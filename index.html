@@ -113,7 +113,8 @@ const CORES = { "NCM":"#7F77DD","Finance":"#1D9E75","Shipment":"#D85A30","Export
 const COR_DEF = "#7F77DD";
 const ABAS_RESULT = ["Espelho","Demo","Migração","Ativação"];
 const PRODUTOS_LISTA = ["NCM","Finance","Shipment","Export","Trading","360","LogOS","Logmanager","México"];
-const FRENTES_FOCO = ["Espelho","Demo","Migração","Ativação"];
+const FRENTES_FOCO = ["Espelho","Demo","Migração","Ativação","Clientes Potenciais"];
+const FRENTES_CONTINUAS = ["Clientes Potenciais"]; // frentes sem foco semanal — são contínuas
 const FORMS_INFO = [
   { id:"espelho", nome:"Espelho", icone:"🪞", cor:"#1D9E75", url:"https://forms.gle/jQaG9qbDubF53z1i9",
     desc:"Todas as consultas que o time faz no produto legado e replica no LogAI. Não precisam ter um foco específico — o objetivo é construir o backlog de dados e identificar discrepâncias." },
@@ -123,6 +124,8 @@ const FORMS_INFO = [
     desc:"Acompanhamento do processo de migração de clientes do produto legado para o LogAI. Atualizar sempre que houver mudança de status." },
   { id:"ativacao", nome:"Ativação", icone:"🚀", cor:"#185FA5", url:"https://forms.gle/CQRpx7TgGstv6iTTA",
     desc:"Acompanhamento semanal de clientes novos. Registrar se ativou, se realizou pesquisas e a percepção do cliente naquela semana." },
+  { id:"potenciais", nome:"Clientes Potenciais", icone:"⭐", cor:"#993556", url:"https://forms.gle/bQ36EwQLjjoKQqdp8",
+    desc:"Registrar clientes com potencial de migrar para o LogAI. Preencher uma vez por cliente quando o guardião identificar a oportunidade." },
 ];
 
 let dadosTodos = {};
@@ -225,22 +228,39 @@ async function salvarFoco() {
       }
     });
   });
+
+  // Merge inteligente — preserva histórico existente e só adiciona/atualiza o que mudou
   const agora = new Date().toLocaleDateString("pt-BR");
-  const linhas = [];
-  focoHistorico.forEach(h => {
-    const novo = novoFoco[h.produto]?.[h.frente];
-    if (!novo || novo === h.objetivo) linhas.push({ Produto: h.produto, Frente: h.frente, Objetivo: h.objetivo, Data: h.data });
-  });
+  const linhasExistentes = [...focoHistorico];
+  const linhasNovas = [];
+
   Object.entries(novoFoco).forEach(([prod, frentes]) => {
     Object.entries(frentes).forEach(([frente, obj]) => {
-      if (!focoHistorico.find(h => h.produto === prod && h.frente === frente && h.objetivo === obj))
-        linhas.push({ Produto: prod, Frente: frente, Objetivo: obj, Data: agora });
+      const existeIgual = linhasExistentes.find(h => h.produto === prod && h.frente === frente && h.objetivo === obj);
+      if (!existeIgual) {
+        linhasNovas.push({ Produto: prod, Frente: frente, Objetivo: obj, Data: agora });
+      }
     });
   });
+
+  const todasLinhas = [
+    ...linhasExistentes.map(h => ({ Produto: h.produto, Frente: h.frente, Objetivo: h.objetivo, Data: h.data })),
+    ...linhasNovas
+  ];
+
+  // Atualizar focoAtual com merge — manter existentes + sobrescrever com novos
+  const focoMerged = { ...focoAtual };
+  Object.entries(novoFoco).forEach(([prod, frentes]) => {
+    if (!focoMerged[prod]) focoMerged[prod] = {};
+    Object.entries(frentes).forEach(([frente, obj]) => {
+      focoMerged[prod][frente] = obj;
+    });
+  });
+
   try {
-    await fetch(`${API}?acao=salvarFoco&dados=${encodeURIComponent(JSON.stringify(linhas))}`);
-    focoAtual = novoFoco;
-    focoHistorico = linhas.map(l => ({ produto: l.Produto, frente: l.Frente, objetivo: l.Objetivo, data: l.Data }));
+    await fetch(`${API}?acao=salvarFoco&dados=${encodeURIComponent(JSON.stringify(todasLinhas))}`);
+    focoAtual = focoMerged;
+    focoHistorico = todasLinhas.map(l => ({ produto: l.Produto, frente: l.Frente, objetivo: l.Objetivo, data: l.Data }));
     modoEdicao = false; salvando = false;
     renderDirecionamento();
   } catch(e) {
@@ -302,9 +322,13 @@ function renderDirecionamento() {
               <div class="dir-card-body">
                 ${FRENTES_FOCO.map(frente => {
                   const obj = focoAtual[prod]?.[frente];
+                  const continua = FRENTES_CONTINUAS.includes(frente);
                   return `<div class="dir-frente">
-                    <div class="dir-frente-label">${frente}</div>
-                    ${obj ? `<div class="dir-frente-valor">${obj}</div>` : `<div class="dir-frente-vazio">Sem foco definido</div>`}
+                    <div class="dir-frente-label" style="display:flex;justify-content:space-between;align-items:center">
+                      <span>${frente}</span>
+                      ${continua ? `<span style="font-size:9px;padding:1px 7px;border-radius:20px;background:#f0f0f0;color:#aaa;font-weight:600">CONTÍNUO</span>` : ""}
+                    </div>
+                    ${obj ? `<div class="dir-frente-valor">${obj}</div>` : `<div class="dir-frente-vazio">${continua ? "Ação contínua — sem foco específico" : "Sem foco definido"}</div>`}
                   </div>`;
                 }).join("")}
               </div>
