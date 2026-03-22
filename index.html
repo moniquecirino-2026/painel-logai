@@ -126,13 +126,41 @@ const FORMS_INFO = [
     desc:"Acompanhamento semanal de clientes novos. Registrar se ativou, se realizou pesquisas e a percepção do cliente naquela semana." },
   { id:"potenciais", nome:"Clientes Potenciais", icone:"⭐", cor:"#993556", url:"https://forms.gle/bQ36EwQLjjoKQqdp8",
     desc:"Registrar clientes com potencial de migrar para o LogAI. Preencher uma vez por cliente quando o guardião identificar a oportunidade." },
+  { id:"direcionamento", nome:"Direcionamento", icone:"🎯", cor:"#0F6E56", url:"https://forms.gle/kH2QSHMFHo1MbhGx7",
+    desc:"Registrar o foco semanal por produto e frente. Preencher toda segunda-feira com o objetivo de cada frente para a semana." },
 ];
 
-let dadosTodos = {};
+const DIRECIONAMENTO_FIXO = {
+  "13": {
+    "NCM": {
+      "Espelho": "Guardião Key user deve realizar testes com foco em comparar resultados de preço. Toda e qualquer pesquisa realizada no NCM (1.0, 2.0 e PRO) deve ser replicada no Log.AI.",
+      "Demo": "Realizar demo com clientes potenciais já selecionados.",
+      "Migração": "Migrar clientes do Basic.",
+      "Clientes Potenciais": "Incluir novos clientes potenciais."
+    },
+    "Finance": {
+      "Demo": "Realizar demo com clientes já agendados.",
+      "Clientes Potenciais": "Incluir novos clientes potenciais."
+    },
+    "Shipment": {
+      "Espelho": "Toda e qualquer pesquisa realizada no Shipment deve ser replicada no Log.AI.",
+      "Demo": "Realizar 10 agendas com clientes potenciais.",
+      "Clientes Potenciais": "Incluir novos clientes potenciais."
+    },
+    "Export": {
+      "Espelho": "Toda e qualquer pesquisa realizada no Export deve ser replicada no Log.AI. Guardiões devem realizar testes com foco em comparar resultados de comprador e exportador.",
+      "Demo": "Realizar 05 agendas com clientes potenciais.",
+      "Clientes Potenciais": "Incluir novos clientes potenciais."
+    },
+    "México": {
+      "Espelho": "Toda e qualquer pesquisa realizada nos produtos México deve ser replicada no Log.AI.",
+      "Ativação": "Ativar com os 15 novos clientes."
+    }
+  }
+};
 let focoAtual = {};
 let focoHistorico = [];
 let modoEdicao = false;
-let abaAtiva = "forms";
 let produtoAtivo = "Todos";
 let frenteAtiva = "Espelho";
 let detalheAberto = null;
@@ -208,6 +236,12 @@ function renderForms() {
 }
 
 // ── ABA DIRECIONAMENTO ─────────────────────────────────────
+function setSemana(s) {
+  const el = document.getElementById("pagina-dir");
+  el.dataset.semAtiva = s;
+  renderDirecionamento();
+}
+
 function toggleEdicao() {
   modoEdicao = !modoEdicao;
   renderDirecionamento();
@@ -271,82 +305,43 @@ async function salvarFoco() {
 
 function renderDirecionamento() {
   const el = document.getElementById("pagina-dir");
-  const temFoco = Object.keys(focoAtual).length > 0;
-  const produtosComFoco = PRODUTOS_LISTA.filter(p => focoAtual[p] && Object.keys(focoAtual[p]).length > 0);
-
-  if (modoEdicao) {
-    el.innerHTML = `
-      <div class="secao-header">
-        <span class="secao-titulo">Editando foco da semana</span>
-        <div style="display:flex;gap:8px">
-          <button class="btn" onclick="toggleEdicao()">Cancelar</button>
-          <button class="btn btn-primary" id="btn-salvar-foco" onclick="salvarFoco()">Salvar</button>
-        </div>
-      </div>
-      <div class="dir-grid">
-        ${PRODUTOS_LISTA.map(prod => {
-          const c = getCor(prod);
-          return `<div class="dir-card">
-            <div class="dir-card-header" style="background:${c}12;border-bottom:2px solid ${c}">
-              <span style="width:9px;height:9px;border-radius:50%;background:${c};display:inline-block;flex-shrink:0"></span>
-              ${prod}
-            </div>
-            <div class="dir-card-body">
-              ${FRENTES_FOCO.map(frente => `
-                <div class="dir-frente">
-                  <div class="dir-frente-label">${frente}</div>
-                  <textarea class="dir-frente-input" id="fi-${prod}-${frente}" placeholder="Objetivo para ${frente}...">${focoAtual[prod]?.[frente] || ""}</textarea>
-                </div>`).join("")}
-            </div>
-          </div>`;
-        }).join("")}
-      </div>`;
-    return;
-  }
+  const semanas = Object.keys(DIRECIONAMENTO_FIXO).sort((a,b) => Number(b)-Number(a));
+  const semAtiva = el.dataset.semAtiva || semanas[0];
+  el.dataset.semAtiva = semAtiva;
+  const produtosSemana = DIRECIONAMENTO_FIXO[semAtiva] || {};
 
   el.innerHTML = `
     <div class="secao-header">
-      <span class="secao-titulo">Foco da semana</span>
-      <button class="btn btn-primary" onclick="toggleEdicao()" style="font-size:12px;padding:5px 14px">✏️ Editar</button>
+      <span class="secao-titulo">Direcionamento da semana</span>
     </div>
-    ${!temFoco
-      ? `<div class="dir-vazio">Nenhum foco definido ainda. Clique em "✏️ Editar" para começar.</div>`
-      : `<div class="dir-grid">
-          ${produtosComFoco.map(prod => {
-            const c = getCor(prod);
-            return `<div class="dir-card">
-              <div class="dir-card-header" style="background:${c}12;border-bottom:2px solid ${c}">
-                <span style="width:9px;height:9px;border-radius:50%;background:${c};display:inline-block;flex-shrink:0"></span>
-                ${prod}
-              </div>
-              <div class="dir-card-body">
-                ${FRENTES_FOCO.map(frente => {
-                  const obj = focoAtual[prod]?.[frente];
-                  const continua = FRENTES_CONTINUAS.includes(frente);
-                  return `<div class="dir-frente">
-                    <div class="dir-frente-label" style="display:flex;justify-content:space-between;align-items:center">
-                      <span>${frente}</span>
-                      ${continua ? `<span style="font-size:9px;padding:1px 7px;border-radius:20px;background:#f0f0f0;color:#aaa;font-weight:600">CONTÍNUO</span>` : ""}
-                    </div>
-                    ${obj ? `<div class="dir-frente-valor">${obj}</div>` : `<div class="dir-frente-vazio">${continua ? "Ação contínua — sem foco específico" : "Sem foco definido"}</div>`}
-                  </div>`;
-                }).join("")}
-              </div>
-            </div>`;
-          }).join("")}
-        </div>
-        ${focoHistorico.length > 0 ? `
-        <div class="historico-wrap">
-          <div style="font-size:11px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Histórico</div>
-          <div class="historico-card">
-            ${focoHistorico.slice().reverse().slice(0,10).map(h => `
-              <div class="historico-item">
-                <div class="historico-meta">${h.data} · <strong>${h.produto}</strong> / ${h.frente}</div>
-                <div style="font-size:12px;color:#333">${h.objetivo}</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+      ${semanas.map(s => `
+        <button onclick="setSemana('${s}')" style="padding:5px 16px;border-radius:20px;border:1px solid;cursor:pointer;font-size:13px;
+          ${s===semAtiva?'border-color:#7F77DD;background:#7F77DD22;color:#7F77DD;font-weight:600':'border-color:#ddd;background:white;color:#888'}">
+          Semana ${s}
+        </button>`).join("")}
+    </div>
+    <div class="dir-grid">
+      ${Object.entries(produtosSemana).map(([prod, frentes]) => {
+        const c = getCor(prod);
+        return `<div class="dir-card">
+          <div class="dir-card-header" style="background:${c}12;border-bottom:2px solid ${c}">
+            <span style="width:9px;height:9px;border-radius:50%;background:${c};display:inline-block;flex-shrink:0"></span>
+            ${prod}
+          </div>
+          <div class="dir-card-body">
+            ${Object.entries(frentes).map(([frente, obj]) => `
+              <div class="dir-frente">
+                <div class="dir-frente-label" style="display:flex;justify-content:space-between;align-items:center">
+                  <span>${frente}</span>
+                  ${frente==="Clientes Potenciais"?`<span style="font-size:9px;padding:1px 7px;border-radius:20px;background:#f0f0f0;color:#aaa;font-weight:600">CONTÍNUO</span>`:""}
+                </div>
+                <div class="dir-frente-valor">${obj}</div>
               </div>`).join("")}
           </div>
-        </div>` : ""}
-      `}`;
+        </div>`;
+      }).join("")}
+    </div>`;
 }
 
 // ── ABA RESULTADOS ─────────────────────────────────────────
