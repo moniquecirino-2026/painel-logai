@@ -121,7 +121,7 @@ const API = "https://script.google.com/macros/s/AKfycbydFzsnklxyH7_-9tNTma7D5PUZ
 const CORES = { "NCM":"#7F77DD","NCM 1.0":"#7F77DD","NCM 2.0":"#7F77DD","NCM PRO":"#7F77DD","Finance":"#1D9E75","Shipment":"#D85A30","Export":"#BA7517","Trading":"#185FA5","México":"#993556","360":"#0F6E56","LogOS":"#534AB7","Logmanager":"#3C3489" };
 const COR_DEF = "#7F77DD";
 const ABAS_RESULT = ["Espelho","Demo","Migração","Ativação"];
-const PRODUTOS_LISTA = ["NCM 1.0","NCM 2.0","NCM PRO","Finance","Shipment","360","LogOS","Logmanager","México"];
+const PRODUTOS_LISTA = ["NCM","Finance","Shipment","360","LogOS","Logmanager","México"];
 const FRENTES_FOCO = ["Espelho","Demo","Migração"];
 const FORM_LINKS = {
   "Espelho": { url: "https://forms.gle/jQaG9qbDubF53z1i9", label: "Form Espelho" },
@@ -141,7 +141,14 @@ let salvando = false;
 
 function getCor(p) {
   if (!p || p === "Todos") return COR_DEF;
+  if (p.startsWith("NCM")) return CORES["NCM"] || COR_DEF;
   return CORES[p] || COR_DEF;
+}
+
+function normalizarProduto(p) {
+  if (!p) return p;
+  if (p.startsWith("NCM")) return "NCM";
+  return p;
 }
 
 async function buscarAba(aba) {
@@ -317,12 +324,14 @@ function renderDirecionamento() {
 // ── RESULTADOS ──────────────────────────────────────────────
 function getProdutos() {
   const s = new Set();
-  ABAS_RESULT.forEach(a => (dadosTodos[a] || []).forEach(r => { if(r["Produto"]) s.add(r["Produto"]); }));
+  ABAS_RESULT.forEach(a => (dadosTodos[a] || []).forEach(r => { if(r["Produto"]) s.add(normalizarProduto(r["Produto"])); }));
   return ["Todos", ...s];
 }
 
 function filtrar(rows) {
-  return produtoAtivo === "Todos" ? rows : rows.filter(r => r["Produto"] === produtoAtivo);
+  if (produtoAtivo === "Todos") return rows;
+  if (produtoAtivo === "NCM") return rows.filter(r => r["Produto"] && r["Produto"].startsWith("NCM"));
+  return rows.filter(r => r["Produto"] === produtoAtivo);
 }
 
 function renderFiltros() {
