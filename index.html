@@ -13,16 +13,12 @@
   .header p { font-size: 12px; color: #888; margin-top: 3px; }
   .btn { padding: 7px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; transition: all .15s; }
   .btn:hover { background: #f0f0f0; }
-  .btn-primary { background: #7F77DD; color: white; border-color: #7F77DD; }
-  .btn-primary:hover { background: #6b63c8; }
 
-  /* Navegação principal */
-  .nav-principal { display: flex; gap: 4px; margin-bottom: 28px; border-bottom: 2px solid #e8e8e8; padding-bottom: 0; }
+  .nav-principal { display: flex; gap: 4px; margin-bottom: 28px; border-bottom: 2px solid #e8e8e8; }
   .nav-btn { padding: 10px 20px; border: none; background: none; font-size: 14px; font-weight: 500; color: #aaa; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .15s; }
   .nav-btn:hover { color: #555; }
   .nav-btn.ativo { color: #7F77DD; border-bottom-color: #7F77DD; }
 
-  /* Cards de forms */
   .forms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
   .form-card { background: white; border-radius: 12px; border: 1px solid #eee; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
   .form-card-icon { font-size: 24px; }
@@ -31,7 +27,6 @@
   .form-card-link { display: inline-block; padding: 7px 16px; border-radius: 20px; border: 1px solid; text-decoration: none; font-size: 12px; font-weight: 600; text-align: center; transition: opacity .15s; }
   .form-card-link:hover { opacity: .8; }
 
-  /* Direcionamento */
   .secao-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
   .secao-titulo { font-size: 13px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .08em; }
   .dir-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
@@ -40,19 +35,9 @@
   .dir-card-body { padding: 8px 14px 14px; }
   .dir-frente { margin-bottom: 10px; }
   .dir-frente:last-child { margin-bottom: 0; }
-  .dir-frente-label { font-size: 10px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 3px; }
+  .dir-frente-label { font-size: 10px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 3px; display: flex; justify-content: space-between; align-items: center; }
   .dir-frente-valor { font-size: 12px; color: #333; line-height: 1.5; }
-  .dir-frente-vazio { font-size: 12px; color: #ddd; font-style: italic; }
-  .dir-frente-input { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 6px 8px; font-size: 12px; font-family: inherit; resize: vertical; min-height: 52px; margin-top: 3px; }
-  .dir-frente-input:focus { outline: none; border-color: #7F77DD; }
-  .dir-vazio { text-align: center; padding: 32px; color: #ccc; font-size: 13px; }
-  .historico-wrap { margin-top: 24px; }
-  .historico-card { background: white; border-radius: 12px; border: 1px solid #eee; overflow: hidden; }
-  .historico-item { padding: 10px 16px; border-bottom: 1px solid #f5f5f5; font-size: 12px; display: flex; gap: 12px; }
-  .historico-item:last-child { border-bottom: none; }
-  .historico-meta { color: #aaa; white-space: nowrap; min-width: 150px; }
 
-  /* Resultados */
   .filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
   .filtro-btn { padding: 5px 14px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 12px; cursor: pointer; }
   .tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
@@ -81,7 +66,6 @@
   th { text-align: left; padding: 5px 7px; border-bottom: 1px solid #eee; color: #999; font-weight: 600; white-space: nowrap; }
   td { padding: 6px 7px; border-bottom: 1px solid #f5f5f5; vertical-align: top; max-width: 180px; word-break: break-word; }
   tr:nth-child(even) { background: #fafafa; }
-  .loading { text-align: center; padding: 40px; color: #aaa; font-size: 13px; }
   .vazio { text-align: center; padding: 28px; color: #bbb; font-size: 13px; }
 </style>
 </head>
@@ -95,7 +79,6 @@
     <button class="btn" onclick="carregar()">↻ Atualizar</button>
   </div>
 
-  <!-- Navegação principal -->
   <div class="nav-principal">
     <button class="nav-btn ativo" onclick="setAba('forms')" id="nav-forms">Forms</button>
     <button class="nav-btn" onclick="setAba('dir')" id="nav-dir">Direcionamento</button>
@@ -111,10 +94,8 @@
 const API = "https://script.google.com/macros/s/AKfycbydFzsnklxyH7_-9tNTma7D5PUZp-UdBrE13OXhXTaXIkdBlT-OtRiWS1I0G5oNYHwqcQ/exec";
 const CORES = { "NCM":"#7F77DD","Finance":"#1D9E75","Shipment":"#D85A30","Export":"#BA7517","Trading":"#185FA5","México":"#993556","360":"#0F6E56","LogOS":"#534AB7","Logmanager":"#3C3489" };
 const COR_DEF = "#7F77DD";
-const ABAS_RESULT = ["Espelho","Demo","Migração","Ativação"];
+const ABAS_RESULT = ["Espelho","Demo","Migração","Ativação","Potenciais"];
 const PRODUTOS_LISTA = ["NCM","Finance","Shipment","Export","Trading","360","LogOS","Logmanager","México"];
-const FRENTES_FOCO = ["Espelho","Demo","Migração","Ativação","Clientes Potenciais"];
-const FRENTES_CONTINUAS = ["Clientes Potenciais"]; // frentes sem foco semanal — são contínuas
 const FORMS_INFO = [
   { id:"espelho", nome:"Espelho", icone:"🪞", cor:"#1D9E75", url:"https://forms.gle/jQaG9qbDubF53z1i9",
     desc:"Todas as consultas que o time faz no produto legado e replica no LogAI. Não precisam ter um foco específico — o objetivo é construir o backlog de dados e identificar discrepâncias." },
@@ -126,8 +107,6 @@ const FORMS_INFO = [
     desc:"Acompanhamento semanal de clientes novos. Registrar se ativou, se realizou pesquisas e a percepção do cliente naquela semana." },
   { id:"potenciais", nome:"Clientes Potenciais", icone:"⭐", cor:"#993556", url:"https://forms.gle/bQ36EwQLjjoKQqdp8",
     desc:"Registrar clientes com potencial de migrar para o LogAI. Preencher uma vez por cliente quando o guardião identificar a oportunidade." },
-  { id:"direcionamento", nome:"Direcionamento", icone:"🎯", cor:"#0F6E56", url:"https://forms.gle/kH2QSHMFHo1MbhGx7",
-    desc:"Registrar o foco semanal por produto e frente. Preencher toda segunda-feira com o objetivo de cada frente para a semana." },
 ];
 
 const DIRECIONAMENTO_FIXO = {
@@ -158,13 +137,12 @@ const DIRECIONAMENTO_FIXO = {
     }
   }
 };
-let focoAtual = {};
-let focoHistorico = [];
-let modoEdicao = false;
+
+let dadosTodos = {};
 let produtoAtivo = "Todos";
 let frenteAtiva = "Espelho";
 let detalheAberto = null;
-let salvando = false;
+let abaAtiva = "forms";
 
 function getCor(p) {
   if (!p || p === "Todos") return COR_DEF;
@@ -186,18 +164,8 @@ async function buscarAba(aba) {
 async function carregar() {
   document.getElementById("ultima-atualizacao").textContent = "Atualizando...";
   try {
-    const abas = [...ABAS_RESULT];
-    const res = await Promise.all(abas.map(a => buscarAba(a).catch(() => [])));
-    abas.forEach((a, i) => dadosTodos[a] = res[i] || []);
-    focoAtual = {}; focoHistorico = [];
-    (dadosTodos["Direcionamento"] || []).forEach(r => {
-      const { Produto: prod, Frente: frente, Objetivo: obj, Data: data } = r;
-      if (prod && frente && obj) {
-        if (!focoAtual[prod]) focoAtual[prod] = {};
-        focoAtual[prod][frente] = obj;
-        focoHistorico.push({ produto: prod, frente, objetivo: obj, data });
-      }
-    });
+    const res = await Promise.all(ABAS_RESULT.map(a => buscarAba(a).catch(() => [])));
+    ABAS_RESULT.forEach((a, i) => dadosTodos[a] = res[i] || []);
     document.getElementById("ultima-atualizacao").textContent = `Atualizado às ${new Date().toLocaleTimeString("pt-BR")}`;
     renderAba();
   } catch(e) {
@@ -220,7 +188,6 @@ function renderAba() {
   else if (abaAtiva === "result") { renderFiltros(); renderTabs(); renderResultado(); }
 }
 
-// ── ABA FORMS ──────────────────────────────────────────────
 function renderForms() {
   document.getElementById("pagina-forms").innerHTML = `
     <div class="forms-grid">
@@ -235,72 +202,9 @@ function renderForms() {
     </div>`;
 }
 
-// ── ABA DIRECIONAMENTO ─────────────────────────────────────
 function setSemana(s) {
-  const el = document.getElementById("pagina-dir");
-  el.dataset.semAtiva = s;
+  document.getElementById("pagina-dir").dataset.semAtiva = s;
   renderDirecionamento();
-}
-
-function toggleEdicao() {
-  modoEdicao = !modoEdicao;
-  renderDirecionamento();
-}
-
-async function salvarFoco() {
-  if (salvando) return;
-  salvando = true;
-  const btn = document.getElementById("btn-salvar-foco");
-  if (btn) btn.textContent = "Salvando...";
-  const novoFoco = {};
-  PRODUTOS_LISTA.forEach(prod => {
-    FRENTES_FOCO.forEach(frente => {
-      const el = document.getElementById(`fi-${prod}-${frente}`);
-      if (el && el.value.trim()) {
-        if (!novoFoco[prod]) novoFoco[prod] = {};
-        novoFoco[prod][frente] = el.value.trim();
-      }
-    });
-  });
-
-  // Merge inteligente — preserva histórico existente e só adiciona/atualiza o que mudou
-  const agora = new Date().toLocaleDateString("pt-BR");
-  const linhasExistentes = [...focoHistorico];
-  const linhasNovas = [];
-
-  Object.entries(novoFoco).forEach(([prod, frentes]) => {
-    Object.entries(frentes).forEach(([frente, obj]) => {
-      const existeIgual = linhasExistentes.find(h => h.produto === prod && h.frente === frente && h.objetivo === obj);
-      if (!existeIgual) {
-        linhasNovas.push({ Produto: prod, Frente: frente, Objetivo: obj, Data: agora });
-      }
-    });
-  });
-
-  const todasLinhas = [
-    ...linhasExistentes.map(h => ({ Produto: h.produto, Frente: h.frente, Objetivo: h.objetivo, Data: h.data })),
-    ...linhasNovas
-  ];
-
-  // Atualizar focoAtual com merge — manter existentes + sobrescrever com novos
-  const focoMerged = { ...focoAtual };
-  Object.entries(novoFoco).forEach(([prod, frentes]) => {
-    if (!focoMerged[prod]) focoMerged[prod] = {};
-    Object.entries(frentes).forEach(([frente, obj]) => {
-      focoMerged[prod][frente] = obj;
-    });
-  });
-
-  try {
-    await fetch(`${API}?acao=salvarFoco&dados=${encodeURIComponent(JSON.stringify(todasLinhas))}`);
-    focoAtual = focoMerged;
-    focoHistorico = todasLinhas.map(l => ({ produto: l.Produto, frente: l.Frente, objetivo: l.Objetivo, data: l.Data }));
-    modoEdicao = false; salvando = false;
-    renderDirecionamento();
-  } catch(e) {
-    salvando = false;
-    if (btn) btn.textContent = "Erro — tentar novamente";
-  }
 }
 
 function renderDirecionamento() {
@@ -309,7 +213,6 @@ function renderDirecionamento() {
   const semAtiva = el.dataset.semAtiva || semanas[0];
   el.dataset.semAtiva = semAtiva;
   const produtosSemana = DIRECIONAMENTO_FIXO[semAtiva] || {};
-
   el.innerHTML = `
     <div class="secao-header">
       <span class="secao-titulo">Direcionamento da semana</span>
@@ -332,11 +235,11 @@ function renderDirecionamento() {
           <div class="dir-card-body">
             ${Object.entries(frentes).map(([frente, obj]) => `
               <div class="dir-frente">
-                <div class="dir-frente-label" style="display:flex;justify-content:space-between;align-items:center">
+                <div class="dir-frente-label">
                   <span>${frente}</span>
                   ${frente==="Clientes Potenciais"?`<span style="font-size:9px;padding:1px 7px;border-radius:20px;background:#f0f0f0;color:#aaa;font-weight:600">CONTÍNUO</span>`:""}
                 </div>
-                <div class="dir-frente-valor">${obj.replace(/\n/g, "<br>")}</div>
+                <div class="dir-frente-valor">${obj.replace(/\n/g,"<br>")}</div>
               </div>`).join("")}
           </div>
         </div>`;
@@ -344,51 +247,65 @@ function renderDirecionamento() {
     </div>`;
 }
 
-// ── ABA RESULTADOS ─────────────────────────────────────────
 function getProdutos() {
   const s = new Set();
-  ABAS_RESULT.forEach(a => (dadosTodos[a] || []).forEach(r => { if(r["Produto"]) s.add(normalizarProduto(r["Produto"])); }));
+  const colPorAba = {
+    "Espelho":"Produto","Demo":"6. Produto atual do cliente",
+    "Migração":"6. Produto de origem (de onde está migrando)",
+    "Ativação":"Agente contratado no Log.AI","Potenciais":"6. Produtos atuais do cliente"
+  };
+  ABAS_RESULT.forEach(a => {
+    const col = colPorAba[a] || "Produto";
+    (dadosTodos[a]||[]).forEach(r => { if(r[col]) s.add(normalizarProduto(r[col])); });
+  });
   return ["Todos", ...s];
 }
-function filtrar(rows) {
+
+function filtrar(rows, aba) {
+  const colPorAba = {
+    "Espelho":"Produto","Demo":"6. Produto atual do cliente",
+    "Migração":"6. Produto de origem (de onde está migrando)",
+    "Ativação":"Agente contratado no Log.AI","Potenciais":"6. Produtos atuais do cliente"
+  };
+  const col = colPorAba[aba] || "Produto";
   if (produtoAtivo === "Todos") return rows;
-  if (produtoAtivo === "NCM") return rows.filter(r => r["Produto"] && r["Produto"].startsWith("NCM"));
-  return rows.filter(r => r["Produto"] === produtoAtivo);
+  if (produtoAtivo === "NCM") return rows.filter(r => r[col] && r[col].startsWith("NCM"));
+  return rows.filter(r => r[col] === produtoAtivo);
 }
+
 function renderFiltros() {
   document.getElementById("filtros-produto").innerHTML = getProdutos().map(p => {
     const c = getCor(p); const at = p === produtoAtivo;
     return `<button class="filtro-btn" onclick="setProduto('${p}')" style="${at?`border-color:${c};background:${c}18;color:${c};font-weight:600`:''}">${p}</button>`;
   }).join("");
 }
+
 function renderTabs() {
+  const labels = {"Espelho":"🪞 Espelho","Demo":"🤝 Demo","Migração":"🔄 Migração","Ativação":"🚀 Ativação","Potenciais":"⭐ Potenciais"};
   document.getElementById("tabs-frente").innerHTML = ABAS_RESULT.map(a => {
     const at = a === frenteAtiva; const c = getCor(produtoAtivo);
-    return `<button class="tab" onclick="setFrente('${a}')" style="${at?`border-color:${c};background:${c}18;color:${c};font-weight:600`:''}">${a}</button>`;
+    return `<button class="tab" onclick="setFrente('${a}')" style="${at?`border-color:${c};background:${c}18;color:${c};font-weight:600`:''}">${labels[a]||a}</button>`;
   }).join("");
 }
+
 function setProduto(p) { produtoAtivo = p; detalheAberto = null; renderFiltros(); renderTabs(); renderResultado(); }
 function setFrente(f) { frenteAtiva = f; detalheAberto = null; renderTabs(); renderResultado(); }
 
 function renderResultado() {
-  const rows = filtrar(dadosTodos[frenteAtiva] || []);
+  const rows = filtrar(dadosTodos[frenteAtiva]||[], frenteAtiva);
   const cor = getCor(produtoAtivo);
   const total = rows.length;
-  const prods = new Set(rows.map(r => normalizarProduto(r["Produto"])).filter(Boolean)).size;
-  const totalG = produtoAtivo === "Todos"
-    ? ABAS_RESULT.reduce((a,b) => a + (dadosTodos[b]||[]).length, 0)
-    : ABAS_RESULT.reduce((a,b) => a + filtrar(dadosTodos[b]||[]).length, 0);
-
+  const totalG = ABAS_RESULT.reduce((a,b) => a + filtrar(dadosTodos[b]||[], b).length, 0);
   document.getElementById("resumo").innerHTML = `
     <div class="resumo-card"><div class="val">${total}</div><div class="lbl">Registros nesta frente</div></div>
-    <div class="resumo-card"><div class="val" style="color:${cor}">${prods}</div><div class="lbl">Produtos nesta frente</div></div>
+    <div class="resumo-card"><div class="val" style="color:${cor};font-size:16px;padding-top:4px">${frenteAtiva}</div><div class="lbl">Frente ativa</div></div>
     <div class="resumo-card"><div class="val">${totalG}</div><div class="lbl">Total em todas as frentes</div></div>`;
-
   let html = "";
-  if (frenteAtiva === "Espelho") html = renderEspelho(rows, cor);
-  else if (frenteAtiva === "Demo") html = renderDemo(rows, cor);
-  else if (frenteAtiva === "Migração") html = renderMigracao(rows, cor);
-  else if (frenteAtiva === "Ativação") html = renderAtivacao(rows, cor);
+  if (frenteAtiva==="Espelho") html = renderEspelho(rows, cor);
+  else if (frenteAtiva==="Demo") html = renderDemo(rows, cor);
+  else if (frenteAtiva==="Migração") html = renderMigracao(rows, cor);
+  else if (frenteAtiva==="Ativação") html = renderAtivacao(rows, cor);
+  else if (frenteAtiva==="Potenciais") html = renderPotenciais(rows, cor);
   document.getElementById("conteudo-resultado").innerHTML = html || '<div class="vazio">Nenhum registro ainda.</div>';
 }
 
@@ -403,7 +320,7 @@ function numBtn(val, label, cor, key, rows) {
   </div>`;
 }
 function tabelaHTML(rows, cols) {
-  if (!rows || !rows.length) return '<p style="font-size:12px;color:#bbb;padding:6px 0">Nenhum registro.</p>';
+  if (!rows||!rows.length) return '<p style="font-size:12px;color:#bbb;padding:6px 0">Nenhum registro.</p>';
   return `<div class="tabela-wrap"><table>
     <thead><tr>${cols.map(c=>`<th>${c}</th>`).join("")}</tr></thead>
     <tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${r[c]||"—"}</td>`).join("")}</tr>`).join("")}</tbody>
@@ -455,30 +372,38 @@ function renderEspelho(rows, cor) {
 
 function renderDemo(rows, cor) {
   if (!rows.length) return '<div class="vazio">Nenhuma demo realizada ainda.</div>';
-  const pos=rows.filter(r=>r["Reação geral do cliente"]==="Positiva").length;
-  const neg=rows.filter(r=>r["Reação geral do cliente"]==="Negativa").length;
-  const gaps=rows.map(r=>r["Gaps ou funcionalidades que o cliente sinalizou"]).filter(Boolean);
-  const cols=["Carimbo de data/hora","Responsável (CS)","Nome do Cliente","ID do Cliente","Produto atual do cliente","Caso de uso apresentado","Reação geral do cliente","O que o cliente disse","Gaps ou funcionalidades que o cliente sinalizou","Cliente quer avançar?","Próxima ação combinada","Link da gravação Meetrox"];
-  const rP=rows.filter(r=>r["Reação geral do cliente"]==="Positiva");
-  const rN=rows.filter(r=>r["Reação geral do cliente"]==="Negativa");
+  const pos=rows.filter(r=>r["8. Percepção geral do cliente em relação ao LogAI"]==="Positiva").length;
+  const neg=rows.filter(r=>r["8. Percepção geral do cliente em relação ao LogAI"]==="Negativa").length;
+  const avanc=rows.filter(r=>r["12. Cliente quer avançar?"]==="Sim").length;
+  const gaps=rows.map(r=>r["10. Cliente sentiu falta de alguma coisa no LogAI?"]).filter(Boolean);
+  const cols=["1. Data e Hora da Demonstração","2. Responsável CS","3. Time / Coordenador","5. Nome do cliente (Copiar exatamente como aparece no sistema de CS)","6. Produto atual do cliente","7. Caso de uso do cliente","8. Percepção geral do cliente em relação ao LogAI","9. O que o cliente disse (Principais comentários, dúvidas e pontos de atenção)","10. Cliente sentiu falta de alguma coisa no LogAI?","12. Cliente quer avançar?","Qual agente foi demonstrado ao cliente no LogAI"];
+  const rP=rows.filter(r=>r["8. Percepção geral do cliente em relação ao LogAI"]==="Positiva");
+  const rN=rows.filter(r=>r["8. Percepção geral do cliente em relação ao LogAI"]==="Negativa");
+  const rA=rows.filter(r=>r["12. Cliente quer avançar?"]==="Sim");
   return `<div class="card" style="border-top:3px solid ${cor}">
     <div class="card-title">Demos com clientes</div>
     <div class="nums">${numBtn(rows.length,"demos",cor,"da",rows)}${numBtn(pos,"positivas","#1D9E75","dp",rP)}${numBtn(neg,"negativas","#D85A30","dn",rN)}</div>
     ${barra(pos,rows.length,cor)}
     ${gaps.length>0?`<div class="insight"><strong>Gaps:</strong> ${gaps.slice(0,3).join(" · ")}${gaps.length>3?` +${gaps.length-3} mais`:""}</div>`:""}
     ${detalheAberto&&["da","dp","dn"].includes(detalheAberto)?tabelaHTML(detalheAberto==="da"?rows:detalheAberto==="dp"?rP:rN,cols):""}
+  </div>
+  <div class="card" style="border-top:3px solid ${cor}">
+    <div class="card-title">Clientes que querem avançar</div>
+    <div class="nums" style="grid-template-columns:repeat(2,1fr)">${numBtn(avanc,"querem avançar","#1D9E75","dav",rA)}${numBtn(rows.length-avanc,"ainda não","#BA7517","dna",rows.filter(r=>r["12. Cliente quer avançar?"]!=="Sim"))}</div>
+    ${barra(avanc,rows.length,cor)}
+    ${detalheAberto&&["dav","dna"].includes(detalheAberto)?tabelaHTML(detalheAberto==="dav"?rA:rows.filter(r=>r["12. Cliente quer avançar?"]!=="Sim"),cols):""}
   </div>`;
 }
 
 function renderMigracao(rows, cor) {
   if (!rows.length) return '<div class="vazio">Nenhuma migração registrada ainda.</div>';
-  const mig=rows.filter(r=>r["Status da migração"]==="Concluído").length;
-  const and=rows.filter(r=>r["Status da migração"]==="Em andamento").length;
-  const sus=rows.filter(r=>r["Status da migração"]==="Suspenso").length;
-  const cols=["Carimbo de data/hora","Responsável (CS)","ID do Cliente","Nome do Cliente","Produto de origem (de onde está migrando)","Tipo de Migração","Status da migração","Motivo da suspensão","Percepção do cliente","Próxima ação"];
-  const rM=rows.filter(r=>r["Status da migração"]==="Concluído");
-  const rA=rows.filter(r=>r["Status da migração"]==="Em andamento");
-  const rS=rows.filter(r=>r["Status da migração"]==="Suspenso");
+  const mig=rows.filter(r=>r["9. Status da migração"]==="Concluído").length;
+  const and=rows.filter(r=>r["9. Status da migração"]==="Em andamento").length;
+  const sus=rows.filter(r=>r["9. Status da migração"]==="Suspenso").length;
+  const cols=["1. Data e Hora do Registro","2. Responsável CS","3. Time / Coordenador","4. ID do Cliente","5. Nome do Cliente","6. Produto de origem (de onde está migrando)","8. Tipo de Migração","9. Status da migração","Agente habilitado no LogAI para o cliente"];
+  const rM=rows.filter(r=>r["9. Status da migração"]==="Concluído");
+  const rA=rows.filter(r=>r["9. Status da migração"]==="Em andamento");
+  const rS=rows.filter(r=>r["9. Status da migração"]==="Suspenso");
   return `<div class="card" style="border-top:3px solid ${cor}">
     <div class="card-title">Migração de clientes</div>
     <div class="nums">${numBtn(mig,"concluídos","#1D9E75","mc",rM)}${numBtn(and,"em andamento",cor,"ma",rA)}${numBtn(sus,"suspensos","#D85A30","ms",rS)}</div>
@@ -488,15 +413,15 @@ function renderMigracao(rows, cor) {
 }
 
 function renderAtivacao(rows, cor) {
-  if (!rows.length) return '<div class="vazio">Nenhum cliente novo registrado ainda.</div>';
+  if (!rows.length) return '<div class="vazio">Nenhum cliente registrado ainda.</div>';
   const sim=rows.filter(r=>r["Ativou o produto Log.AI?"]==="Sim").length;
   const nao=rows.filter(r=>r["Ativou o produto Log.AI?"]==="Não").length;
   const pesq=rows.filter(r=>r["Já realizou pesquisas no LogAI essa semana?"]==="Sim").length;
-  const cols=["Carimbo de data/hora","Responsável (CS)","ID do Cliente","Nome do Cliente","Agente contratado no Log.AI","Ativou o produto Log.AI?","Já realizou pesquisas no LogAI essa semana?","Existe algum feedback do cliente sobre o Log.AI essa semana?","Precisa de acompanhamento esta semana?"];
+  const cols=["Data e Hora do Acompanhamento","Time / Coordenador","ID do Cliente","Nome do Cliente","Agente contratado no Log.AI","Ativou o produto Log.AI?","Já realizou pesquisas no LogAI essa semana?","Feedback qualitativo da semana"];
   const rS=rows.filter(r=>r["Ativou o produto Log.AI?"]==="Sim");
   const rN=rows.filter(r=>r["Ativou o produto Log.AI?"]==="Não");
   return `<div class="card" style="border-top:3px solid ${cor}">
-    <div class="card-title">Ativação — clientes novos</div>
+    <div class="card-title">Ativação — clientes</div>
     <div class="nums">${numBtn(rows.length,"clientes",cor,"aa",rows)}${numBtn(sim,"ativaram","#1D9E75","as",rS)}${numBtn(nao,"não ativaram","#D85A30","an",rN)}</div>
     ${barra(sim,rows.length,cor)}
     <div class="insight"><strong>Realizaram pesquisas esta semana:</strong> ${pesq} de ${rows.length} clientes</div>
@@ -504,7 +429,23 @@ function renderAtivacao(rows, cor) {
   </div>`;
 }
 
-// Páginas de resultado precisam de containers
+function renderPotenciais(rows, cor) {
+  if (!rows.length) return '<div class="vazio">Nenhum cliente potencial registrado ainda.</div>';
+  const comAgenda=rows.filter(r=>r["10. Você tem agenda com cliente já marcada?"]==="Sim").length;
+  const cols=["1. Data e Hora do Registro","3. Time / Coordenador","4. ID do Cliente","5. Nome do Cliente","6. Produtos atuais do cliente","7. Motivo / Estratégia de Indicação para LogAI","8. Agente do LogAI com potencial para este Cliente","9. Caso de Uso do Cliente","10. Você tem agenda com cliente já marcada?","11. Observações Adicionais (Opcional)"];
+  const rCA=rows.filter(r=>r["10. Você tem agenda com cliente já marcada?"]==="Sim");
+  const agentes={};
+  rows.forEach(r=>{const ag=r["8. Agente do LogAI com potencial para este Cliente"]||"Não informado";agentes[ag]=(agentes[ag]||0)+1;});
+  const agentesHTML=Object.entries(agentes).sort((a,b)=>b[1]-a[1]).map(([ag,n])=>`<span style="margin-right:8px"><strong>${n}</strong> ${ag}</span>`).join("");
+  return `<div class="card" style="border-top:3px solid ${cor}">
+    <div class="card-title">Clientes potenciais para LogAI</div>
+    <div class="nums" style="grid-template-columns:repeat(2,1fr)">${numBtn(rows.length,"total",cor,"pa",rows)}${numBtn(comAgenda,"com agenda","#1D9E75","pca",rCA)}</div>
+    ${barra(comAgenda,rows.length,cor)}
+    ${agentesHTML?`<div class="insight"><strong>Por agente:</strong> ${agentesHTML}</div>`:""}
+    ${detalheAberto&&["pa","pca"].includes(detalheAberto)?tabelaHTML(detalheAberto==="pa"?rows:rCA,cols):""}
+  </div>`;
+}
+
 document.getElementById("pagina-result").innerHTML = `
   <div class="filtros" id="filtros-produto"></div>
   <div class="tabs" id="tabs-frente"></div>
