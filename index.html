@@ -7,93 +7,131 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
-  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
-  .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
-  .header h1 { font-size: 22px; font-weight: 600; }
-  .header p { font-size: 13px; color: #666; margin-top: 4px; }
-  .header-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .container { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
+
+  /* Header */
+  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+  .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -.3px; }
+  .header p { font-size: 12px; color: #888; margin-top: 3px; }
   .btn { padding: 7px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; transition: all .15s; }
   .btn:hover { background: #f0f0f0; }
   .btn-primary { background: #7F77DD; color: white; border-color: #7F77DD; }
   .btn-primary:hover { background: #6b63c8; }
-  .btn-danger { background: #D85A30; color: white; border-color: #D85A30; }
-  .filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-  .filtro-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; }
-  .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-  .tab { padding: 6px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; }
-  .resumo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
-  .resumo-card { background: white; border-radius: 12px; padding: 16px; text-align: center; border: 1px solid #eee; }
-  .resumo-card .val { font-size: 26px; font-weight: 600; }
-  .resumo-card .lbl { font-size: 12px; color: #888; margin-top: 4px; }
-  .card { background: white; border-radius: 12px; padding: 18px; margin-bottom: 14px; border: 1px solid #eee; }
-  .card-title { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 14px; }
-  .nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
-  .num-btn { text-align: center; cursor: pointer; padding: 10px 6px; border-radius: 8px; border: 1px solid transparent; transition: all .15s; }
-  .num-btn:hover { background: #f5f5f5; }
-  .num-btn.ativo { border-color: currentColor; }
-  .num-btn .v { font-size: 26px; font-weight: 600; }
-  .num-btn .l { font-size: 11px; color: #888; margin-top: 2px; }
-  .num-btn .d { font-size: 10px; color: #aaa; margin-top: 1px; }
-  .barra-wrap { display: flex; align-items: center; gap: 10px; }
-  .barra-bg { flex: 1; background: #f0f0f0; border-radius: 4px; height: 8px; }
-  .barra-fill { height: 8px; border-radius: 4px; transition: width .4s; }
-  .barra-pct { font-size: 12px; color: #888; min-width: 36px; }
-  .insight { margin-top: 12px; padding: 10px 14px; background: #f8f8f8; border-radius: 8px; font-size: 12px; color: #555; }
-  .insight strong { color: #1a1a1a; }
-  .tabela-wrap { overflow-x: auto; margin-top: 12px; }
-  table { width: 100%; border-collapse: collapse; font-size: 11px; }
-  th { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; color: #888; font-weight: 500; white-space: nowrap; }
-  td { padding: 7px 8px; border-bottom: 1px solid #eee; vertical-align: top; max-width: 200px; word-break: break-word; }
-  tr:nth-child(even) { background: #fafafa; }
-  .loading { text-align: center; padding: 48px; color: #888; font-size: 14px; }
-  .erro { padding: 16px; background: #fff3f3; border: 1px solid #fcc; border-radius: 10px; font-size: 13px; color: #c00; margin-bottom: 16px; }
-  .vazio { text-align: center; padding: 32px; color: #aaa; font-size: 13px; }
+
+  /* Divisórias */
+  .secao { margin-bottom: 32px; }
+  .secao-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .secao-titulo { font-size: 13px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
+  .secao-linha { flex: 1; height: 1px; background: #e0e0e0; }
+
   /* Direcionamento */
-  .foco-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-  .foco-card { background: white; border-radius: 12px; border: 1px solid #eee; overflow: hidden; }
-  .foco-card-header { padding: 12px 16px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; }
-  .foco-card-body { padding: 0 16px 14px; }
-  .foco-frente { margin-bottom: 10px; }
-  .foco-frente-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
-  .foco-frente-valor { font-size: 13px; color: #333; line-height: 1.5; }
-  .foco-frente-vazio { font-size: 13px; color: #bbb; font-style: italic; }
-  .foco-frente-input { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 6px 8px; font-size: 13px; font-family: inherit; resize: vertical; min-height: 60px; margin-top: 2px; }
-  .foco-frente-input:focus { outline: none; border-color: #7F77DD; }
-  .semana-badge { font-size: 11px; padding: 2px 10px; border-radius: 20px; background: #f0f0f0; color: #666; margin-left: auto; }
-  .historico-item { padding: 10px 14px; border-bottom: 1px solid #eee; font-size: 12px; }
+  .dir-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .dir-card { background: white; border-radius: 12px; border: 1px solid #eee; overflow: hidden; }
+  .dir-card-header { padding: 11px 14px; font-weight: 600; font-size: 13px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .dir-card-header-left { display: flex; align-items: center; gap: 8px; }
+  .dir-card-body { padding: 8px 14px 12px; }
+  .dir-frente { margin-bottom: 8px; }
+  .dir-frente-label { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between; }
+  .dir-frente-valor { font-size: 12px; color: #333; line-height: 1.5; }
+  .dir-frente-vazio { font-size: 12px; color: #ccc; font-style: italic; }
+  .dir-frente-input { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 6px 8px; font-size: 12px; font-family: inherit; resize: vertical; min-height: 52px; margin-top: 3px; }
+  .dir-frente-input:focus { outline: none; border-color: #7F77DD; }
+  .form-link { font-size: 11px; padding: 3px 10px; border-radius: 20px; border: 1px solid; text-decoration: none; font-weight: 500; white-space: nowrap; }
+  .dir-links { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 14px 12px; border-top: 1px solid #f0f0f0; margin-top: 4px; }
+  .dir-vazio { text-align: center; padding: 24px; color: #bbb; font-size: 13px; }
+
+  /* Histórico */
+  .historico-card { background: white; border-radius: 12px; border: 1px solid #eee; overflow: hidden; }
+  .historico-item { padding: 10px 16px; border-bottom: 1px solid #f5f5f5; font-size: 12px; display: flex; gap: 12px; align-items: flex-start; }
   .historico-item:last-child { border-bottom: none; }
-  .historico-data { color: #888; margin-bottom: 4px; }
-  .salvo-badge { display: inline-block; background: #1D9E7522; color: #1D9E75; padding: 2px 10px; border-radius: 20px; font-size: 12px; margin-left: 8px; }
+  .historico-meta { color: #aaa; white-space: nowrap; min-width: 140px; }
+  .historico-obj { color: #333; }
+
+  /* Resultados */
+  .filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .filtro-btn { padding: 5px 14px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+  .tab { padding: 5px 14px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 12px; cursor: pointer; }
+  .resumo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+  .resumo-card { background: white; border-radius: 10px; padding: 14px; text-align: center; border: 1px solid #eee; }
+  .resumo-card .val { font-size: 24px; font-weight: 600; }
+  .resumo-card .lbl { font-size: 11px; color: #888; margin-top: 3px; }
+  .card { background: white; border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; border: 1px solid #eee; }
+  .card-title { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+  .nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+  .num-btn { text-align: center; cursor: pointer; padding: 8px 4px; border-radius: 8px; border: 1px solid transparent; transition: all .15s; }
+  .num-btn:hover { background: #f5f5f5; }
+  .num-btn.ativo { border-color: currentColor; background: #f9f9f9; }
+  .num-btn .v { font-size: 24px; font-weight: 600; }
+  .num-btn .l { font-size: 11px; color: #888; margin-top: 1px; }
+  .num-btn .d { font-size: 10px; color: #ccc; margin-top: 1px; }
+  .barra-wrap { display: flex; align-items: center; gap: 8px; }
+  .barra-bg { flex: 1; background: #f0f0f0; border-radius: 4px; height: 7px; }
+  .barra-fill { height: 7px; border-radius: 4px; transition: width .4s; }
+  .barra-pct { font-size: 11px; color: #888; min-width: 32px; }
+  .insight { margin-top: 10px; padding: 9px 12px; background: #f8f8f8; border-radius: 8px; font-size: 12px; color: #555; }
+  .insight strong { color: #1a1a1a; }
+  .tabela-wrap { overflow-x: auto; margin-top: 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  th { text-align: left; padding: 5px 7px; border-bottom: 1px solid #eee; color: #999; font-weight: 600; white-space: nowrap; }
+  td { padding: 6px 7px; border-bottom: 1px solid #f5f5f5; vertical-align: top; max-width: 180px; word-break: break-word; }
+  tr:nth-child(even) { background: #fafafa; }
+  .loading { text-align: center; padding: 40px; color: #aaa; font-size: 13px; }
+  .vazio { text-align: center; padding: 28px; color: #bbb; font-size: 13px; }
 </style>
 </head>
 <body>
 <div class="container">
+
+  <!-- Header -->
   <div class="header">
     <div>
       <h1>Painel LogAI</h1>
-      <p id="ultima-atualizacao">Carregando dados...</p>
+      <p id="ultima-atualizacao">Carregando...</p>
     </div>
-    <div class="header-btns">
-      <button class="btn" onclick="carregar()">↻ Atualizar</button>
-    </div>
+    <button class="btn" onclick="carregar()">↻ Atualizar</button>
   </div>
 
-  <div class="filtros" id="filtros-produto"></div>
-  <div class="tabs" id="tabs-frente"></div>
-  <div id="resumo" class="resumo"></div>
-  <div id="conteudo"></div>
+  <!-- SEÇÃO: DIRECIONAMENTO -->
+  <div class="secao" id="secao-dir">
+    <div class="secao-header">
+      <span class="secao-titulo">Direcionamento da semana</span>
+      <div class="secao-linha"></div>
+      <button class="btn btn-primary" id="btn-editar" onclick="toggleEdicao()" style="font-size:12px;padding:5px 14px">✏️ Editar</button>
+    </div>
+    <div id="dir-conteudo"></div>
+  </div>
+
+  <!-- SEÇÃO: RESULTADOS -->
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-titulo">Resultados & acompanhamento</span>
+      <div class="secao-linha"></div>
+    </div>
+    <div class="filtros" id="filtros-produto"></div>
+    <div class="tabs" id="tabs-frente"></div>
+    <div id="resumo" class="resumo"></div>
+    <div id="conteudo-resultado"></div>
+  </div>
+
 </div>
 
 <script>
 const API = "https://script.google.com/macros/s/AKfycbydFzsnklxyH7_-9tNTma7D5PUZp-UdBrE13OXhXTaXIkdBlT-OtRiWS1I0G5oNYHwqcQ/exec";
-const CORES = { NCM:"#7F77DD", Finance:"#1D9E75", Shipment:"#D85A30", Export:"#BA7517", Trading:"#185FA5", "México":"#D85A30", "360":"#0F6E56", LogOS:"#993556", Logmanager:"#534AB7" };
+const CORES = { "NCM":"#7F77DD","NCM 1.0":"#7F77DD","NCM 2.0":"#7F77DD","NCM PRO":"#7F77DD","Finance":"#1D9E75","Shipment":"#D85A30","Export":"#BA7517","Trading":"#185FA5","México":"#993556","360":"#0F6E56","LogOS":"#534AB7","Logmanager":"#3C3489" };
 const COR_DEF = "#7F77DD";
-const ABAS = ["Espelho","Direcionamento","Demo","Migração","Ativação"];
-const PRODUTOS_LISTA = ["NCM","Finance","Shipment","Export","Trading","México","360","LogOS","Logmanager"];
+const ABAS_RESULT = ["Espelho","Demo","Migração","Ativação"];
+const PRODUTOS_LISTA = ["NCM 1.0","NCM 2.0","NCM PRO","Finance","Shipment","360","LogOS","Logmanager","México"];
 const FRENTES_FOCO = ["Espelho","Demo","Migração"];
+const FORM_LINKS = {
+  "Espelho": { url: "https://forms.gle/jQaG9qbDubF53z1i9", label: "Form Espelho" },
+  "Demo":    { url: "https://forms.gle/hweej1hHV8xaeoeq9", label: "Form Demo" },
+  "Migração":{ url: "https://forms.gle/ugKFwpVTR8Urr4DZA", label: "Form Migração" },
+  "Ativação":{ url: "https://forms.gle/CQRpx7TgGstv6iTTA", label: "Form Ativação" },
+};
 
 let dadosTodos = {};
-let focoAtual = {}; // { produto: { frente: objetivo } }
+let focoAtual = {};
 let focoHistorico = [];
 let modoEdicao = false;
 let produtoAtivo = "Todos";
@@ -101,30 +139,29 @@ let frenteAtiva = "Espelho";
 let detalheAberto = null;
 let salvando = false;
 
-function getCor(p) { return CORES[p] || COR_DEF; }
+function getCor(p) {
+  if (!p || p === "Todos") return COR_DEF;
+  return CORES[p] || COR_DEF;
+}
 
 async function buscarAba(aba) {
   const r = await fetch(`${API}?aba=${encodeURIComponent(aba)}`);
-  const json = await r.json();
-  return Array.isArray(json) ? json : [];
+  const j = await r.json();
+  return Array.isArray(j) ? j : [];
 }
 
 async function carregar() {
   document.getElementById("ultima-atualizacao").textContent = "Atualizando...";
-  document.getElementById("conteudo").innerHTML = '<div class="loading">Carregando dados...</div>';
   try {
-    const resultados = await Promise.all(ABAS.map(a => buscarAba(a).catch(() => [])));
-    ABAS.forEach((a, i) => dadosTodos[a] = resultados[i] || []);
+    const abas = [...ABAS_RESULT, "Direcionamento"];
+    const resultados = await Promise.all(abas.map(a => buscarAba(a).catch(() => [])));
+    abas.forEach((a, i) => dadosTodos[a] = resultados[i] || []);
 
-    // Carregar foco do Sheets
-    const focoRows = dadosTodos["Direcionamento"] || [];
+    // Processar foco
     focoAtual = {};
     focoHistorico = [];
-    focoRows.forEach(r => {
-      const prod = r["Produto"];
-      const frente = r["Frente"];
-      const obj = r["Objetivo"];
-      const data = r["Data"];
+    (dadosTodos["Direcionamento"] || []).forEach(r => {
+      const prod = r["Produto"], frente = r["Frente"], obj = r["Objetivo"], data = r["Data"];
       if (prod && frente && obj) {
         if (!focoAtual[prod]) focoAtual[prod] = {};
         focoAtual[prod][frente] = obj;
@@ -133,26 +170,32 @@ async function carregar() {
     });
 
     document.getElementById("ultima-atualizacao").textContent = `Atualizado às ${new Date().toLocaleTimeString("pt-BR")}`;
+    renderDirecionamento();
     renderFiltros();
     renderTabs();
-    renderConteudo();
+    renderResultado();
   } catch(e) {
-    document.getElementById("conteudo").innerHTML = `<div class="erro">⚠️ Erro ao carregar. Verifique sua conexão.</div>`;
-    document.getElementById("ultima-atualizacao").textContent = "Erro ao atualizar";
+    document.getElementById("ultima-atualizacao").textContent = "Erro ao carregar";
   }
+}
+
+// ── DIRECIONAMENTO ──────────────────────────────────────────
+function toggleEdicao() {
+  modoEdicao = !modoEdicao;
+  document.getElementById("btn-editar").textContent = modoEdicao ? "✕ Cancelar" : "✏️ Editar";
+  renderDirecionamento();
 }
 
 async function salvarFoco() {
   if (salvando) return;
   salvando = true;
-  const btnSalvar = document.getElementById("btn-salvar");
-  if (btnSalvar) btnSalvar.textContent = "Salvando...";
+  const btn = document.getElementById("btn-salvar-foco");
+  if (btn) btn.textContent = "Salvando...";
 
-  // Coletar valores dos inputs
   const novoFoco = {};
   PRODUTOS_LISTA.forEach(prod => {
     FRENTES_FOCO.forEach(frente => {
-      const el = document.getElementById(`foco-${prod}-${frente}`);
+      const el = document.getElementById(`fi-${prod}-${frente}`);
       if (el && el.value.trim()) {
         if (!novoFoco[prod]) novoFoco[prod] = {};
         novoFoco[prod][frente] = el.value.trim();
@@ -160,177 +203,166 @@ async function salvarFoco() {
     });
   });
 
-  // Construir array para o Sheets — cada linha é produto+frente+objetivo+data
   const agora = new Date().toLocaleDateString("pt-BR");
   const linhas = [];
-  
-  // Manter histórico existente
   focoHistorico.forEach(h => {
-    // Verificar se esse produto+frente foi alterado
-    const novoObj = novoFoco[h.produto] && novoFoco[h.produto][h.frente];
-    if (!novoObj || novoObj === h.objetivo) {
-      linhas.push({ Produto: h.produto, Frente: h.frente, Objetivo: h.objetivo, Data: h.data });
-    }
+    const novo = novoFoco[h.produto]?.[h.frente];
+    if (!novo || novo === h.objetivo) linhas.push({ Produto: h.produto, Frente: h.frente, Objetivo: h.objetivo, Data: h.data });
   });
-
-  // Adicionar novos ou alterados
   Object.entries(novoFoco).forEach(([prod, frentes]) => {
     Object.entries(frentes).forEach(([frente, obj]) => {
-      const existente = focoHistorico.find(h => h.produto === prod && h.frente === frente && h.objetivo === obj);
-      if (!existente) {
+      if (!focoHistorico.find(h => h.produto === prod && h.frente === frente && h.objetivo === obj)) {
         linhas.push({ Produto: prod, Frente: frente, Objetivo: obj, Data: agora });
       }
     });
   });
 
   try {
-    const dadosEncoded = encodeURIComponent(JSON.stringify(linhas));
-    await fetch(`${API}?acao=salvarFoco&dados=${dadosEncoded}`);
+    await fetch(`${API}?acao=salvarFoco&dados=${encodeURIComponent(JSON.stringify(linhas))}`);
     focoAtual = novoFoco;
     focoHistorico = linhas.map(l => ({ produto: l.Produto, frente: l.Frente, objetivo: l.Objetivo, data: l.Data }));
     modoEdicao = false;
     salvando = false;
-    renderConteudo();
+    document.getElementById("btn-editar").textContent = "✏️ Editar";
+    renderDirecionamento();
   } catch(e) {
     salvando = false;
-    if (btnSalvar) btnSalvar.textContent = "Erro ao salvar";
+    if (btn) btn.textContent = "Erro — tentar novamente";
   }
 }
 
-function getProdutos() {
-  const todos = new Set();
-  Object.values(dadosTodos).forEach(rows => rows.forEach(r => { if(r["Produto"]) todos.add(r["Produto"]); }));
-  return ["Todos", ...todos];
+function renderDirecionamento() {
+  const el = document.getElementById("dir-conteudo");
+  const temFoco = Object.keys(focoAtual).length > 0;
+
+  if (modoEdicao) {
+    el.innerHTML = `
+      <div class="dir-grid">
+        ${PRODUTOS_LISTA.map(prod => {
+          const c = getCor(prod);
+          return `<div class="dir-card">
+            <div class="dir-card-header" style="background:${c}12;border-bottom:2px solid ${c}">
+              <div class="dir-card-header-left">
+                <span style="width:9px;height:9px;border-radius:50%;background:${c};display:inline-block;flex-shrink:0"></span>
+                <span style="font-size:13px">${prod}</span>
+              </div>
+            </div>
+            <div class="dir-card-body">
+              ${FRENTES_FOCO.map(frente => `
+                <div class="dir-frente">
+                  <div class="dir-frente-label">${frente}</div>
+                  <textarea class="dir-frente-input" id="fi-${prod}-${frente}" placeholder="Objetivo para ${frente}...">${(focoAtual[prod]?.[frente]) || ""}</textarea>
+                </div>
+              `).join("")}
+            </div>
+          </div>`;
+        }).join("")}
+      </div>
+      <div style="margin-top:14px;display:flex;justify-content:flex-end">
+        <button class="btn btn-primary" id="btn-salvar-foco" onclick="salvarFoco()">Salvar foco da semana</button>
+      </div>`;
+    return;
+  }
+
+  if (!temFoco) {
+    el.innerHTML = `<div class="dir-vazio">Nenhum foco definido ainda. Clique em "✏️ Editar" para começar.</div>`;
+    return;
+  }
+
+  const produtosComFoco = PRODUTOS_LISTA.filter(p => focoAtual[p] && Object.keys(focoAtual[p]).length > 0);
+
+  el.innerHTML = `
+    <div class="dir-grid">
+      ${produtosComFoco.map(prod => {
+        const c = getCor(prod);
+        return `<div class="dir-card">
+          <div class="dir-card-header" style="background:${c}12;border-bottom:2px solid ${c}">
+            <div class="dir-card-header-left">
+              <span style="width:9px;height:9px;border-radius:50%;background:${c};display:inline-block;flex-shrink:0"></span>
+              <span>${prod}</span>
+            </div>
+          </div>
+          <div class="dir-card-body">
+            ${FRENTES_FOCO.map(frente => {
+              const obj = focoAtual[prod]?.[frente];
+              return `<div class="dir-frente">
+                <div class="dir-frente-label">
+                  ${frente}
+                  ${FORM_LINKS[frente] ? `<a href="${FORM_LINKS[frente].url}" target="_blank" class="form-link" style="border-color:${c};color:${c};background:${c}12">+ registrar</a>` : ""}
+                </div>
+                ${obj ? `<div class="dir-frente-valor">${obj}</div>` : `<div class="dir-frente-vazio">Sem foco definido</div>`}
+              </div>`;
+            }).join("")}
+          </div>
+          <div class="dir-links">
+            ${Object.entries(FORM_LINKS).map(([nome, f]) => `<a href="${f.url}" target="_blank" class="form-link" style="border-color:${c};color:${c};background:${c}12">${f.label}</a>`).join("")}
+          </div>
+        </div>`;
+      }).join("")}
+    </div>
+    ${focoHistorico.length > 0 ? `
+    <div style="margin-top:16px">
+      <div style="font-size:11px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Histórico</div>
+      <div class="historico-card">
+        ${focoHistorico.slice().reverse().slice(0,10).map(h => `
+          <div class="historico-item">
+            <div class="historico-meta">${h.data} · <strong>${h.produto}</strong> / ${h.frente}</div>
+            <div class="historico-obj">${h.objetivo}</div>
+          </div>
+        `).join("")}
+      </div>
+    </div>` : ""}`;
 }
 
-function filtrarPorProduto(rows) {
-  if (produtoAtivo === "Todos") return rows;
-  return rows.filter(r => r["Produto"] === produtoAtivo);
+// ── RESULTADOS ──────────────────────────────────────────────
+function getProdutos() {
+  const s = new Set();
+  ABAS_RESULT.forEach(a => (dadosTodos[a] || []).forEach(r => { if(r["Produto"]) s.add(r["Produto"]); }));
+  return ["Todos", ...s];
+}
+
+function filtrar(rows) {
+  return produtoAtivo === "Todos" ? rows : rows.filter(r => r["Produto"] === produtoAtivo);
 }
 
 function renderFiltros() {
   document.getElementById("filtros-produto").innerHTML = getProdutos().map(p => {
-    const c = getCor(p);
-    const at = p === produtoAtivo;
-    return `<button class="filtro-btn" onclick="setProduto('${p}')"
-      style="${at ? `border-color:${c};background:${c}22;color:${c};font-weight:500` : ''}">${p}</button>`;
+    const c = getCor(p); const at = p === produtoAtivo;
+    return `<button class="filtro-btn" onclick="setProduto('${p}')" style="${at ? `border-color:${c};background:${c}18;color:${c};font-weight:600` : ''}">${p}</button>`;
   }).join("");
 }
 
 function renderTabs() {
-  document.getElementById("tabs-frente").innerHTML = ABAS.map(a => {
-    const at = a === frenteAtiva;
-    const c = getCor(produtoAtivo === "Todos" ? "NCM" : produtoAtivo);
-    return `<button class="tab" onclick="setFrente('${a}')"
-      style="${at ? `border-color:${c};background:${c}22;color:${c};font-weight:500` : ''}">${a}</button>`;
+  document.getElementById("tabs-frente").innerHTML = ABAS_RESULT.map(a => {
+    const at = a === frenteAtiva; const c = getCor(produtoAtivo);
+    return `<button class="tab" onclick="setFrente('${a}')" style="${at ? `border-color:${c};background:${c}18;color:${c};font-weight:600` : ''}">${a}</button>`;
   }).join("");
 }
 
-function setProduto(p) { produtoAtivo = p; detalheAberto = null; modoEdicao = false; renderFiltros(); renderTabs(); renderConteudo(); }
-function setFrente(f) { frenteAtiva = f; detalheAberto = null; modoEdicao = false; renderTabs(); renderConteudo(); }
+function setProduto(p) { produtoAtivo = p; detalheAberto = null; renderFiltros(); renderTabs(); renderResultado(); }
+function setFrente(f) { frenteAtiva = f; detalheAberto = null; renderTabs(); renderResultado(); }
 
-function renderConteudo() {
-  const rows = filtrarPorProduto(dadosTodos[frenteAtiva] || []);
-  const cor = getCor(produtoAtivo === "Todos" ? "NCM" : produtoAtivo);
+function renderResultado() {
+  const rows = filtrar(dadosTodos[frenteAtiva] || []);
+  const cor = getCor(produtoAtivo);
+  const total = rows.length;
+  const prods = new Set(rows.map(r => r["Produto"]).filter(Boolean)).size;
+  const totalG = produtoAtivo === "Todos"
+    ? ABAS_RESULT.reduce((a,b) => a + (dadosTodos[b]||[]).length, 0)
+    : ABAS_RESULT.reduce((a,b) => a + (dadosTodos[b]||[]).filter(r=>r["Produto"]===produtoAtivo).length, 0);
+
+  document.getElementById("resumo").innerHTML = `
+    <div class="resumo-card"><div class="val">${total}</div><div class="lbl">Registros nesta frente</div></div>
+    <div class="resumo-card"><div class="val" style="color:${cor}">${prods}</div><div class="lbl">Produtos nesta frente</div></div>
+    <div class="resumo-card"><div class="val">${totalG}</div><div class="lbl">Total em todas as frentes</div></div>`;
+
   let html = "";
-
   if (frenteAtiva === "Espelho") html = renderEspelho(rows, cor);
-  else if (frenteAtiva === "Direcionamento") html = renderDirecionamento(cor);
   else if (frenteAtiva === "Demo") html = renderDemo(rows, cor);
   else if (frenteAtiva === "Migração") html = renderMigracao(rows, cor);
   else if (frenteAtiva === "Ativação") html = renderAtivacao(rows, cor);
 
-  const total = rows.length;
-  const produtosNaFrente = new Set(rows.map(r => r["Produto"]).filter(Boolean)).size;
-  const totalGeral = produtoAtivo === "Todos"
-    ? Object.values(dadosTodos).reduce((a,b) => a + b.length, 0)
-    : Object.values(dadosTodos).reduce((a,b) => a + b.filter(r => r["Produto"] === produtoAtivo).length, 0);
-
-  if (frenteAtiva !== "Direcionamento") {
-    document.getElementById("resumo").innerHTML = `
-      <div class="resumo-card"><div class="val">${total}</div><div class="lbl">Registros nesta frente</div></div>
-      <div class="resumo-card"><div class="val" style="color:${cor}">${produtosNaFrente}</div><div class="lbl">Produtos nesta frente</div></div>
-      <div class="resumo-card"><div class="val">${totalGeral}</div><div class="lbl">Total em todas as frentes</div></div>
-    `;
-  } else {
-    document.getElementById("resumo").innerHTML = "";
-  }
-
-  document.getElementById("conteudo").innerHTML = html || '<div class="vazio">Nenhum registro ainda para este filtro.</div>';
-}
-
-function renderDirecionamento(cor) {
-  const produtosFiltrados = produtoAtivo === "Todos" ? PRODUTOS_LISTA : [produtoAtivo];
-  const temFoco = produtosFiltrados.some(p => focoAtual[p] && Object.keys(focoAtual[p]).length > 0);
-
-  if (modoEdicao) {
-    return `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-      <div style="font-size:14px;font-weight:600">Editando foco da semana</div>
-      <div style="display:flex;gap:8px">
-        <button class="btn" onclick="modoEdicao=false;renderConteudo()">Cancelar</button>
-        <button class="btn btn-primary" id="btn-salvar" onclick="salvarFoco()">Salvar</button>
-      </div>
-    </div>
-    <div class="foco-grid">
-      ${produtosFiltrados.map(prod => {
-        const c = getCor(prod);
-        return `<div class="foco-card">
-          <div class="foco-card-header" style="background:${c}15;border-bottom:2px solid ${c}">
-            <span style="width:10px;height:10px;border-radius:50%;background:${c};display:inline-block"></span>
-            ${prod}
-          </div>
-          <div class="foco-card-body" style="padding-top:12px">
-            ${FRENTES_FOCO.map(frente => `
-              <div class="foco-frente">
-                <div class="foco-frente-label">${frente}</div>
-                <textarea class="foco-frente-input" id="foco-${prod}-${frente}" placeholder="Qual o objetivo para ${frente} esta semana?">${(focoAtual[prod] && focoAtual[prod][frente]) || ""}</textarea>
-              </div>
-            `).join("")}
-          </div>
-        </div>`;
-      }).join("")}
-    </div>`;
-  }
-
-  return `
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-    <div style="font-size:14px;font-weight:600">Foco da semana</div>
-    <button class="btn btn-primary" onclick="modoEdicao=true;renderConteudo()">✏️ Editar foco</button>
-  </div>
-  ${!temFoco ? `<div class="vazio">Nenhum foco definido ainda. Clique em "Editar foco" para começar.</div>` : `
-  <div class="foco-grid">
-    ${produtosFiltrados.map(prod => {
-      const c = getCor(prod);
-      const temFocoProd = focoAtual[prod] && Object.keys(focoAtual[prod]).length > 0;
-      if (!temFocoProd) return "";
-      return `<div class="foco-card">
-        <div class="foco-card-header" style="background:${c}15;border-bottom:2px solid ${c}">
-          <span style="width:10px;height:10px;border-radius:50%;background:${c};display:inline-block"></span>
-          ${prod}
-        </div>
-        <div class="foco-card-body" style="padding-top:12px">
-          ${FRENTES_FOCO.map(frente => {
-            const obj = focoAtual[prod] && focoAtual[prod][frente];
-            return `<div class="foco-frente">
-              <div class="foco-frente-label">${frente}</div>
-              ${obj ? `<div class="foco-frente-valor">${obj}</div>` : `<div class="foco-frente-vazio">Sem foco definido</div>`}
-            </div>`;
-          }).join("")}
-        </div>
-      </div>`;
-    }).join("")}
-  </div>
-  ${focoHistorico.length > 0 ? `
-  <div class="card" style="margin-top:20px">
-    <div class="card-title">Histórico de focos</div>
-    ${focoHistorico.slice().reverse().map(h => `
-      <div class="historico-item">
-        <div class="historico-data">${h.data} — <strong>${h.produto}</strong> / ${h.frente}</div>
-        <div>${h.objetivo}</div>
-      </div>
-    `).join("")}
-  </div>` : ""}`}`;
+  document.getElementById("conteudo-resultado").innerHTML = html || '<div class="vazio">Nenhum registro ainda.</div>';
 }
 
 function barra(v, t, cor) {
@@ -340,136 +372,111 @@ function barra(v, t, cor) {
 
 function numBtn(val, label, cor, key, rows) {
   const at = detalheAberto === key;
-  return `<div class="num-btn ${at?'ativo':''}" style="color:${cor}" onclick="toggleDetalhe('${key}', ${JSON.stringify(rows).replace(/"/g,'&quot;')})">
-    <div class="v" style="color:${cor}">${val}</div>
-    <div class="l">${label}</div>
-    <div class="d">${at ? '▲ fechar' : '▼ detalhe'}</div>
+  return `<div class="num-btn ${at?'ativo':''}" onclick="toggleDetalhe('${key}',${JSON.stringify(rows).replace(/"/g,'&quot;')})">
+    <div class="v" style="color:${cor}">${val}</div><div class="l">${label}</div><div class="d">${at?'▲':'▼'}</div>
   </div>`;
 }
 
 function tabelaHTML(rows, cols) {
-  if (!rows || rows.length === 0) return '<p style="font-size:12px;color:#aaa;padding:8px 0">Nenhum registro.</p>';
+  if (!rows || !rows.length) return '<p style="font-size:12px;color:#bbb;padding:6px 0">Nenhum registro.</p>';
   return `<div class="tabela-wrap"><table>
-    <thead><tr>${cols.map(c => `<th>${c}</th>`).join("")}</tr></thead>
-    <tbody>${rows.map((r,i) => `<tr>${cols.map(c => `<td>${r[c]||"—"}</td>`).join("")}</tr>`).join("")}</tbody>
+    <thead><tr>${cols.map(c=>`<th>${c}</th>`).join("")}</tr></thead>
+    <tbody>${rows.map((r,i)=>`<tr>${cols.map(c=>`<td>${r[c]||"—"}</td>`).join("")}</tr>`).join("")}</tbody>
   </table></div>`;
 }
 
 function toggleDetalhe(key, rows) {
   detalheAberto = detalheAberto === key ? null : key;
-  renderConteudo();
+  renderResultado();
 }
 
 function renderEspelho(rows, cor) {
-  const total = rows.length;
-  const ok = rows.filter(r => r["Houve discrepância entre legado e LogAI?"] === "Não").length;
-  const disc = rows.filter(r => ["Sim","Parcial"].includes(r["Houve discrepância entre legado e LogAI?"])).length;
-  const atendeu = rows.filter(r => r["O LogAI atendeu o que você / o cliente precisava?"] === "Sim, completamente").length;
-  const parcial = rows.filter(r => r["O LogAI atendeu o que você / o cliente precisava?"] === "Sim, parcialmente").length;
-  const nao = rows.filter(r => r["O LogAI atendeu o que você / o cliente precisava?"] === "Não atendeu").length;
-  const retestes = rows.filter(r => r["Esse teste é um reteste?"] === "Sim").length;
-  const retesteOk = rows.filter(r => r["Esse teste é um reteste?"] === "Sim" && r["Houve discrepância entre legado e LogAI?"] === "Não").length;
-
-  const colsDisc = ["Carimbo de data/hora","Responsável (CS)","Time / Coordenador","Produto","Caso de uso / foco da pesquisa","Pesquisa realizada","Resposta do produto legado","Resposta do LogAI","Houve discrepância entre legado e LogAI?","Descreva a discrepância"];
-  const colsObj = ["Carimbo de data/hora","Responsável (CS)","Produto","Pesquisa realizada","O LogAI atendeu o que você / o cliente precisava?","O que ficou faltando ou poderia ser melhor?"];
-
-  const rowsOk = rows.filter(r => r["Houve discrepância entre legado e LogAI?"] === "Não");
-  const rowsDisc = rows.filter(r => ["Sim","Parcial"].includes(r["Houve discrepância entre legado e LogAI?"]));
-  const rowsAtendeu = rows.filter(r => r["O LogAI atendeu o que você / o cliente precisava?"] === "Sim, completamente");
-  const rowsParcial = rows.filter(r => r["O LogAI atendeu o que você / o cliente precisava?"] === "Sim, parcialmente");
-  const rowsNao = rows.filter(r => r["O LogAI atendeu o que você / o cliente precisava?"] === "Não atendeu");
-  const rowsRet = rows.filter(r => r["Esse teste é um reteste?"] === "Sim");
-  const rowsRetOk = rows.filter(r => r["Esse teste é um reteste?"] === "Sim" && r["Houve discrepância entre legado e LogAI?"] === "Não");
-
+  if (!rows.length) return '<div class="vazio">Nenhum teste espelho ainda.</div>';
+  const ok = rows.filter(r=>r["Houve discrepância entre legado e LogAI?"]==="Não").length;
+  const disc = rows.filter(r=>["Sim","Parcial"].includes(r["Houve discrepância entre legado e LogAI?"])).length;
+  const at = rows.filter(r=>r["O LogAI atendeu o que você / o cliente precisava?"]==="Sim, completamente").length;
+  const parc = rows.filter(r=>r["O LogAI atendeu o que você / o cliente precisava?"]==="Sim, parcialmente").length;
+  const nao = rows.filter(r=>r["O LogAI atendeu o que você / o cliente precisava?"]==="Não atendeu").length;
+  const ret = rows.filter(r=>r["Esse teste é um reteste?"]==="Sim").length;
+  const retOk = rows.filter(r=>r["Esse teste é um reteste?"]==="Sim"&&r["Houve discrepância entre legado e LogAI?"]==="Não").length;
+  const cD = ["Carimbo de data/hora","Responsável (CS)","Time / Coordenador","Produto","Caso de uso / foco da pesquisa","Pesquisa realizada","Resposta do produto legado","Resposta do LogAI","Houve discrepância entre legado e LogAI?","Descreva a discrepância"];
+  const cO = ["Carimbo de data/hora","Responsável (CS)","Produto","Pesquisa realizada","O LogAI atendeu o que você / o cliente precisava?","O que ficou faltando ou poderia ser melhor?"];
+  const rOk=rows.filter(r=>r["Houve discrepância entre legado e LogAI?"]==="Não");
+  const rDi=rows.filter(r=>["Sim","Parcial"].includes(r["Houve discrepância entre legado e LogAI?"]));
+  const rAt=rows.filter(r=>r["O LogAI atendeu o que você / o cliente precisava?"]==="Sim, completamente");
+  const rPa=rows.filter(r=>r["O LogAI atendeu o que você / o cliente precisava?"]==="Sim, parcialmente");
+  const rNa=rows.filter(r=>r["O LogAI atendeu o que você / o cliente precisava?"]==="Não atendeu");
+  const rRe=rows.filter(r=>r["Esse teste é um reteste?"]==="Sim");
+  const rRO=rows.filter(r=>r["Esse teste é um reteste?"]==="Sim"&&r["Houve discrepância entre legado e LogAI?"]==="Não");
   return `
   <div class="card" style="border-top:3px solid ${cor}">
     <div class="card-title">Discrepância — legado vs LogAI</div>
-    <div class="nums">
-      ${numBtn(total, "total testes", cor, "esp-all", rows)}
-      ${numBtn(ok, "alinhados", "#1D9E75", "esp-ok", rowsOk)}
-      ${numBtn(disc, "discrepantes", "#D85A30", "esp-disc", rowsDisc)}
-    </div>
-    ${barra(ok, total, cor)}
-    ${detalheAberto && ["esp-all","esp-ok","esp-disc"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="esp-all"?rows:detalheAberto==="esp-ok"?rowsOk:rowsDisc, colsDisc) : ""}
+    <div class="nums">${numBtn(rows.length,"total",cor,"ea",rows)}${numBtn(ok,"alinhados","#1D9E75","eo",rOk)}${numBtn(disc,"discrepantes","#D85A30","ed",rDi)}</div>
+    ${barra(ok,rows.length,cor)}
+    ${detalheAberto&&["ea","eo","ed"].includes(detalheAberto)?tabelaHTML(detalheAberto==="ea"?rows:detalheAberto==="eo"?rOk:rDi,cD):""}
   </div>
   <div class="card" style="border-top:3px solid ${cor}">
     <div class="card-title">Atendimento ao objetivo</div>
-    <div class="nums">
-      ${numBtn(atendeu, "atendeu", "#1D9E75", "esp-at", rowsAtendeu)}
-      ${numBtn(parcial, "parcialmente", "#BA7517", "esp-parc", rowsParcial)}
-      ${numBtn(nao, "não atendeu", "#D85A30", "esp-nao", rowsNao)}
-    </div>
-    ${barra(atendeu, total, cor)}
-    ${detalheAberto && ["esp-at","esp-parc","esp-nao"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="esp-at"?rowsAtendeu:detalheAberto==="esp-parc"?rowsParcial:rowsNao, colsObj) : ""}
+    <div class="nums">${numBtn(at,"atendeu","#1D9E75","eat",rAt)}${numBtn(parc,"parcialmente","#BA7517","ep",rPa)}${numBtn(nao,"não atendeu","#D85A30","en",rNa)}</div>
+    ${barra(at,rows.length,cor)}
+    ${detalheAberto&&["eat","ep","en"].includes(detalheAberto)?tabelaHTML(detalheAberto==="eat"?rAt:detalheAberto==="ep"?rPa:rNa,cO):""}
   </div>
-  ${retestes > 0 ? `
-  <div class="card" style="border-top:3px solid ${cor}">
+  ${ret>0?`<div class="card" style="border-top:3px solid ${cor}">
     <div class="card-title">Ciclo de correção — retestes</div>
-    <div class="nums" style="grid-template-columns:repeat(2,1fr)">
-      ${numBtn(retestes, "retestes feitos", cor, "esp-ret", rowsRet)}
-      ${numBtn(retesteOk, "problemas resolvidos", "#1D9E75", "esp-retok", rowsRetOk)}
-    </div>
-    ${barra(retesteOk, retestes, cor)}
-    ${detalheAberto && ["esp-ret","esp-retok"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="esp-ret"?rowsRet:rowsRetOk, ["Carimbo de data/hora","Responsável (CS)","Produto","Pesquisa realizada","Houve discrepância entre legado e LogAI?","Esse teste é um reteste?","ID do teste original"]) : ""}
-  </div>` : ""}`;
+    <div class="nums" style="grid-template-columns:repeat(2,1fr)">${numBtn(ret,"retestes",cor,"er",rRe)}${numBtn(retOk,"resolvidos","#1D9E75","erk",rRO)}</div>
+    ${barra(retOk,ret,cor)}
+    ${detalheAberto&&["er","erk"].includes(detalheAberto)?tabelaHTML(detalheAberto==="er"?rRe:rRO,["Carimbo de data/hora","Responsável (CS)","Produto","Pesquisa realizada","Houve discrepância entre legado e LogAI?","ID do teste original"]):""}
+  </div>`:""}`;
 }
 
 function renderDemo(rows, cor) {
-  if (rows.length === 0) return '<div class="vazio">Nenhuma demo realizada ainda.</div>';
-  const pos = rows.filter(r => r["Reação geral do cliente"] === "Positiva").length;
-  const neg = rows.filter(r => r["Reação geral do cliente"] === "Negativa").length;
-  const gaps = rows.map(r => r["Gaps ou funcionalidades que o cliente sinalizou"]).filter(Boolean);
-  const cols = ["Carimbo de data/hora","Responsável (CS)","Produto demonstrado","Nome do cliente","Caso de uso apresentado","Reação geral do cliente","O que o cliente disse","Gaps ou funcionalidades que o cliente sinalizou","Cliente quer avançar?","Próxima ação combinada"];
-  return `
-  <div class="card" style="border-top:3px solid ${cor}">
+  if (!rows.length) return '<div class="vazio">Nenhuma demo realizada ainda.</div>';
+  const pos=rows.filter(r=>r["Reação geral do cliente"]==="Positiva").length;
+  const neg=rows.filter(r=>r["Reação geral do cliente"]==="Negativa").length;
+  const gaps=rows.map(r=>r["Gaps ou funcionalidades que o cliente sinalizou"]).filter(Boolean);
+  const cols=["Carimbo de data/hora","Responsável (CS)","Nome do Cliente","ID do Cliente","Produto atual do cliente","Caso de uso apresentado","Reação geral do cliente","O que o cliente disse","Gaps ou funcionalidades que o cliente sinalizou","Cliente quer avançar?","Próxima ação combinada","Link da gravação Meetrox"];
+  const rP=rows.filter(r=>r["Reação geral do cliente"]==="Positiva");
+  const rN=rows.filter(r=>r["Reação geral do cliente"]==="Negativa");
+  return `<div class="card" style="border-top:3px solid ${cor}">
     <div class="card-title">Demos com clientes</div>
-    <div class="nums">
-      ${numBtn(rows.length, "demos", cor, "demo-all", rows)}
-      ${numBtn(pos, "positivas", "#1D9E75", "demo-pos", rows.filter(r=>r["Reação geral do cliente"]==="Positiva"))}
-      ${numBtn(neg, "negativas", "#D85A30", "demo-neg", rows.filter(r=>r["Reação geral do cliente"]==="Negativa"))}
-    </div>
-    ${barra(pos, rows.length, cor)}
-    ${gaps.length > 0 ? `<div class="insight"><strong>Gaps sinalizados:</strong> ${gaps.slice(0,3).join(" · ")}${gaps.length>3?` +${gaps.length-3} mais`:""}</div>` : ""}
-    ${detalheAberto && ["demo-all","demo-pos","demo-neg"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="demo-all"?rows:detalheAberto==="demo-pos"?rows.filter(r=>r["Reação geral do cliente"]==="Positiva"):rows.filter(r=>r["Reação geral do cliente"]==="Negativa"), cols) : ""}
+    <div class="nums">${numBtn(rows.length,"demos",cor,"da",rows)}${numBtn(pos,"positivas","#1D9E75","dp",rP)}${numBtn(neg,"negativas","#D85A30","dn",rN)}</div>
+    ${barra(pos,rows.length,cor)}
+    ${gaps.length>0?`<div class="insight"><strong>Gaps:</strong> ${gaps.slice(0,3).join(" · ")}${gaps.length>3?` +${gaps.length-3} mais`:""}</div>`:""}
+    ${detalheAberto&&["da","dp","dn"].includes(detalheAberto)?tabelaHTML(detalheAberto==="da"?rows:detalheAberto==="dp"?rP:rN,cols):""}
   </div>`;
 }
 
 function renderMigracao(rows, cor) {
-  if (rows.length === 0) return '<div class="vazio">Nenhuma migração registrada ainda.</div>';
-  const mig = rows.filter(r => r["Status da migração"] === "Concluído").length;
-  const and = rows.filter(r => r["Status da migração"] === "Em andamento").length;
-  const sus = rows.filter(r => r["Status da migração"] === "Suspenso").length;
-  const cols = ["Carimbo de data/hora","Responsável (CS)","Nome do cliente","Produto de origem (de onde está migrando)","Tipo de migração","Status da migração","Motivo da suspensão","Percepção do cliente","Próxima ação"];
-  return `
-  <div class="card" style="border-top:3px solid ${cor}">
+  if (!rows.length) return '<div class="vazio">Nenhuma migração registrada ainda.</div>';
+  const mig=rows.filter(r=>r["Status da migração"]==="Concluído").length;
+  const and=rows.filter(r=>r["Status da migração"]==="Em andamento").length;
+  const sus=rows.filter(r=>r["Status da migração"]==="Suspenso").length;
+  const cols=["Carimbo de data/hora","Responsável (CS)","ID do Cliente","Nome do Cliente","Produto de origem (de onde está migrando)","Tipo de Migração","Status da migração","Motivo da suspensão","Percepção do cliente","Próxima ação"];
+  const rM=rows.filter(r=>r["Status da migração"]==="Concluído");
+  const rA=rows.filter(r=>r["Status da migração"]==="Em andamento");
+  const rS=rows.filter(r=>r["Status da migração"]==="Suspenso");
+  return `<div class="card" style="border-top:3px solid ${cor}">
     <div class="card-title">Migração de clientes</div>
-    <div class="nums">
-      ${numBtn(mig, "concluídos", "#1D9E75", "mig-ok", rows.filter(r=>r["Status da migração"]==="Concluído"))}
-      ${numBtn(and, "em andamento", cor, "mig-and", rows.filter(r=>r["Status da migração"]==="Em andamento"))}
-      ${numBtn(sus, "suspensos", "#D85A30", "mig-sus", rows.filter(r=>r["Status da migração"]==="Suspenso"))}
-    </div>
-    ${barra(mig, rows.length, cor)}
-    ${detalheAberto && ["mig-ok","mig-and","mig-sus"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="mig-ok"?rows.filter(r=>r["Status da migração"]==="Concluído"):detalheAberto==="mig-and"?rows.filter(r=>r["Status da migração"]==="Em andamento"):rows.filter(r=>r["Status da migração"]==="Suspenso"), cols) : ""}
+    <div class="nums" style="grid-template-columns:repeat(3,1fr)">${numBtn(mig,"concluídos","#1D9E75","mc",rM)}${numBtn(and,"em andamento",cor,"ma",rA)}${numBtn(sus,"suspensos","#D85A30","ms",rS)}</div>
+    ${barra(mig,rows.length,cor)}
+    ${detalheAberto&&["mc","ma","ms"].includes(detalheAberto)?tabelaHTML(detalheAberto==="mc"?rM:detalheAberto==="ma"?rA:rS,cols):""}
   </div>`;
 }
 
 function renderAtivacao(rows, cor) {
-  if (rows.length === 0) return '<div class="vazio">Nenhum cliente novo registrado ainda.</div>';
-  const sim = rows.filter(r => r["Ativou o produto?"] === "Sim").length;
-  const nao = rows.filter(r => r["Ativou o produto?"] === "Não").length;
-  const pesq = rows.filter(r => r["Já realizou pesquisas no LogAI?"] === "Sim").length;
-  const cols = ["Carimbo de data/hora","Responsável (CS)","Produto","Nome do cliente","Como chegou","Ativou o produto?","Já realizou pesquisas no LogAI?","Se sim, quantas pesquisas aproximadamente?","Onde o cliente parou ou o que sentiu que faltava","Precisa de acompanhamento esta semana?"];
-  return `
-  <div class="card" style="border-top:3px solid ${cor}">
+  if (!rows.length) return '<div class="vazio">Nenhum cliente novo registrado ainda.</div>';
+  const sim=rows.filter(r=>r["Ativou o produto Log.AI?"]==="Sim").length;
+  const nao=rows.filter(r=>r["Ativou o produto Log.AI?"]==="Não").length;
+  const pesq=rows.filter(r=>r["Já realizou pesquisas no LogAI essa semana?"]==="Sim").length;
+  const cols=["Carimbo de data/hora","Responsável (CS)","ID do Cliente","Nome do Cliente","Agente contratado no Log.AI","Ativou o produto Log.AI?","Já realizou pesquisas no LogAI essa semana?","Existe algum feedback do cliente sobre o Log.AI essa semana?","Precisa de acompanhamento esta semana?"];
+  const rS=rows.filter(r=>r["Ativou o produto Log.AI?"]==="Sim");
+  const rN=rows.filter(r=>r["Ativou o produto Log.AI?"]==="Não");
+  return `<div class="card" style="border-top:3px solid ${cor}">
     <div class="card-title">Ativação — clientes novos</div>
-    <div class="nums">
-      ${numBtn(rows.length, "clientes novos", cor, "at-all", rows)}
-      ${numBtn(sim, "ativaram", "#1D9E75", "at-sim", rows.filter(r=>r["Ativou o produto?"]==="Sim"))}
-      ${numBtn(nao, "não ativaram", "#D85A30", "at-nao", rows.filter(r=>r["Ativou o produto?"]==="Não"))}
-    </div>
-    ${barra(sim, rows.length, cor)}
-    <div class="insight"><strong>Realizaram pesquisas:</strong> ${pesq} de ${rows.length} clientes</div>
-    ${detalheAberto && ["at-all","at-sim","at-nao"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="at-all"?rows:detalheAberto==="at-sim"?rows.filter(r=>r["Ativou o produto?"]==="Sim"):rows.filter(r=>r["Ativou o produto?"]==="Não"), cols) : ""}
+    <div class="nums">${numBtn(rows.length,"clientes",cor,"aa",rows)}${numBtn(sim,"ativaram","#1D9E75","as",rS)}${numBtn(nao,"não ativaram","#D85A30","an",rN)}</div>
+    ${barra(sim,rows.length,cor)}
+    <div class="insight"><strong>Realizaram pesquisas esta semana:</strong> ${pesq} de ${rows.length} clientes</div>
+    ${detalheAberto&&["aa","as","an"].includes(detalheAberto)?tabelaHTML(detalheAberto==="aa"?rows:detalheAberto==="as"?rS:rN,cols):""}
   </div>`;
 }
 
