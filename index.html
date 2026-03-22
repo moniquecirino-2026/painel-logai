@@ -184,10 +184,8 @@ async function salvarFoco() {
   });
 
   try {
-    await fetch(API, {
-      method: "POST",
-      body: JSON.stringify({ aba: "Direcionamento", dados: linhas })
-    });
+    const dadosEncoded = encodeURIComponent(JSON.stringify(linhas));
+    await fetch(`${API}?acao=salvarFoco&dados=${dadosEncoded}`);
     focoAtual = novoFoco;
     focoHistorico = linhas.map(l => ({ produto: l.Produto, frente: l.Frente, objetivo: l.Objetivo, data: l.Data }));
     modoEdicao = false;
