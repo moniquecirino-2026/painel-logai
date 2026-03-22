@@ -148,10 +148,14 @@ function renderConteudo() {
 
   // Resumo
   const total = rows.length;
+  const produtosNaFrente = new Set(rows.map(r => r["Produto"]).filter(Boolean)).size;
+  const totalGeral = produtoAtivo === "Todos"
+    ? Object.values(dadosTodos).reduce((a,b) => a + b.length, 0)
+    : Object.values(dadosTodos).reduce((a,b) => a + b.filter(r => r["Produto"] === produtoAtivo).length, 0);
   document.getElementById("resumo").innerHTML = `
-    <div class="resumo-card"><div class="val">${total}</div><div class="lbl">Registros</div></div>
-    <div class="resumo-card"><div class="val" style="color:${cor}">${getProdutos().length - 1}</div><div class="lbl">Produtos ativos</div></div>
-    <div class="resumo-card"><div class="val">${Object.values(dadosTodos).reduce((a,b) => a + b.length, 0)}</div><div class="lbl">Total geral</div></div>
+    <div class="resumo-card"><div class="val">${total}</div><div class="lbl">Registros nesta frente</div></div>
+    <div class="resumo-card"><div class="val" style="color:${cor}">${produtosNaFrente}</div><div class="lbl">Produtos nesta frente</div></div>
+    <div class="resumo-card"><div class="val">${totalGeral}</div><div class="lbl">Total em todas as frentes</div></div>
   `;
 
   document.getElementById("conteudo").innerHTML = html || '<div class="vazio">Nenhum registro ainda para este filtro.</div>';
