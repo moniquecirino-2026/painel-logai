@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel LogAI</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+  .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .header h1 { font-size: 22px; font-weight: 600; }
+  .header p { font-size: 13px; color: #666; margin-top: 4px; }
+  .btn { padding: 7px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; transition: all .15s; }
+  .btn:hover { background: #f0f0f0; }
+  .btn-atualizar { display: flex; align-items: center; gap: 6px; }
+  .filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .filtro-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; transition: all .15s; }
+  .filtro-btn.ativo { font-weight: 500; }
+  .resumo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+  .resumo-card { background: white; border-radius: 12px; padding: 16px; text-align: center; border: 1px solid #eee; }
+  .resumo-card .val { font-size: 26px; font-weight: 600; }
+  .resumo-card .lbl { font-size: 12px; color: #888; margin-top: 4px; }
+  .card { background: white; border-radius: 12px; padding: 18px; margin-bottom: 14px; border: 1px solid #eee; }
+  .card-title { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 14px; }
+  .nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+  .num-btn { text-align: center; cursor: pointer; padding: 10px 6px; border-radius: 8px; border: 1px solid transparent; transition: all .15s; }
+  .num-btn:hover { background: #f5f5f5; }
+  .num-btn.ativo { border-color: currentColor; }
+  .num-btn .v { font-size: 26px; font-weight: 600; }
+  .num-btn .l { font-size: 11px; color: #888; margin-top: 2px; }
+  .num-btn .d { font-size: 10px; color: #aaa; margin-top: 1px; }
+  .barra-wrap { display: flex; align-items: center; gap: 10px; }
+  .barra-bg { flex: 1; background: #f0f0f0; border-radius: 4px; height: 8px; }
+  .barra-fill { height: 8px; border-radius: 4px; transition: width .4s; }
+  .barra-pct { font-size: 12px; color: #888; min-width: 36px; }
+  .insight { margin-top: 12px; padding: 10px 14px; background: #f8f8f8; border-radius: 8px; font-size: 12px; color: #555; }
+  .insight strong { color: #1a1a1a; }
+  .tabela-wrap { overflow-x: auto; margin-top: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  th { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; color: #888; font-weight: 500; white-space: nowrap; }
+  td { padding: 7px 8px; border-bottom: 1px solid #eee; vertical-align: top; max-width: 200px; word-break: break-word; }
+  tr:nth-child(even) { background: #fafafa; }
+  .loading { text-align: center; padding: 48px; color: #888; font-size: 14px; }
+  .erro { padding: 16px; background: #fff3f3; border: 1px solid #fcc; border-radius: 10px; font-size: 13px; color: #c00; margin-bottom: 16px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .tab { padding: 6px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; }
+  .tab.ativo { font-weight: 500; }
+  .vazio { text-align: center; padding: 32px; color: #aaa; font-size: 13px; }
+  @media (max-width: 600px) { .resumo { grid-template-columns: repeat(2, 1fr); } .nums { grid-template-columns: repeat(3, 1fr); } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div>
+      <h1>Painel LogAI</h1>
+      <p id="ultima-atualizacao">Carregando dados...</p>
+    </div>
+    <button class="btn btn-atualizar" onclick="carregar()">↻ Atualizar</button>
+  </div>
+
+  <div class="filtros" id="filtros-produto"></div>
+  <div class="tabs" id="tabs-frente"></div>
+
+  <div id="resumo" class="resumo"></div>
+  <div id="conteudo"></div>
+</div>
+
+<script>
+const API = "https://script.google.com/macros/s/AKfycbydFzsnklxyH7_-9tNTma7D5PUZp-UdBrE13OXhXTaXIkdBlT-OtRiWS1I0G5oNYHwqcQ/exec";
+const CORES = { NCM:"#7F77DD", Finance:"#1D9E75", Shipment:"#D85A30", Export:"#BA7517", Trading:"#185FA5", "México":"#D85A30", "360":"#0F6E56", LogOS:"#993556", Logmanager:"#534AB7" };
+const COR_DEF = "#7F77DD";
+const ABAS = ["Espelho","Direcionamento","Demo","Migração","Ativação"];
+
+let dadosTodos = {};
+let produtoAtivo = "Todos";
+let frenteAtiva = "Espelho";
+let detalheAberto = null;
+
+function getCor(p) { return CORES[p] || COR_DEF; }
+
+async function buscarAba(aba) {
+  const r = await fetch(`${API}?aba=${encodeURIComponent(aba)}`);
+  return r.json();
+}
+
+async function carregar() {
+  document.getElementById("ultima-atualizacao").textContent = "Atualizando...";
+  document.getElementById("conteudo").innerHTML = '<div class="loading">Carregando dados do Sheets...</div>';
+  try {
+    const resultados = await Promise.all(ABAS.map(a => buscarAba(a).catch(() => [])));
+    ABAS.forEach((a, i) => dadosTodos[a] = resultados[i] || []);
+    document.getElementById("ultima-atualizacao").textContent = `Atualizado às ${new Date().toLocaleTimeString("pt-BR")}`;
+    renderFiltros();
+    renderTabs();
+    renderConteudo();
+  } catch(e) {
+    document.getElementById("conteudo").innerHTML = `<div class="erro">⚠️ Erro ao carregar dados. Verifique sua conexão e tente novamente.</div>`;
+    document.getElementById("ultima-atualizacao").textContent = "Erro ao atualizar";
+  }
+}
+
+function getProdutos() {
+  const todos = new Set();
+  Object.values(dadosTodos).forEach(rows => rows.forEach(r => { if(r["Produto"]) todos.add(r["Produto"]); }));
+  return ["Todos", ...todos];
+}
+
+function filtrarPorProduto(rows) {
+  if (produtoAtivo === "Todos") return rows;
+  return rows.filter(r => r["Produto"] === produtoAtivo);
+}
+
+function renderFiltros() {
+  const prods = getProdutos();
+  const cor = getCor(produtoAtivo);
+  document.getElementById("filtros-produto").innerHTML = prods.map(p => {
+    const c = getCor(p);
+    const at = p === produtoAtivo;
+    return `<button class="filtro-btn ${at ? 'ativo' : ''}" onclick="setProduto('${p}')"
+      style="${at ? `border-color:${c};background:${c}22;color:${c}` : ''}">${p}</button>`;
+  }).join("");
+}
+
+function renderTabs() {
+  const cor = getCor(produtoAtivo);
+  document.getElementById("tabs-frente").innerHTML = ABAS.map(a => {
+    const at = a === frenteAtiva;
+    return `<button class="tab ${at ? 'ativo' : ''}" onclick="setFrente('${a}')"
+      style="${at ? `border-color:${getCor(produtoAtivo)};background:${getCor(produtoAtivo)}22;color:${getCor(produtoAtivo)}` : ''}">${a}</button>`;
+  }).join("");
+}
+
+function setProduto(p) { produtoAtivo = p; detalheAberto = null; renderFiltros(); renderTabs(); renderConteudo(); }
+function setFrente(f) { frenteAtiva = f; detalheAberto = null; renderTabs(); renderConteudo(); }
+
+function renderConteudo() {
+  const rows = filtrarPorProduto(dadosTodos[frenteAtiva] || []);
+  const cor = getCor(produtoAtivo === "Todos" ? "NCM" : produtoAtivo);
+  let html = "";
+
+  if (frenteAtiva === "Espelho") html = renderEspelho(rows, cor);
+  else if (frenteAtiva === "Direcionamento") html = renderDirecionamento(rows, cor);
+  else if (frenteAtiva === "Demo") html = renderDemo(rows, cor);
+  else if (frenteAtiva === "Migração") html = renderMigracao(rows, cor);
+  else if (frenteAtiva === "Ativação") html = renderAtivacao(rows, cor);
+
+  // Resumo
+  const total = rows.length;
+  document.getElementById("resumo").innerHTML = `
+    <div class="resumo-card"><div class="val">${total}</div><div class="lbl">Registros</div></div>
+    <div class="resumo-card"><div class="val" style="color:${cor}">${getProdutos().length - 1}</div><div class="lbl">Produtos ativos</div></div>
+    <div class="resumo-card"><div class="val">${Object.values(dadosTodos).reduce((a,b) => a + b.length, 0)}</div><div class="lbl">Total geral</div></div>
+  `;
+
+  document.getElementById("conteudo").innerHTML = html || '<div class="vazio">Nenhum registro ainda para este filtro.</div>';
+}
+
+function barra(v, t, cor) {
+  const p = t > 0 ? Math.round(v/t*100) : 0;
+  return `<div class="barra-wrap"><div class="barra-bg"><div class="barra-fill" style="width:${p}%;background:${cor}"></div></div><span class="barra-pct">${p}%</span></div>`;
+}
+
+function numBtn(val, label, cor, key, rows) {
+  const at = detalheAberto === key;
+  return `<div class="num-btn ${at?'ativo':''}" style="color:${cor}" onclick="toggleDetalhe('${key}', ${JSON.stringify(rows).replace(/"/g,'&quot;')})">
+    <div class="v" style="color:${cor}">${val}</div>
+    <div class="l">${label}</div>
+    <div class="d">${at ? '▲ fechar' : '▼ detalhe'}</div>
+  </div>`;
+}
+
+function tabelaHTML(rows, cols) {
+  if (!rows || rows.length === 0) return '<p style="font-size:12px;color:#aaa;padding:8px 0">Nenhum registro.</p>';
+  return `<div class="tabela-wrap"><table>
+    <thead><tr>${cols.map(c => `<th>${c}</th>`).join("")}</tr></thead>
+    <tbody>${rows.map((r,i) => `<tr>${cols.map(c => `<td>${r[c]||"—"}</td>`).join("")}</tr>`).join("")}</tbody>
+  </table></div>`;
+}
+
+function toggleDetalhe(key, rows) {
+  detalheAberto = detalheAberto === key ? null : key;
+  renderConteudo();
+}
+
+function renderEspelho(rows, cor) {
+  const total = rows.length;
+  const ok = rows.filter(r => r["Houve discrepância entre legado e LogAI?"] === "Não").length;
+  const disc = rows.filter(r => ["Sim","Parcial"].includes(r["Houve discrepância entre legado e LogAI?"])).length;
+  const atendeu = rows.filter(r => r["O LogAI atendeu o que você / o cliente precisava?"] === "Sim, completamente").length;
+  const parcial = rows.filter(r => r["O LogAI atendeu o que você / o cliente precisava?"] === "Sim, parcialmente").length;
+  const nao = rows.filter(r => r["O LogAI atendeu o que você / o cliente precisava?"] === "Não atendeu").length;
+  const retestes = rows.filter(r => r["Esse teste é um reteste?"] === "Sim").length;
+  const retesteOk = rows.filter(r => r["Esse teste é um reteste?"] === "Sim" && r["Houve discrepância entre legado e LogAI?"] === "Não").length;
+
+  const colsDisc = ["Carimbo de data/hora","Responsável (CS)","Time / Coordenador","Produto","Caso de uso / foco da pesquisa","Pesquisa realizada","Resposta do produto legado","Resposta do LogAI","Houve discrepância entre legado e LogAI?","Descreva a discrepância"];
+  const colsObj = ["Carimbo de data/hora","Responsável (CS)","Produto","Pesquisa realizada","O LogAI atendeu o que você / o cliente precisava?","O que ficou faltando ou poderia ser melhor?"];
+
+  const rowsOk = rows.filter(r => r["Houve discrepância entre legado e LogAI?"] === "Não");
+  const rowsDisc = rows.filter(r => ["Sim","Parcial"].includes(r["Houve discrepância entre legado e LogAI?"]));
+  const rowsAtendeu = rows.filter(r => r["O LogAI atendeu o que você / o cliente precisava?"] === "Sim, completamente");
+  const rowsParcial = rows.filter(r => r["O LogAI atendeu o que você / o cliente precisava?"] === "Sim, parcialmente");
+  const rowsNao = rows.filter(r => r["O LogAI atendeu o que você / o cliente precisava?"] === "Não atendeu");
+  const rowsRet = rows.filter(r => r["Esse teste é um reteste?"] === "Sim");
+  const rowsRetOk = rows.filter(r => r["Esse teste é um reteste?"] === "Sim" && r["Houve discrepância entre legado e LogAI?"] === "Não");
+
+  return `
+  <div class="card" style="border-top:3px solid ${cor}">
+    <div class="card-title">Discrepância — legado vs LogAI</div>
+    <div class="nums">
+      ${numBtn(total, "total testes", cor, "esp-all", rows)}
+      ${numBtn(ok, "alinhados", "#1D9E75", "esp-ok", rowsOk)}
+      ${numBtn(disc, "discrepantes", "#D85A30", "esp-disc", rowsDisc)}
+    </div>
+    ${barra(ok, total, cor)}
+    ${detalheAberto && ["esp-all","esp-ok","esp-disc"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="esp-all"?rows:detalheAberto==="esp-ok"?rowsOk:rowsDisc, colsDisc) : ""}
+  </div>
+  <div class="card" style="border-top:3px solid ${cor}">
+    <div class="card-title">Atendimento ao objetivo</div>
+    <div class="nums">
+      ${numBtn(atendeu, "atendeu", "#1D9E75", "esp-at", rowsAtendeu)}
+      ${numBtn(parcial, "parcialmente", "#BA7517", "esp-parc", rowsParcial)}
+      ${numBtn(nao, "não atendeu", "#D85A30", "esp-nao", rowsNao)}
+    </div>
+    ${barra(atendeu, total, cor)}
+    ${detalheAberto && ["esp-at","esp-parc","esp-nao"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="esp-at"?rowsAtendeu:detalheAberto==="esp-parc"?rowsParcial:rowsNao, colsObj) : ""}
+  </div>
+  ${retestes > 0 ? `
+  <div class="card" style="border-top:3px solid ${cor}">
+    <div class="card-title">Ciclo de correção — retestes</div>
+    <div class="nums" style="grid-template-columns:repeat(2,1fr)">
+      ${numBtn(retestes, "retestes feitos", cor, "esp-ret", rowsRet)}
+      ${numBtn(retesteOk, "problemas resolvidos", "#1D9E75", "esp-retok", rowsRetOk)}
+    </div>
+    ${barra(retesteOk, retestes, cor)}
+    ${detalheAberto && ["esp-ret","esp-retok"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="esp-ret"?rowsRet:rowsRetOk, ["Carimbo de data/hora","Responsável (CS)","Produto","Pesquisa realizada","Houve discrepância entre legado e LogAI?","Esse teste é um reteste?","ID do teste original"]) : ""}
+  </div>` : ""}`;
+}
+
+function renderDirecionamento(rows, cor) {
+  if (rows.length === 0) return '<div class="vazio">Nenhum teste direcionado ainda.</div>';
+  const total = rows.length;
+  const sim = rows.filter(r => r["Atendeu o foco?"] === "Sim").length;
+  const nao = rows.filter(r => r["Atendeu o foco?"] === "Não").length;
+  const focos = [...new Set(rows.map(r => r["Foco da semana"]).filter(Boolean))];
+  const cols = ["Carimbo de data/hora","Responsável (CS)","Produto","Foco da semana","Caso de uso testado","Pesquisa realizada","Resultado encontrado no LogAI","Atendeu o foco?","Observações e sugestões"];
+  return `
+  <div class="card" style="border-top:3px solid ${cor}">
+    <div class="card-title">Testes direcionados</div>
+    ${focos.length > 0 ? `<div style="margin-bottom:12px">${focos.map(f => `<span style="background:${cor}22;color:${cor};padding:3px 12px;border-radius:20px;font-size:12px;font-weight:500;margin-right:6px">${f}</span>`).join("")}</div>` : ""}
+    <div class="nums">
+      ${numBtn(total, "testes", cor, "dir-all", rows)}
+      ${numBtn(sim, "atenderam", "#1D9E75", "dir-sim", rows.filter(r=>r["Atendeu o foco?"]==="Sim"))}
+      ${numBtn(nao, "não atenderam", "#D85A30", "dir-nao", rows.filter(r=>r["Atendeu o foco?"]==="Não"))}
+    </div>
+    ${barra(sim, total, cor)}
+    ${detalheAberto && ["dir-all","dir-sim","dir-nao"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="dir-all"?rows:detalheAberto==="dir-sim"?rows.filter(r=>r["Atendeu o foco?"]==="Sim"):rows.filter(r=>r["Atendeu o foco?"]==="Não"), cols) : ""}
+  </div>`;
+}
+
+function renderDemo(rows, cor) {
+  if (rows.length === 0) return '<div class="vazio">Nenhuma demo realizada ainda.</div>';
+  const pos = rows.filter(r => r["Reação geral do cliente"] === "Positiva").length;
+  const neg = rows.filter(r => r["Reação geral do cliente"] === "Negativa").length;
+  const neu = rows.filter(r => r["Reação geral do cliente"] === "Neutra").length;
+  const gaps = rows.map(r => r["Gaps ou funcionalidades que o cliente sinalizou"]).filter(Boolean);
+  const cols = ["Carimbo de data/hora","Responsável (CS)","Produto demonstrado","Nome do cliente","Caso de uso apresentado","Reação geral do cliente","O que o cliente disse","Gaps ou funcionalidades que o cliente sinalizou","Cliente quer avançar?","Próxima ação combinada"];
+  return `
+  <div class="card" style="border-top:3px solid ${cor}">
+    <div class="card-title">Demos com clientes</div>
+    <div class="nums">
+      ${numBtn(rows.length, "demos", cor, "demo-all", rows)}
+      ${numBtn(pos, "positivas", "#1D9E75", "demo-pos", rows.filter(r=>r["Reação geral do cliente"]==="Positiva"))}
+      ${numBtn(neg, "negativas", "#D85A30", "demo-neg", rows.filter(r=>r["Reação geral do cliente"]==="Negativa"))}
+    </div>
+    ${barra(pos, rows.length, cor)}
+    ${gaps.length > 0 ? `<div class="insight"><strong>Gaps sinalizados:</strong> ${gaps.slice(0,3).join(" · ")}${gaps.length>3?` +${gaps.length-3} mais`:""}</div>` : ""}
+    ${detalheAberto && ["demo-all","demo-pos","demo-neg"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="demo-all"?rows:detalheAberto==="demo-pos"?rows.filter(r=>r["Reação geral do cliente"]==="Positiva"):rows.filter(r=>r["Reação geral do cliente"]==="Negativa"), cols) : ""}
+  </div>`;
+}
+
+function renderMigracao(rows, cor) {
+  if (rows.length === 0) return '<div class="vazio">Nenhuma migração registrada ainda.</div>';
+  const mig = rows.filter(r => r["Status da migração"] === "Concluído").length;
+  const and = rows.filter(r => r["Status da migração"] === "Em andamento").length;
+  const sus = rows.filter(r => r["Status da migração"] === "Suspenso").length;
+  const cols = ["Carimbo de data/hora","Responsável (CS)","Nome do cliente","Produto de origem (de onde está migrando)","Tipo de migração","Status da migração","Motivo da suspensão","Percepção do cliente","Próxima ação"];
+  return `
+  <div class="card" style="border-top:3px solid ${cor}">
+    <div class="card-title">Migração de clientes</div>
+    <div class="nums">
+      ${numBtn(mig, "concluídos", "#1D9E75", "mig-ok", rows.filter(r=>r["Status da migração"]==="Concluído"))}
+      ${numBtn(and, "em andamento", cor, "mig-and", rows.filter(r=>r["Status da migração"]==="Em andamento"))}
+      ${numBtn(sus, "suspensos", "#D85A30", "mig-sus", rows.filter(r=>r["Status da migração"]==="Suspenso"))}
+    </div>
+    ${barra(mig, rows.length, cor)}
+    ${detalheAberto && ["mig-ok","mig-and","mig-sus"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="mig-ok"?rows.filter(r=>r["Status da migração"]==="Concluído"):detalheAberto==="mig-and"?rows.filter(r=>r["Status da migração"]==="Em andamento"):rows.filter(r=>r["Status da migração"]==="Suspenso"), cols) : ""}
+  </div>`;
+}
+
+function renderAtivacao(rows, cor) {
+  if (rows.length === 0) return '<div class="vazio">Nenhum cliente novo registrado ainda.</div>';
+  const sim = rows.filter(r => r["Ativou o produto?"] === "Sim").length;
+  const nao = rows.filter(r => r["Ativou o produto?"] === "Não").length;
+  const pesq = rows.filter(r => r["Já realizou pesquisas no LogAI?"] === "Sim").length;
+  const cols = ["Carimbo de data/hora","Responsável (CS)","Produto","Nome do cliente","Como chegou","Ativou o produto?","Já realizou pesquisas no LogAI?","Se sim, quantas pesquisas aproximadamente?","Onde o cliente parou ou o que sentiu que faltava","Precisa de acompanhamento esta semana?"];
+  return `
+  <div class="card" style="border-top:3px solid ${cor}">
+    <div class="card-title">Ativação — clientes novos</div>
+    <div class="nums">
+      ${numBtn(rows.length, "clientes novos", cor, "at-all", rows)}
+      ${numBtn(sim, "ativaram", "#1D9E75", "at-sim", rows.filter(r=>r["Ativou o produto?"]==="Sim"))}
+      ${numBtn(nao, "não ativaram", "#D85A30", "at-nao", rows.filter(r=>r["Ativou o produto?"]==="Não"))}
+    </div>
+    ${barra(sim, rows.length, cor)}
+    <div class="insight"><strong>Realizaram pesquisas:</strong> ${pesq} de ${rows.length} clientes</div>
+    ${detalheAberto && ["at-all","at-sim","at-nao"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="at-all"?rows:detalheAberto==="at-sim"?rows.filter(r=>r["Ativou o produto?"]==="Sim"):rows.filter(r=>r["Ativou o produto?"]==="Não"), cols) : ""}
+  </div>`;
+}
+
+carregar();
+</script>
+</body>
+</html>
