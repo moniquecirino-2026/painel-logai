@@ -186,7 +186,7 @@ async function buscarAba(aba) {
 async function carregar() {
   document.getElementById("ultima-atualizacao").textContent = "Atualizando...";
   try {
-    const abas = [...ABAS_RESULT, "Direcionamento"];
+    const abas = [...ABAS_RESULT];
     const res = await Promise.all(abas.map(a => buscarAba(a).catch(() => [])));
     abas.forEach((a, i) => dadosTodos[a] = res[i] || []);
     focoAtual = {}; focoHistorico = [];
