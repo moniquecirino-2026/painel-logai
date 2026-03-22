@@ -11,12 +11,16 @@
   .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
   .header h1 { font-size: 22px; font-weight: 600; }
   .header p { font-size: 13px; color: #666; margin-top: 4px; }
+  .header-btns { display: flex; gap: 8px; flex-wrap: wrap; }
   .btn { padding: 7px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; transition: all .15s; }
   .btn:hover { background: #f0f0f0; }
-  .btn-atualizar { display: flex; align-items: center; gap: 6px; }
-  .filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-  .filtro-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; transition: all .15s; }
-  .filtro-btn.ativo { font-weight: 500; }
+  .btn-primary { background: #7F77DD; color: white; border-color: #7F77DD; }
+  .btn-primary:hover { background: #6b63c8; }
+  .btn-danger { background: #D85A30; color: white; border-color: #D85A30; }
+  .filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .filtro-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .tab { padding: 6px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; }
   .resumo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
   .resumo-card { background: white; border-radius: 12px; padding: 16px; text-align: center; border: 1px solid #eee; }
   .resumo-card .val { font-size: 26px; font-weight: 600; }
@@ -43,11 +47,23 @@
   tr:nth-child(even) { background: #fafafa; }
   .loading { text-align: center; padding: 48px; color: #888; font-size: 14px; }
   .erro { padding: 16px; background: #fff3f3; border: 1px solid #fcc; border-radius: 10px; font-size: 13px; color: #c00; margin-bottom: 16px; }
-  .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-  .tab { padding: 6px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; }
-  .tab.ativo { font-weight: 500; }
   .vazio { text-align: center; padding: 32px; color: #aaa; font-size: 13px; }
-  @media (max-width: 600px) { .resumo { grid-template-columns: repeat(2, 1fr); } .nums { grid-template-columns: repeat(3, 1fr); } }
+  /* Direcionamento */
+  .foco-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .foco-card { background: white; border-radius: 12px; border: 1px solid #eee; overflow: hidden; }
+  .foco-card-header { padding: 12px 16px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+  .foco-card-body { padding: 0 16px 14px; }
+  .foco-frente { margin-bottom: 10px; }
+  .foco-frente-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+  .foco-frente-valor { font-size: 13px; color: #333; line-height: 1.5; }
+  .foco-frente-vazio { font-size: 13px; color: #bbb; font-style: italic; }
+  .foco-frente-input { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 6px 8px; font-size: 13px; font-family: inherit; resize: vertical; min-height: 60px; margin-top: 2px; }
+  .foco-frente-input:focus { outline: none; border-color: #7F77DD; }
+  .semana-badge { font-size: 11px; padding: 2px 10px; border-radius: 20px; background: #f0f0f0; color: #666; margin-left: auto; }
+  .historico-item { padding: 10px 14px; border-bottom: 1px solid #eee; font-size: 12px; }
+  .historico-item:last-child { border-bottom: none; }
+  .historico-data { color: #888; margin-bottom: 4px; }
+  .salvo-badge { display: inline-block; background: #1D9E7522; color: #1D9E75; padding: 2px 10px; border-radius: 20px; font-size: 12px; margin-left: 8px; }
 </style>
 </head>
 <body>
@@ -57,12 +73,13 @@
       <h1>Painel LogAI</h1>
       <p id="ultima-atualizacao">Carregando dados...</p>
     </div>
-    <button class="btn btn-atualizar" onclick="carregar()">↻ Atualizar</button>
+    <div class="header-btns">
+      <button class="btn" onclick="carregar()">↻ Atualizar</button>
+    </div>
   </div>
 
   <div class="filtros" id="filtros-produto"></div>
   <div class="tabs" id="tabs-frente"></div>
-
   <div id="resumo" class="resumo"></div>
   <div id="conteudo"></div>
 </div>
@@ -72,32 +89,113 @@ const API = "https://script.google.com/macros/s/AKfycbydFzsnklxyH7_-9tNTma7D5PUZ
 const CORES = { NCM:"#7F77DD", Finance:"#1D9E75", Shipment:"#D85A30", Export:"#BA7517", Trading:"#185FA5", "México":"#D85A30", "360":"#0F6E56", LogOS:"#993556", Logmanager:"#534AB7" };
 const COR_DEF = "#7F77DD";
 const ABAS = ["Espelho","Direcionamento","Demo","Migração","Ativação"];
+const PRODUTOS_LISTA = ["NCM","Finance","Shipment","Export","Trading","México","360","LogOS","Logmanager"];
+const FRENTES_FOCO = ["Espelho","Demo","Migração"];
 
 let dadosTodos = {};
+let focoAtual = {}; // { produto: { frente: objetivo } }
+let focoHistorico = [];
+let modoEdicao = false;
 let produtoAtivo = "Todos";
 let frenteAtiva = "Espelho";
 let detalheAberto = null;
+let salvando = false;
 
 function getCor(p) { return CORES[p] || COR_DEF; }
 
 async function buscarAba(aba) {
   const r = await fetch(`${API}?aba=${encodeURIComponent(aba)}`);
-  return r.json();
+  const json = await r.json();
+  return Array.isArray(json) ? json : [];
 }
 
 async function carregar() {
   document.getElementById("ultima-atualizacao").textContent = "Atualizando...";
-  document.getElementById("conteudo").innerHTML = '<div class="loading">Carregando dados do Sheets...</div>';
+  document.getElementById("conteudo").innerHTML = '<div class="loading">Carregando dados...</div>';
   try {
     const resultados = await Promise.all(ABAS.map(a => buscarAba(a).catch(() => [])));
     ABAS.forEach((a, i) => dadosTodos[a] = resultados[i] || []);
+
+    // Carregar foco do Sheets
+    const focoRows = dadosTodos["Direcionamento"] || [];
+    focoAtual = {};
+    focoHistorico = [];
+    focoRows.forEach(r => {
+      const prod = r["Produto"];
+      const frente = r["Frente"];
+      const obj = r["Objetivo"];
+      const data = r["Data"];
+      if (prod && frente && obj) {
+        if (!focoAtual[prod]) focoAtual[prod] = {};
+        focoAtual[prod][frente] = obj;
+        focoHistorico.push({ produto: prod, frente, objetivo: obj, data });
+      }
+    });
+
     document.getElementById("ultima-atualizacao").textContent = `Atualizado às ${new Date().toLocaleTimeString("pt-BR")}`;
     renderFiltros();
     renderTabs();
     renderConteudo();
   } catch(e) {
-    document.getElementById("conteudo").innerHTML = `<div class="erro">⚠️ Erro ao carregar dados. Verifique sua conexão e tente novamente.</div>`;
+    document.getElementById("conteudo").innerHTML = `<div class="erro">⚠️ Erro ao carregar. Verifique sua conexão.</div>`;
     document.getElementById("ultima-atualizacao").textContent = "Erro ao atualizar";
+  }
+}
+
+async function salvarFoco() {
+  if (salvando) return;
+  salvando = true;
+  const btnSalvar = document.getElementById("btn-salvar");
+  if (btnSalvar) btnSalvar.textContent = "Salvando...";
+
+  // Coletar valores dos inputs
+  const novoFoco = {};
+  PRODUTOS_LISTA.forEach(prod => {
+    FRENTES_FOCO.forEach(frente => {
+      const el = document.getElementById(`foco-${prod}-${frente}`);
+      if (el && el.value.trim()) {
+        if (!novoFoco[prod]) novoFoco[prod] = {};
+        novoFoco[prod][frente] = el.value.trim();
+      }
+    });
+  });
+
+  // Construir array para o Sheets — cada linha é produto+frente+objetivo+data
+  const agora = new Date().toLocaleDateString("pt-BR");
+  const linhas = [];
+  
+  // Manter histórico existente
+  focoHistorico.forEach(h => {
+    // Verificar se esse produto+frente foi alterado
+    const novoObj = novoFoco[h.produto] && novoFoco[h.produto][h.frente];
+    if (!novoObj || novoObj === h.objetivo) {
+      linhas.push({ Produto: h.produto, Frente: h.frente, Objetivo: h.objetivo, Data: h.data });
+    }
+  });
+
+  // Adicionar novos ou alterados
+  Object.entries(novoFoco).forEach(([prod, frentes]) => {
+    Object.entries(frentes).forEach(([frente, obj]) => {
+      const existente = focoHistorico.find(h => h.produto === prod && h.frente === frente && h.objetivo === obj);
+      if (!existente) {
+        linhas.push({ Produto: prod, Frente: frente, Objetivo: obj, Data: agora });
+      }
+    });
+  });
+
+  try {
+    await fetch(API, {
+      method: "POST",
+      body: JSON.stringify({ aba: "Direcionamento", dados: linhas })
+    });
+    focoAtual = novoFoco;
+    focoHistorico = linhas.map(l => ({ produto: l.Produto, frente: l.Frente, objetivo: l.Objetivo, data: l.Data }));
+    modoEdicao = false;
+    salvando = false;
+    renderConteudo();
+  } catch(e) {
+    salvando = false;
+    if (btnSalvar) btnSalvar.textContent = "Erro ao salvar";
   }
 }
 
@@ -113,27 +211,25 @@ function filtrarPorProduto(rows) {
 }
 
 function renderFiltros() {
-  const prods = getProdutos();
-  const cor = getCor(produtoAtivo);
-  document.getElementById("filtros-produto").innerHTML = prods.map(p => {
+  document.getElementById("filtros-produto").innerHTML = getProdutos().map(p => {
     const c = getCor(p);
     const at = p === produtoAtivo;
-    return `<button class="filtro-btn ${at ? 'ativo' : ''}" onclick="setProduto('${p}')"
-      style="${at ? `border-color:${c};background:${c}22;color:${c}` : ''}">${p}</button>`;
+    return `<button class="filtro-btn" onclick="setProduto('${p}')"
+      style="${at ? `border-color:${c};background:${c}22;color:${c};font-weight:500` : ''}">${p}</button>`;
   }).join("");
 }
 
 function renderTabs() {
-  const cor = getCor(produtoAtivo);
   document.getElementById("tabs-frente").innerHTML = ABAS.map(a => {
     const at = a === frenteAtiva;
-    return `<button class="tab ${at ? 'ativo' : ''}" onclick="setFrente('${a}')"
-      style="${at ? `border-color:${getCor(produtoAtivo)};background:${getCor(produtoAtivo)}22;color:${getCor(produtoAtivo)}` : ''}">${a}</button>`;
+    const c = getCor(produtoAtivo === "Todos" ? "NCM" : produtoAtivo);
+    return `<button class="tab" onclick="setFrente('${a}')"
+      style="${at ? `border-color:${c};background:${c}22;color:${c};font-weight:500` : ''}">${a}</button>`;
   }).join("");
 }
 
-function setProduto(p) { produtoAtivo = p; detalheAberto = null; renderFiltros(); renderTabs(); renderConteudo(); }
-function setFrente(f) { frenteAtiva = f; detalheAberto = null; renderTabs(); renderConteudo(); }
+function setProduto(p) { produtoAtivo = p; detalheAberto = null; modoEdicao = false; renderFiltros(); renderTabs(); renderConteudo(); }
+function setFrente(f) { frenteAtiva = f; detalheAberto = null; modoEdicao = false; renderTabs(); renderConteudo(); }
 
 function renderConteudo() {
   const rows = filtrarPorProduto(dadosTodos[frenteAtiva] || []);
@@ -141,24 +237,102 @@ function renderConteudo() {
   let html = "";
 
   if (frenteAtiva === "Espelho") html = renderEspelho(rows, cor);
-  else if (frenteAtiva === "Direcionamento") html = renderDirecionamento(rows, cor);
+  else if (frenteAtiva === "Direcionamento") html = renderDirecionamento(cor);
   else if (frenteAtiva === "Demo") html = renderDemo(rows, cor);
   else if (frenteAtiva === "Migração") html = renderMigracao(rows, cor);
   else if (frenteAtiva === "Ativação") html = renderAtivacao(rows, cor);
 
-  // Resumo
   const total = rows.length;
   const produtosNaFrente = new Set(rows.map(r => r["Produto"]).filter(Boolean)).size;
   const totalGeral = produtoAtivo === "Todos"
     ? Object.values(dadosTodos).reduce((a,b) => a + b.length, 0)
     : Object.values(dadosTodos).reduce((a,b) => a + b.filter(r => r["Produto"] === produtoAtivo).length, 0);
-  document.getElementById("resumo").innerHTML = `
-    <div class="resumo-card"><div class="val">${total}</div><div class="lbl">Registros nesta frente</div></div>
-    <div class="resumo-card"><div class="val" style="color:${cor}">${produtosNaFrente}</div><div class="lbl">Produtos nesta frente</div></div>
-    <div class="resumo-card"><div class="val">${totalGeral}</div><div class="lbl">Total em todas as frentes</div></div>
-  `;
+
+  if (frenteAtiva !== "Direcionamento") {
+    document.getElementById("resumo").innerHTML = `
+      <div class="resumo-card"><div class="val">${total}</div><div class="lbl">Registros nesta frente</div></div>
+      <div class="resumo-card"><div class="val" style="color:${cor}">${produtosNaFrente}</div><div class="lbl">Produtos nesta frente</div></div>
+      <div class="resumo-card"><div class="val">${totalGeral}</div><div class="lbl">Total em todas as frentes</div></div>
+    `;
+  } else {
+    document.getElementById("resumo").innerHTML = "";
+  }
 
   document.getElementById("conteudo").innerHTML = html || '<div class="vazio">Nenhum registro ainda para este filtro.</div>';
+}
+
+function renderDirecionamento(cor) {
+  const produtosFiltrados = produtoAtivo === "Todos" ? PRODUTOS_LISTA : [produtoAtivo];
+  const temFoco = produtosFiltrados.some(p => focoAtual[p] && Object.keys(focoAtual[p]).length > 0);
+
+  if (modoEdicao) {
+    return `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+      <div style="font-size:14px;font-weight:600">Editando foco da semana</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn" onclick="modoEdicao=false;renderConteudo()">Cancelar</button>
+        <button class="btn btn-primary" id="btn-salvar" onclick="salvarFoco()">Salvar</button>
+      </div>
+    </div>
+    <div class="foco-grid">
+      ${produtosFiltrados.map(prod => {
+        const c = getCor(prod);
+        return `<div class="foco-card">
+          <div class="foco-card-header" style="background:${c}15;border-bottom:2px solid ${c}">
+            <span style="width:10px;height:10px;border-radius:50%;background:${c};display:inline-block"></span>
+            ${prod}
+          </div>
+          <div class="foco-card-body" style="padding-top:12px">
+            ${FRENTES_FOCO.map(frente => `
+              <div class="foco-frente">
+                <div class="foco-frente-label">${frente}</div>
+                <textarea class="foco-frente-input" id="foco-${prod}-${frente}" placeholder="Qual o objetivo para ${frente} esta semana?">${(focoAtual[prod] && focoAtual[prod][frente]) || ""}</textarea>
+              </div>
+            `).join("")}
+          </div>
+        </div>`;
+      }).join("")}
+    </div>`;
+  }
+
+  return `
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+    <div style="font-size:14px;font-weight:600">Foco da semana</div>
+    <button class="btn btn-primary" onclick="modoEdicao=true;renderConteudo()">✏️ Editar foco</button>
+  </div>
+  ${!temFoco ? `<div class="vazio">Nenhum foco definido ainda. Clique em "Editar foco" para começar.</div>` : `
+  <div class="foco-grid">
+    ${produtosFiltrados.map(prod => {
+      const c = getCor(prod);
+      const temFocoProd = focoAtual[prod] && Object.keys(focoAtual[prod]).length > 0;
+      if (!temFocoProd) return "";
+      return `<div class="foco-card">
+        <div class="foco-card-header" style="background:${c}15;border-bottom:2px solid ${c}">
+          <span style="width:10px;height:10px;border-radius:50%;background:${c};display:inline-block"></span>
+          ${prod}
+        </div>
+        <div class="foco-card-body" style="padding-top:12px">
+          ${FRENTES_FOCO.map(frente => {
+            const obj = focoAtual[prod] && focoAtual[prod][frente];
+            return `<div class="foco-frente">
+              <div class="foco-frente-label">${frente}</div>
+              ${obj ? `<div class="foco-frente-valor">${obj}</div>` : `<div class="foco-frente-vazio">Sem foco definido</div>`}
+            </div>`;
+          }).join("")}
+        </div>
+      </div>`;
+    }).join("")}
+  </div>
+  ${focoHistorico.length > 0 ? `
+  <div class="card" style="margin-top:20px">
+    <div class="card-title">Histórico de focos</div>
+    ${focoHistorico.slice().reverse().map(h => `
+      <div class="historico-item">
+        <div class="historico-data">${h.data} — <strong>${h.produto}</strong> / ${h.frente}</div>
+        <div>${h.objetivo}</div>
+      </div>
+    `).join("")}
+  </div>` : ""}`}`;
 }
 
 function barra(v, t, cor) {
@@ -242,32 +416,10 @@ function renderEspelho(rows, cor) {
   </div>` : ""}`;
 }
 
-function renderDirecionamento(rows, cor) {
-  if (rows.length === 0) return '<div class="vazio">Nenhum teste direcionado ainda.</div>';
-  const total = rows.length;
-  const sim = rows.filter(r => r["Atendeu o foco?"] === "Sim").length;
-  const nao = rows.filter(r => r["Atendeu o foco?"] === "Não").length;
-  const focos = [...new Set(rows.map(r => r["Foco da semana"]).filter(Boolean))];
-  const cols = ["Carimbo de data/hora","Responsável (CS)","Produto","Foco da semana","Caso de uso testado","Pesquisa realizada","Resultado encontrado no LogAI","Atendeu o foco?","Observações e sugestões"];
-  return `
-  <div class="card" style="border-top:3px solid ${cor}">
-    <div class="card-title">Testes direcionados</div>
-    ${focos.length > 0 ? `<div style="margin-bottom:12px">${focos.map(f => `<span style="background:${cor}22;color:${cor};padding:3px 12px;border-radius:20px;font-size:12px;font-weight:500;margin-right:6px">${f}</span>`).join("")}</div>` : ""}
-    <div class="nums">
-      ${numBtn(total, "testes", cor, "dir-all", rows)}
-      ${numBtn(sim, "atenderam", "#1D9E75", "dir-sim", rows.filter(r=>r["Atendeu o foco?"]==="Sim"))}
-      ${numBtn(nao, "não atenderam", "#D85A30", "dir-nao", rows.filter(r=>r["Atendeu o foco?"]==="Não"))}
-    </div>
-    ${barra(sim, total, cor)}
-    ${detalheAberto && ["dir-all","dir-sim","dir-nao"].includes(detalheAberto) ? tabelaHTML(detalheAberto==="dir-all"?rows:detalheAberto==="dir-sim"?rows.filter(r=>r["Atendeu o foco?"]==="Sim"):rows.filter(r=>r["Atendeu o foco?"]==="Não"), cols) : ""}
-  </div>`;
-}
-
 function renderDemo(rows, cor) {
   if (rows.length === 0) return '<div class="vazio">Nenhuma demo realizada ainda.</div>';
   const pos = rows.filter(r => r["Reação geral do cliente"] === "Positiva").length;
   const neg = rows.filter(r => r["Reação geral do cliente"] === "Negativa").length;
-  const neu = rows.filter(r => r["Reação geral do cliente"] === "Neutra").length;
   const gaps = rows.map(r => r["Gaps ou funcionalidades que o cliente sinalizou"]).filter(Boolean);
   const cols = ["Carimbo de data/hora","Responsável (CS)","Produto demonstrado","Nome do cliente","Caso de uso apresentado","Reação geral do cliente","O que o cliente disse","Gaps ou funcionalidades que o cliente sinalizou","Cliente quer avançar?","Próxima ação combinada"];
   return `
