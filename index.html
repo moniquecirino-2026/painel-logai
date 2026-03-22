@@ -133,7 +133,7 @@ const FORMS_INFO = [
 const DIRECIONAMENTO_FIXO = {
   "13": {
     "NCM": {
-      "Espelho": "Guardião Key user deve realizar testes com foco em comparar resultados de preço. Toda e qualquer pesquisa realizada no NCM (1.0, 2.0 e PRO) deve ser replicada no Log.AI.",
+      "Espelho": "• Guardião Key user deve realizar testes com foco em comparar resultados de preço.\n• Toda e qualquer pesquisa realizada no NCM (1.0, 2.0 e PRO) deve ser replicada no Log.AI.",
       "Demo": "Realizar demo com clientes potenciais já selecionados.",
       "Migração": "Migrar clientes do Basic.",
       "Clientes Potenciais": "Incluir novos clientes potenciais."
@@ -148,7 +148,7 @@ const DIRECIONAMENTO_FIXO = {
       "Clientes Potenciais": "Incluir novos clientes potenciais."
     },
     "Export": {
-      "Espelho": "Toda e qualquer pesquisa realizada no Export deve ser replicada no Log.AI. Guardiões devem realizar testes com foco em comparar resultados de comprador e exportador.",
+      "Espelho": "• Toda e qualquer pesquisa realizada no Export deve ser replicada no Log.AI.\n• Guardiões devem realizar testes com foco em comparar resultados de comprador e exportador.",
       "Demo": "Realizar 05 agendas com clientes potenciais.",
       "Clientes Potenciais": "Incluir novos clientes potenciais."
     },
@@ -336,7 +336,7 @@ function renderDirecionamento() {
                   <span>${frente}</span>
                   ${frente==="Clientes Potenciais"?`<span style="font-size:9px;padding:1px 7px;border-radius:20px;background:#f0f0f0;color:#aaa;font-weight:600">CONTÍNUO</span>`:""}
                 </div>
-                <div class="dir-frente-valor">${obj}</div>
+                <div class="dir-frente-valor">${obj.replace(/\n/g, "<br>")}</div>
               </div>`).join("")}
           </div>
         </div>`;
