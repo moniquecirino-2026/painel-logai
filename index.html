@@ -349,7 +349,9 @@ function renderDetalheDemo(cor) {
   const pos  = rows.filter(r=>r["8. Percepção geral do cliente em relação ao LogAI"]==="Positiva").length;
   const neg  = rows.filter(r=>r["8. Percepção geral do cliente em relação ao LogAI"]==="Negativa").length;
   const neu  = total-pos-neg;
-  const sim  = rows.filter(r=>r["12. Cliente quer avançar?"]==="Sim").length;
+  const sim  = rows.filter(r=>r["12. Cliente quer avançar?"]&&r["12. Cliente quer avançar?"].startsWith("Sim")).length;
+  const mig  = rows.filter(r=>r["12. Cliente quer avançar?"]==="Sim, vai migrar").length;
+  const test = rows.filter(r=>r["12. Cliente quer avançar?"]==="Sim, vai testar").length;
   const nao  = rows.filter(r=>r["12. Cliente quer avançar?"]==="Não").length;
   const txtPos = rows.filter(r=>r["8. Percepção geral do cliente em relação ao LogAI"]==="Positiva").map(r=>r["9. O que o cliente disse (Principais comentários, dúvidas e pontos de atenção)"]||"").join(" ");
   const txtNeg = rows.map(r=>r["10. Cliente sentiu falta de alguma coisa no LogAI?"]||"").join(" ")+" "+rows.filter(r=>r["12. Cliente quer avançar?"]==="Não").map(r=>r["Se não, descreva o motivo"]||"").join(" ");
@@ -358,7 +360,7 @@ function renderDetalheDemo(cor) {
     <div class="exec-grid" style="grid-template-columns:auto 1fr 1fr">
       <div class="exec-total"><div class="exec-total-num" style="color:${cor}">${total}</div><div class="exec-total-label">demos realizadas</div></div>
       <div class="exec-bloco"><div class="exec-bloco-titulo">Percepção do cliente</div>${execItem("Positiva","#1D9E75",pos,total)}${execItem("Neutra","#BA7517",neu,total)}${execItem("Negativa","#D85A30",neg,total)}</div>
-      <div class="exec-bloco"><div class="exec-bloco-titulo">Quer avançar?</div>${execItem("Sim","#7F77DD",sim,total)}${execItem("Não","#888",nao,total)}</div>
+      <div class="exec-bloco"><div class="exec-bloco-titulo">Quer avançar?</div>${execItem("Sim, vai migrar","#1D9E75",mig,total)}${execItem("Sim, vai testar","#7F77DD",test,total)}${execItem("Não","#888",nao,total)}</div>
     </div>
     <div class="divider"></div>
     <div class="sec-label" style="margin-bottom:8px">listão de clientes</div>
