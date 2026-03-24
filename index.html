@@ -19,7 +19,6 @@
   .nav-btn:hover { color: #555; }
   .nav-btn.ativo { color: #7F77DD; border-bottom-color: #7F77DD; }
 
-  /* FORMS */
   .forms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
   .form-card { background: white; border-radius: 12px; border: 1px solid #eee; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
   .form-card-icon { font-size: 24px; }
@@ -28,7 +27,6 @@
   .form-card-link { display: inline-block; padding: 7px 16px; border-radius: 20px; border: 1px solid; text-decoration: none; font-size: 12px; font-weight: 600; text-align: center; transition: opacity .15s; }
   .form-card-link:hover { opacity: .8; }
 
-  /* DIRECIONAMENTO */
   .secao-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
   .secao-titulo { font-size: 13px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .08em; }
   .dir-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
@@ -40,7 +38,6 @@
   .dir-frente-label { font-size: 10px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 3px; display: flex; justify-content: space-between; align-items: center; }
   .dir-frente-valor { font-size: 12px; color: #333; line-height: 1.5; }
 
-  /* EXECUTIVO */
   .sec-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; font-weight: 600; }
   .funil-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
   .etapa { background: white; border: 1px solid #eee; border-radius: 12px; padding: 14px 12px; text-align: center; position: relative; cursor: pointer; transition: all .15s; }
@@ -97,7 +94,6 @@
   .nuvem { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .palavra { border-radius: 20px; padding: 3px 10px; font-weight: 600; cursor: default; }
 
-  /* CLIENTES */
   .clientes-filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
   .clientes-filtros input, .clientes-filtros select { padding: 7px 12px; border: 1px solid #ddd; border-radius: 20px; font-size: 12px; background: white; }
   .clientes-table-wrap { overflow-x: auto; background: white; border-radius: 12px; border: 1px solid #eee; }
@@ -150,14 +146,14 @@
 <script>
 const API = "https://script.google.com/macros/s/AKfycbydFzsnklxyH7_-9tNTma7D5PUZp-UdBrE13OXhXTaXIkdBlT-OtRiWS1I0G5oNYHwqcQ/exec";
 const CORES = {"NCM":"#7F77DD","Finance":"#1D9E75","Shipment":"#D85A30","Export":"#BA7517","Trading":"#185FA5","México":"#993556","360":"#0F6E56","LogOS":"#534AB7","Logmanager":"#3C3489"};
-const COR_ETAPAS = {potencial:"#993556",demo:"#7F77DD",migracao:"#BA7517",ativacao:"#185FA5"};
+const COR_ETAPAS = {potencial:"#993556",demo:"#7F77DD",migracao:"#BA7517",new:"#185FA5"};
 const ABAS = ["Espelho","Demo","Migração","Ativação","Clientes potenciais"];
 
 const FORMS_INFO = [
   {nome:"Espelho",icone:"🪞",cor:"#1D9E75",url:"https://forms.gle/jQaG9qbDubF53z1i9",desc:"Todas as consultas que o time faz no produto legado e replica no LogAI."},
   {nome:"Demo",icone:"🤝",cor:"#7F77DD",url:"https://forms.gle/hweej1hHV8xaeoeq9",desc:"Preencher após cada demonstração do LogAI para um cliente."},
   {nome:"Migração",icone:"🔄",cor:"#BA7517",url:"https://forms.gle/ugKFwpVTR8Urr4DZA",desc:"Acompanhamento do processo de migração de clientes para o LogAI."},
-  {nome:"Ativação",icone:"🚀",cor:"#185FA5",url:"https://forms.gle/CQRpx7TgGstv6iTTA",desc:"Acompanhamento semanal de clientes novos no LogAI."},
+  {nome:"New",icone:"🚀",cor:"#185FA5",url:"https://forms.gle/CQRpx7TgGstv6iTTA",desc:"Acompanhamento semanal de clientes novos no LogAI."},
   {nome:"Clientes Potenciais",icone:"⭐",cor:"#993556",url:"https://forms.gle/bQ36EwQLjjoKQqdp8",desc:"Registrar clientes com potencial de migrar para o LogAI."},
 ];
 
@@ -167,17 +163,14 @@ const DIRECIONAMENTO_FIXO = {
     "Finance":{"Demo":"Realizar demo com clientes já agendados.","Clientes Potenciais":"Incluir novos clientes potenciais."},
     "Shipment":{"Espelho":"Toda e qualquer pesquisa realizada no Shipment deve ser replicada no Log.AI.","Demo":"Realizar 10 agendas com clientes potenciais.","Clientes Potenciais":"Incluir novos clientes potenciais."},
     "Export":{"Espelho":"• Toda e qualquer pesquisa realizada no Export deve ser replicada no Log.AI.\n• Guardiões devem realizar testes com foco em comparar resultados de comprador e exportador.","Demo":"Realizar 05 agendas com clientes potenciais.","Clientes Potenciais":"Incluir novos clientes potenciais."},
-    "México":{"Espelho":"Toda e qualquer pesquisa realizada nos produtos México deve ser replicada no Log.AI.","Ativação":"Ativar com os 15 novos clientes."}
+    "México":{"Espelho":"Toda e qualquer pesquisa realizada nos produtos México deve ser replicada no Log.AI.","New":"Ativar com os 15 novos clientes."}
   }
 };
 
 let dadosTodos = {};
 let abaAtiva = "forms";
 let etapaAberta = null;
-let clientesBusca = "";
-let clientesFiltroEtapa = "";
 
-// ── UTILS ──────────────────────────────────────────────────
 const COL_ID = {
   "Demo":"4. ID do cliente (Copiar exatamente como aparece no sistema de CS)",
   "Migração":"4. ID do Cliente",
@@ -288,10 +281,9 @@ function renderExecutivo() {
   const idsPot  = new Set((dadosTodos["Clientes potenciais"]||[]).map(r=>getId(r,"Clientes potenciais")).filter(Boolean));
   const idsDemo = new Set((dadosTodos["Demo"]||[]).map(r=>getId(r,"Demo")).filter(Boolean));
   const idsMig  = new Set((dadosTodos["Migração"]||[]).map(r=>getId(r,"Migração")).filter(Boolean));
-  const idsAtiv = new Set((dadosTodos["Ativação"]||[]).map(r=>getId(r,"Ativação")).filter(Boolean));
+  const idsNew  = new Set((dadosTodos["Ativação"]||[]).map(r=>getId(r,"Ativação")).filter(Boolean));
   const convDemo = idsPot.size>0 ? Math.round([...idsDemo].filter(id=>idsPot.has(id)).length/idsPot.size*100) : 0;
   const convMig  = idsDemo.size>0 ? Math.round([...idsMig].filter(id=>idsDemo.has(id)).length/idsDemo.size*100) : 0;
-  const convAtiv = idsMig.size>0 ? Math.round([...idsAtiv].filter(id=>idsMig.has(id)).length/idsMig.size*100) : 0;
 
   el.innerHTML = `
     <div class="sec-label">funil de clientes — clique em uma etapa para detalhar</div>
@@ -299,7 +291,7 @@ function renderExecutivo() {
       ${etapaCard("potencial","Potenciais",idsPot.size,"clientes únicos","","","",etapaAberta==="potencial"?"▴":"▾")}
       ${etapaCard("demo","Demo",idsDemo.size,"clientes únicos",convDemo>0?`${convDemo}% dos potenciais`:"","#EEEDFE","#534AB7",etapaAberta==="demo"?"▴":"▾")}
       ${etapaCard("migracao","Migração",idsMig.size,"clientes únicos",convMig>0?`${convMig}% das demos`:"","#FAEEDA","#854F0B",etapaAberta==="migracao"?"▴":"▾")}
-      ${etapaCard("ativacao","Ativação",idsAtiv.size,"clientes únicos",convAtiv>0?`${convAtiv}% das migrações`:"","#E6F1FB","#0C447C",etapaAberta==="ativacao"?"▴":"▾")}
+      ${etapaCard("new","New",idsNew.size,"clientes únicos","","#E6F1FB","#0C447C",etapaAberta==="new"?"▴":"▾")}
     </div>
     <div id="detalhe-container"></div>`;
 
@@ -326,11 +318,11 @@ function toggleEtapa(id) {
 
 function renderDetalhe(id) {
   const c = COR_ETAPAS[id];
-  const nomes = {potencial:"Potenciais",demo:"Demo",migracao:"Migração",ativacao:"Ativação"};
+  const nomes = {potencial:"Potenciais",demo:"Demo",migracao:"Migração",new:"New"};
   const html = id==="demo" ? renderDetalheDemo(c)
              : id==="potencial" ? renderDetalhePotencial(c)
              : id==="migracao" ? renderDetalheMigracao(c)
-             : renderDetalheAtivacao(c);
+             : renderDetalheNew(c);
   document.getElementById("detalhe-container").innerHTML = `
     <div class="detalhe visivel">
       <div class="det-header">
@@ -446,10 +438,10 @@ function renderDetalheMigracao(cor) {
     }).join("")}`;
 }
 
-// ── DETALHE ATIVAÇÃO ───────────────────────────────────────
-function renderDetalheAtivacao(cor) {
+// ── DETALHE NEW ────────────────────────────────────────────
+function renderDetalheNew(cor) {
   const rows = dadosTodos["Ativação"]||[];
-  if (!rows.length) return '<div class="vazio">Nenhum cliente de ativação registrado ainda.</div>';
+  if (!rows.length) return '<div class="vazio">Nenhum cliente new registrado ainda.</div>';
   const ativ = rows.filter(r=>r["Ativou o produto Log.AI?"]==="Sim").length;
   const pesq = rows.filter(r=>r["Já realizou pesquisas no LogAI essa semana?"]==="Sim").length;
   const gc = "grid-template-columns:2fr 1fr 1fr 2fr";
@@ -463,13 +455,13 @@ function renderDetalheAtivacao(cor) {
     <div class="sec-label" style="margin-bottom:8px">listão de clientes</div>
     <div class="listao-header" style="${gc}"><div>nome</div><div>ativou?</div><div>pesquisou?</div><div>feedback da semana</div></div>
     ${rows.map(r=>{
-      const at=r["Ativou o produto Log.AI?"]||"—";
-      const ps=r["Já realizou pesquisas no LogAI essa semana?"]||"—";
+      const at=r["Ativou o produto Log.AI?"]==="Sim";
+      const ps=r["Já realizou pesquisas no LogAI essa semana?"]==="Sim";
       const fb=r["Feedback qualitativo da semana"]||"—";
       return `<div class="listao-row" style="${gc}">
         <div style="font-weight:500">${getNome(r,"Ativação")}</div>
-        <div><span class="tag ${at==="Sim"?"tag-sim":"tag-nao"}">${at}</span></div>
-        <div><span class="tag ${ps==="Sim"?"tag-sim":"tag-nao"}">${ps}</span></div>
+        <div><span class="tag ${at?"tag-sim":"tag-nao"}">${at?"Sim":"Não"}</span></div>
+        <div><span class="tag ${ps?"tag-sim":"tag-nao"}">${ps?"Sim":"Não"}</span></div>
         <div style="font-size:11px;color:#555;white-space:normal">${fb}</div>
       </div>`;
     }).join("")}`;
@@ -478,43 +470,37 @@ function renderDetalheAtivacao(cor) {
 // ── ABA CLIENTES ───────────────────────────────────────────
 function renderClientes() {
   const el = document.getElementById("pagina-clientes");
-
-  // Monta mapa de clientes cruzando todas as abas pelo ID
   const mapa = {};
 
   const registrar = (aba, row) => {
     const id = getId(row, aba);
     if (!id) return;
-    if (!mapa[id]) mapa[id] = {id, nome:"—", produto:"—", agente:"—", potencial:false, demo:false, migracao:false, ativacao:false, statusMig:"—", statusAtiv:"—"};
+    if (!mapa[id]) mapa[id] = {id, nome:"—", produto:"—", agente:"—", potencial:false, demo:false, migracao:false, new:false, statusMig:"—", statusNew:"—"};
     const c = mapa[id];
-    const nome = getNome(row, aba);
-    if (nome && nome !== "—") c.nome = nome;
-    const prod = getProduto(row, aba);
-    if (prod && prod !== "—") c.produto = prod;
-    const ag = getAgente(row, aba);
-    if (ag && ag !== "—") c.agente = ag;
-    if (aba==="Potenciais") c.potencial = true;
-    if (aba==="Demo") c.demo = true;
-    if (aba==="Migração") { c.migracao = true; c.statusMig = row["9. Status da migração"]||"—"; }
-    if (aba==="Ativação") { c.ativacao = true; c.statusAtiv = row["Ativou o produto Log.AI?"]||"—"; }
+    const nome = getNome(row, aba); if (nome&&nome!=="—") c.nome=nome;
+    const prod = getProduto(row, aba); if (prod&&prod!=="—") c.produto=prod;
+    const ag = getAgente(row, aba); if (ag&&ag!=="—") c.agente=ag;
+    if (aba==="Clientes potenciais") c.potencial=true;
+    if (aba==="Demo") c.demo=true;
+    if (aba==="Migração") { c.migracao=true; c.statusMig=row["9. Status da migração"]||"—"; }
+    if (aba==="Ativação") { c.new=true; c.statusNew=row["Ativou o produto Log.AI?"]||"—"; }
   };
 
-  ["Clientes potenciais","Demo","Migração","Ativação"].forEach(aba => (dadosTodos[aba]||[]).forEach(r => registrar(aba, r)));
+  ["Clientes potenciais","Demo","Migração","Ativação"].forEach(aba=>(dadosTodos[aba]||[]).forEach(r=>registrar(aba,r)));
 
   let clientes = Object.values(mapa);
 
-  // Cards resumo
   const total = clientes.length;
-  const soPot = clientes.filter(c=>c.potencial&&!c.demo&&!c.migracao&&!c.ativacao).length;
-  const emMig = clientes.filter(c=>c.migracao&&!c.ativacao).length;
-  const ativados = clientes.filter(c=>c.ativacao).length;
+  const soPot = clientes.filter(c=>c.potencial&&!c.demo&&!c.migracao&&!c.new).length;
+  const emMig = clientes.filter(c=>c.migracao&&!c.new).length;
+  const news  = clientes.filter(c=>c.new).length;
 
   el.innerHTML = `
     <div class="clientes-resumo">
       <div class="res-card"><div class="v">${total}</div><div class="l">clientes únicos</div></div>
       <div class="res-card"><div class="v" style="color:#993556">${soPot}</div><div class="l">só em potenciais</div></div>
       <div class="res-card"><div class="v" style="color:#BA7517">${emMig}</div><div class="l">em migração</div></div>
-      <div class="res-card"><div class="v" style="color:#185FA5">${ativados}</div><div class="l">ativados</div></div>
+      <div class="res-card"><div class="v" style="color:#185FA5">${news}</div><div class="l">new</div></div>
     </div>
     <div class="clientes-filtros">
       <input type="text" id="busca-cliente" placeholder="🔍 Buscar por nome ou ID..." oninput="filtrarClientes()" style="min-width:220px"/>
@@ -523,7 +509,7 @@ function renderClientes() {
         <option value="potencial">Potenciais</option>
         <option value="demo">Demo</option>
         <option value="migracao">Migração</option>
-        <option value="ativacao">Ativação</option>
+        <option value="new">New</option>
       </select>
       <select id="filtro-agente" onchange="filtrarClientes()">
         <option value="">Todos os agentes</option>
@@ -544,17 +530,17 @@ function filtrarClientes() {
   const registrar = (aba, row) => {
     const id = getId(row, aba);
     if (!id) return;
-    if (!mapa[id]) mapa[id] = {id, nome:"—", produto:"—", agente:"—", potencial:false, demo:false, migracao:false, ativacao:false, statusMig:"—", statusAtiv:"—"};
+    if (!mapa[id]) mapa[id] = {id, nome:"—", produto:"—", agente:"—", potencial:false, demo:false, migracao:false, new:false, statusMig:"—", statusNew:"—"};
     const c = mapa[id];
     const nome = getNome(row, aba); if (nome&&nome!=="—") c.nome=nome;
     const prod = getProduto(row, aba); if (prod&&prod!=="—") c.produto=prod;
     const ag = getAgente(row, aba); if (ag&&ag!=="—") c.agente=ag;
-    if (aba==="Potenciais") c.potencial=true;
+    if (aba==="Clientes potenciais") c.potencial=true;
     if (aba==="Demo") c.demo=true;
     if (aba==="Migração") { c.migracao=true; c.statusMig=row["9. Status da migração"]||"—"; }
-    if (aba==="Ativação") { c.ativacao=true; c.statusAtiv=row["Ativou o produto Log.AI?"]||"—"; }
+    if (aba==="Ativação") { c.new=true; c.statusNew=row["Ativou o produto Log.AI?"]||"—"; }
   };
-  ["Potenciais","Demo","Migração","Ativação"].forEach(aba=>(dadosTodos[aba]||[]).forEach(r=>registrar(aba,r)));
+  ["Clientes potenciais","Demo","Migração","Ativação"].forEach(aba=>(dadosTodos[aba]||[]).forEach(r=>registrar(aba,r)));
   let clientes = Object.values(mapa);
 
   if (busca) clientes = clientes.filter(c=>(c.nome+c.id).toLowerCase().includes(busca));
@@ -574,7 +560,7 @@ function renderTabelaClientes(clientes) {
       <table class="clientes-table">
         <thead><tr>
           <th>ID</th><th>Nome</th><th>Produto</th><th>Agente LogAI</th>
-          <th>Potencial</th><th>Demo</th><th>Migração</th><th>Ativação</th>
+          <th>Potencial</th><th>Demo</th><th>Migração</th><th>New</th>
         </tr></thead>
         <tbody>${clientes.map(c=>`<tr>
           <td style="color:#888;font-size:11px">${c.id}</td>
@@ -584,7 +570,7 @@ function renderTabelaClientes(clientes) {
           <td>${pill(c.potencial,"Potencial","#993556")}</td>
           <td>${pill(c.demo,"Demo","#7F77DD")}</td>
           <td>${c.migracao?`${pill(true,"Migração","#BA7517")}<br><span style="font-size:10px;color:#888">${c.statusMig}</span>`:pill(false,"Migração","#BA7517")}</td>
-          <td>${c.ativacao?`${pill(true,"Ativação","#185FA5")}<br><span style="font-size:10px;color:#888">${c.statusAtiv}</span>`:pill(false,"Ativação","#185FA5")}</td>
+          <td>${c.new?`${pill(true,"New","#185FA5")}<br><span style="font-size:10px;color:#888">${c.statusNew}</span>`:pill(false,"New","#185FA5")}</td>
         </tr>`).join("")}</tbody>
       </table>
     </div>
