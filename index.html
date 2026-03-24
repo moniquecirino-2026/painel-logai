@@ -151,7 +151,7 @@
 const API = "https://script.google.com/macros/s/AKfycbydFzsnklxyH7_-9tNTma7D5PUZp-UdBrE13OXhXTaXIkdBlT-OtRiWS1I0G5oNYHwqcQ/exec";
 const CORES = {"NCM":"#7F77DD","Finance":"#1D9E75","Shipment":"#D85A30","Export":"#BA7517","Trading":"#185FA5","México":"#993556","360":"#0F6E56","LogOS":"#534AB7","Logmanager":"#3C3489"};
 const COR_ETAPAS = {potencial:"#993556",demo:"#7F77DD",migracao:"#BA7517",ativacao:"#185FA5"};
-const ABAS = ["Espelho","Demo","Migração","Ativação","Potenciais"];
+const ABAS = ["Espelho","Demo","Migração","Ativação","Clientes potenciais"];
 
 const FORMS_INFO = [
   {nome:"Espelho",icone:"🪞",cor:"#1D9E75",url:"https://forms.gle/jQaG9qbDubF53z1i9",desc:"Todas as consultas que o time faz no produto legado e replica no LogAI."},
@@ -182,25 +182,25 @@ const COL_ID = {
   "Demo":"4. ID do cliente (Copiar exatamente como aparece no sistema de CS)",
   "Migração":"4. ID do Cliente",
   "Ativação":"ID do Cliente",
-  "Potenciais":"4. ID do Cliente"
+  "Clientes potenciais":"4. ID do Cliente"
 };
 const COL_NOME = {
   "Demo":"5. Nome do cliente (Copiar exatamente como aparece no sistema de CS)",
   "Migração":"5. Nome do Cliente",
   "Ativação":"Nome do Cliente",
-  "Potenciais":"5. Nome do Cliente"
+  "Clientes potenciais":"5. Nome do Cliente"
 };
 const COL_PRODUTO = {
   "Demo":"6. Produto atual do cliente",
   "Migração":"6. Produto de origem (de onde está migrando)",
   "Ativação":"Agente contratado no Log.AI",
-  "Potenciais":"6. Produtos atuais do cliente"
+  "Clientes potenciais":"6. Produtos atuais do cliente"
 };
 const COL_AGENTE = {
   "Demo":"Qual agente foi demonstrado ao cliente no LogAI",
   "Migração":"Agente habilitado no LogAI para o cliente",
   "Ativação":"Agente contratado no Log.AI",
-  "Potenciais":"8. Agente do LogAI com potencial para este Cliente"
+  "Clientes potenciais":"8. Agente do LogAI com potencial para este Cliente"
 };
 
 function getId(row, aba) { return (row[COL_ID[aba]]||"").trim().toUpperCase(); }
@@ -285,7 +285,7 @@ function renderDirecionamento() {
 // ── EXECUTIVO ───────────────────────────────────────────────
 function renderExecutivo() {
   const el = document.getElementById("pagina-exec");
-  const idsPot  = new Set((dadosTodos["Potenciais"]||[]).map(r=>getId(r,"Potenciais")).filter(Boolean));
+  const idsPot  = new Set((dadosTodos["Clientes potenciais"]||[]).map(r=>getId(r,"Clientes potenciais")).filter(Boolean));
   const idsDemo = new Set((dadosTodos["Demo"]||[]).map(r=>getId(r,"Demo")).filter(Boolean));
   const idsMig  = new Set((dadosTodos["Migração"]||[]).map(r=>getId(r,"Migração")).filter(Boolean));
   const idsAtiv = new Set((dadosTodos["Ativação"]||[]).map(r=>getId(r,"Ativação")).filter(Boolean));
@@ -386,7 +386,7 @@ function renderDetalheDemo(cor) {
 
 // ── DETALHE POTENCIAIS ─────────────────────────────────────
 function renderDetalhePotencial(cor) {
-  const rows = dadosTodos["Potenciais"]||[];
+  const rows = dadosTodos["Clientes potenciais"]||[];
   if (!rows.length) return '<div class="vazio">Nenhum cliente potencial registrado ainda.</div>';
   const comAgenda = rows.filter(r=>r["10. Você tem agenda com cliente já marcada?"]==="Sim").length;
   const txtObs = rows.map(r=>r["11. Observações Adicionais (Opcional)"]||"").join(" ");
@@ -402,9 +402,9 @@ function renderDetalhePotencial(cor) {
     ${rows.map(r=>{
       const ag=r["10. Você tem agenda com cliente já marcada?"]||"—";
       return `<div class="listao-row" style="${gc}">
-        <div style="font-weight:500">${getNome(r,"Potenciais")}</div>
+        <div style="font-weight:500">${getNome(r,"Clientes potenciais")}</div>
         <div><span class="tag ${ag==="Sim"?"tag-sim":"tag-nao"}">${ag}</span></div>
-        <div>${getAgente(r,"Potenciais")}</div>
+        <div>${getAgente(r,"Clientes potenciais")}</div>
         <div>${r["3. Time / Coordenador"]||"—"}</div>
       </div>`;
     }).join("")}
@@ -497,7 +497,7 @@ function renderClientes() {
     if (aba==="Ativação") { c.ativacao = true; c.statusAtiv = row["Ativou o produto Log.AI?"]||"—"; }
   };
 
-  ["Potenciais","Demo","Migração","Ativação"].forEach(aba => (dadosTodos[aba]||[]).forEach(r => registrar(aba, r)));
+  ["Clientes potenciais","Demo","Migração","Ativação"].forEach(aba => (dadosTodos[aba]||[]).forEach(r => registrar(aba, r)));
 
   let clientes = Object.values(mapa);
 
