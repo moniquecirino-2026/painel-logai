@@ -13,7 +13,6 @@
   .header p { font-size: 12px; color: #888; margin-top: 3px; }
   .btn { padding: 7px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; transition: all .15s; }
   .btn:hover { background: #f0f0f0; }
-
   .nav-principal { display: flex; gap: 4px; margin-bottom: 28px; border-bottom: 2px solid #e8e8e8; }
   .nav-btn { padding: 10px 20px; border: none; background: none; font-size: 14px; font-weight: 500; color: #aaa; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .15s; }
   .nav-btn:hover { color: #555; }
@@ -38,6 +37,14 @@
   .dir-frente-label { font-size: 10px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 3px; display: flex; justify-content: space-between; align-items: center; }
   .dir-frente-valor { font-size: 12px; color: #333; line-height: 1.5; }
 
+  /* EXECUTIVO */
+  .exec-filtros { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; padding: 14px 16px; background: white; border-radius: 12px; border: 1px solid #eee; }
+  .exec-filtros label { font-size: 11px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: .06em; margin-right: 4px; }
+  .exec-filtros select, .exec-filtros input[type="date"] { padding: 6px 12px; border: 1px solid #ddd; border-radius: 20px; font-size: 12px; background: white; color: #333; }
+  .exec-filtros-sep { width: 1px; height: 24px; background: #eee; margin: 0 4px; }
+  .exec-filtros-clear { font-size: 11px; color: #999; cursor: pointer; padding: 5px 12px; border-radius: 20px; border: 1px solid #eee; background: white; }
+  .exec-filtros-clear:hover { background: #f5f5f5; }
+
   .sec-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; font-weight: 600; }
   .funil-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
   .etapa { background: white; border: 1px solid #eee; border-radius: 12px; padding: 14px 12px; text-align: center; position: relative; cursor: pointer; transition: all .15s; }
@@ -49,14 +56,12 @@
   .etapa-sub { font-size: 11px; color: #888; margin-top: 4px; }
   .etapa-conv { font-size: 10px; margin-top: 8px; padding: 3px 8px; border-radius: 20px; display: inline-block; }
   .etapa-hint { font-size: 10px; color: #bbb; margin-top: 8px; }
-
   .detalhe { display: none; border: 1px solid #eee; border-radius: 12px; padding: 20px; margin-bottom: 20px; background: white; }
   .detalhe.visivel { display: block; }
   .det-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
   .det-titulo { font-size: 16px; font-weight: 600; }
   .det-fechar { font-size: 11px; color: #888; cursor: pointer; padding: 3px 10px; border-radius: 20px; border: 1px solid #eee; }
   .det-fechar:hover { background: #f5f5f5; }
-
   .exec-grid { display: grid; gap: 14px; margin-bottom: 20px; align-items: start; }
   .exec-total { text-align: center; padding: 16px 24px; background: #f8f8f8; border-radius: 12px; }
   .exec-total-num { font-size: 48px; font-weight: 600; line-height: 1; }
@@ -70,13 +75,10 @@
   .exec-item-val { font-size: 12px; font-weight: 600; }
   .exec-bar-bg { width: 100%; background: #e8e8e8; border-radius: 4px; height: 5px; }
   .exec-bar-fill { height: 5px; border-radius: 4px; }
-
   .divider { height: 1px; background: #f0f0f0; margin: 16px 0; }
-
   .listao-header { display: grid; gap: 8px; padding: 6px 8px; font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid #eee; margin-bottom: 4px; }
   .listao-row { display: grid; gap: 8px; padding: 8px; border-radius: 8px; font-size: 12px; align-items: center; }
   .listao-row:hover { background: #fafafa; }
-
   .tag { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 600; display: inline-block; white-space: nowrap; }
   .tag-pos { background: #e1f5ee; color: #0f6e56; }
   .tag-neg { background: #faece7; color: #993c1d; }
@@ -87,17 +89,17 @@
   .tag-ok  { background: #e1f5ee; color: #0f6e56; }
   .link-meet { font-size: 11px; color: #185fa5; text-decoration: none; }
   .motivo-txt { font-size: 11px; color: #D85A30; font-style: italic; }
-
   .nuvens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
   .nuvem-box { background: #f8f8f8; border-radius: 12px; padding: 14px; }
   .nuvem-titulo { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
   .nuvem { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .palavra { border-radius: 20px; padding: 3px 10px; font-weight: 600; cursor: default; }
 
+  /* CLIENTES */
   .clientes-filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
   .clientes-filtros input, .clientes-filtros select { padding: 7px 12px; border: 1px solid #ddd; border-radius: 20px; font-size: 12px; background: white; }
   .clientes-table-wrap { overflow-x: auto; background: white; border-radius: 12px; border: 1px solid #eee; }
-  .clientes-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 700px; }
+  .clientes-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 750px; }
   .clientes-table th { padding: 10px 12px; text-align: left; font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid #eee; white-space: nowrap; background: #fafafa; }
   .clientes-table td { padding: 9px 12px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
   .clientes-table tr:last-child td { border-bottom: none; }
@@ -109,8 +111,14 @@
   .res-card { background: white; border-radius: 10px; padding: 14px; text-align: center; border: 1px solid #eee; }
   .res-card .v { font-size: 24px; font-weight: 600; }
   .res-card .l { font-size: 11px; color: #888; margin-top: 3px; }
-
   .vazio { text-align: center; padding: 28px; color: #bbb; font-size: 13px; }
+
+  /* STATUS PILL */
+  .status-pill { display: inline-block; font-size: 10px; padding: 3px 10px; border-radius: 20px; font-weight: 700; white-space: nowrap; }
+  .status-potencial { background: #fce8ef; color: #993556; }
+  .status-demo      { background: #eeedfe; color: #534ab7; }
+  .status-migracao  { background: #faeeda; color: #854f0b; }
+  .status-new       { background: #e6f1fb; color: #0c447c; }
 
   @media (max-width: 600px) {
     .funil-row { grid-template-columns: repeat(2,1fr); }
@@ -123,20 +131,15 @@
 <body>
 <div class="container">
   <div class="header">
-    <div>
-      <h1>Painel LogAI</h1>
-      <p id="ultima-atualizacao">Carregando...</p>
-    </div>
+    <div><h1>Painel LogAI</h1><p id="ultima-atualizacao">Carregando...</p></div>
     <button class="btn" onclick="carregar()">↻ Atualizar</button>
   </div>
-
   <div class="nav-principal">
     <button class="nav-btn ativo" onclick="setAba('forms')" id="nav-forms">Forms</button>
     <button class="nav-btn" onclick="setAba('dir')" id="nav-dir">Direcionamento</button>
     <button class="nav-btn" onclick="setAba('exec')" id="nav-exec">Executivo</button>
     <button class="nav-btn" onclick="setAba('clientes')" id="nav-clientes">Clientes</button>
   </div>
-
   <div id="pagina-forms"></div>
   <div id="pagina-dir" style="display:none"></div>
   <div id="pagina-exec" style="display:none"></div>
@@ -171,6 +174,19 @@ let dadosTodos = {};
 let abaAtiva = "forms";
 let etapaAberta = null;
 
+// Filtros do executivo
+let execFiltroAgente = "";
+let execFiltroDataDe = "";
+let execFiltroDataAte = "";
+
+// Colunas de data por aba
+const COL_DATA = {
+  "Demo": "1. Data e Hora da Demonstração",
+  "Migração": "1. Data e Hora do Registro",
+  "Ativação": "1. Data e Hora do Acompanhamento",
+  "Clientes potenciais": "1. Data e Hora do Registro"
+};
+
 const COL_ID = {
   "Demo":"4. ID do cliente (Copiar exatamente como aparece no sistema de CS)",
   "Migração":"4. ID do Cliente",
@@ -196,10 +212,53 @@ const COL_AGENTE = {
   "Clientes potenciais":"8. Agente do LogAI com potencial para este Cliente"
 };
 
-function getId(row, aba) { return (row[COL_ID[aba]]||"").trim().toUpperCase(); }
-function getNome(row, aba) { return row[COL_NOME[aba]]||"—"; }
-function getProduto(row, aba) { return row[COL_PRODUTO[aba]]||"—"; }
+function getId(row, aba)     { return (row[COL_ID[aba]]||"").trim().toUpperCase(); }
+function getNome(row, aba)   { return row[COL_NOME[aba]]||"—"; }
+function getProduto(row, aba){ return row[COL_PRODUTO[aba]]||"—"; }
 function getAgente(row, aba) { return row[COL_AGENTE[aba]]||"—"; }
+
+function parseData(str) {
+  if (!str) return null;
+  // Tenta DD/MM/YYYY HH:MM:SS ou DD/MM/YYYY
+  const m = str.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+  if (m) return new Date(`${m[3]}-${m[2]}-${m[1]}`);
+  return new Date(str);
+}
+
+function filtrarPorPeriodoEAgente(rows, aba) {
+  return rows.filter(r => {
+    // Filtro de agente
+    if (execFiltroAgente) {
+      const ag = getAgente(r, aba);
+      if (!ag.toLowerCase().includes(execFiltroAgente.toLowerCase())) return false;
+    }
+    // Filtro de data
+    if (execFiltroDataDe || execFiltroDataAte) {
+      const col = COL_DATA[aba];
+      const d = col ? parseData(r[col]) : null;
+      if (!d) return false;
+      if (execFiltroDataDe && d < new Date(execFiltroDataDe)) return false;
+      if (execFiltroDataAte) {
+        const ate = new Date(execFiltroDataAte);
+        ate.setDate(ate.getDate() + 1);
+        if (d >= ate) return false;
+      }
+    }
+    return true;
+  });
+}
+
+// Coleta todos os agentes únicos de todas as abas relevantes
+function todosAgentes() {
+  const set = new Set();
+  ["Demo","Migração","Ativação","Clientes potenciais"].forEach(aba => {
+    (dadosTodos[aba]||[]).forEach(r => {
+      const ag = getAgente(r, aba);
+      if (ag && ag !== "—") set.add(ag);
+    });
+  });
+  return [...set].sort();
+}
 
 async function buscarAba(aba) {
   const r = await fetch(`${API}?aba=${encodeURIComponent(aba)}`);
@@ -229,7 +288,7 @@ function setAba(aba) {
 }
 
 function renderAba() {
-  if (abaAtiva==="forms") renderForms();
+  if (abaAtiva==="forms")    renderForms();
   else if (abaAtiva==="dir") renderDirecionamento();
   else if (abaAtiva==="exec") renderExecutivo();
   else if (abaAtiva==="clientes") renderClientes();
@@ -276,16 +335,53 @@ function renderDirecionamento() {
 }
 
 // ── EXECUTIVO ───────────────────────────────────────────────
+function aplicarFiltrosExec() {
+  execFiltroAgente  = document.getElementById("exec-agente").value;
+  execFiltroDataDe  = document.getElementById("exec-data-de").value;
+  execFiltroDataAte = document.getElementById("exec-data-ate").value;
+  renderExecutivo();
+}
+
+function limparFiltrosExec() {
+  execFiltroAgente = ""; execFiltroDataDe = ""; execFiltroDataAte = "";
+  renderExecutivo();
+}
+
 function renderExecutivo() {
   const el = document.getElementById("pagina-exec");
-  const idsPot  = new Set((dadosTodos["Clientes potenciais"]||[]).map(r=>getId(r,"Clientes potenciais")).filter(Boolean));
-  const idsDemo = new Set((dadosTodos["Demo"]||[]).map(r=>getId(r,"Demo")).filter(Boolean));
-  const idsMig  = new Set((dadosTodos["Migração"]||[]).map(r=>getId(r,"Migração")).filter(Boolean));
-  const idsNew  = new Set((dadosTodos["Ativação"]||[]).map(r=>getId(r,"Ativação")).filter(Boolean));
+
+  const agentes = todosAgentes();
+
+  const rowsPot  = filtrarPorPeriodoEAgente(dadosTodos["Clientes potenciais"]||[], "Clientes potenciais");
+  const rowsDemo = filtrarPorPeriodoEAgente(dadosTodos["Demo"]||[], "Demo");
+  const rowsMig  = filtrarPorPeriodoEAgente(dadosTodos["Migração"]||[], "Migração");
+  const rowsNew  = filtrarPorPeriodoEAgente(dadosTodos["Ativação"]||[], "Ativação");
+
+  const idsPot  = new Set(rowsPot.map(r=>getId(r,"Clientes potenciais")).filter(Boolean));
+  const idsDemo = new Set(rowsDemo.map(r=>getId(r,"Demo")).filter(Boolean));
+  const idsMig  = new Set(rowsMig.map(r=>getId(r,"Migração")).filter(Boolean));
+  const idsNew  = new Set(rowsNew.map(r=>getId(r,"Ativação")).filter(Boolean));
+
   const convDemo = idsPot.size>0 ? Math.round([...idsDemo].filter(id=>idsPot.has(id)).length/idsPot.size*100) : 0;
   const convMig  = idsDemo.size>0 ? Math.round([...idsMig].filter(id=>idsDemo.has(id)).length/idsDemo.size*100) : 0;
 
+  const filtroAtivo = execFiltroAgente || execFiltroDataDe || execFiltroDataAte;
+
   el.innerHTML = `
+    <div class="exec-filtros">
+      <label>Agente</label>
+      <select id="exec-agente" onchange="aplicarFiltrosExec()">
+        <option value="">Todos</option>
+        ${agentes.map(a=>`<option${execFiltroAgente===a?' selected':''}>${a}</option>`).join("")}
+      </select>
+      <div class="exec-filtros-sep"></div>
+      <label>De</label>
+      <input type="date" id="exec-data-de" value="${execFiltroDataDe}" onchange="aplicarFiltrosExec()"/>
+      <label>Até</label>
+      <input type="date" id="exec-data-ate" value="${execFiltroDataAte}" onchange="aplicarFiltrosExec()"/>
+      ${filtroAtivo ? `<button class="exec-filtros-clear" onclick="limparFiltrosExec()">✕ Limpar filtros</button>` : ""}
+    </div>
+    ${filtroAtivo ? `<div style="font-size:11px;color:#BA7517;margin-bottom:12px;padding:6px 12px;background:#faeeda;border-radius:8px;display:inline-block">Filtros ativos — os números refletem apenas os registros filtrados</div>` : ""}
     <div class="sec-label">funil de clientes — clique em uma etapa para detalhar</div>
     <div class="funil-row">
       ${etapaCard("potencial","Potenciais",idsPot.size,"clientes únicos","","","",etapaAberta==="potencial"?"▴":"▾")}
@@ -319,9 +415,9 @@ function toggleEtapa(id) {
 function renderDetalhe(id) {
   const c = COR_ETAPAS[id];
   const nomes = {potencial:"Potenciais",demo:"Demo",migracao:"Migração",new:"New"};
-  const html = id==="demo" ? renderDetalheDemo(c)
+  const html = id==="demo"      ? renderDetalheDemo(c)
              : id==="potencial" ? renderDetalhePotencial(c)
-             : id==="migracao" ? renderDetalheMigracao(c)
+             : id==="migracao"  ? renderDetalheMigracao(c)
              : renderDetalheNew(c);
   document.getElementById("detalhe-container").innerHTML = `
     <div class="detalhe visivel">
@@ -335,13 +431,12 @@ function renderDetalhe(id) {
 
 // ── DETALHE DEMO ───────────────────────────────────────────
 function renderDetalheDemo(cor) {
-  const rows = dadosTodos["Demo"]||[];
-  if (!rows.length) return '<div class="vazio">Nenhuma demo registrada ainda.</div>';
+  const rows = filtrarPorPeriodoEAgente(dadosTodos["Demo"]||[], "Demo");
+  if (!rows.length) return '<div class="vazio">Nenhuma demo encontrada para os filtros selecionados.</div>';
   const total = rows.length;
   const pos  = rows.filter(r=>r["8. Percepção geral do cliente em relação ao LogAI"]==="Positiva").length;
   const neg  = rows.filter(r=>r["8. Percepção geral do cliente em relação ao LogAI"]==="Negativa").length;
   const neu  = total-pos-neg;
-  const sim  = rows.filter(r=>r["12. Cliente quer avançar?"]&&r["12. Cliente quer avançar?"].startsWith("Sim")).length;
   const mig  = rows.filter(r=>r["12. Cliente quer avançar?"]==="Sim, vai migrar").length;
   const test = rows.filter(r=>r["12. Cliente quer avançar?"]==="Sim, vai testar").length;
   const nao  = rows.filter(r=>r["12. Cliente quer avançar?"]==="Não").length;
@@ -365,7 +460,7 @@ function renderDetalheDemo(cor) {
       return `<div class="listao-row" style="${gc}">
         <div style="font-weight:500">${getNome(r,"Demo")}</div>
         <div><span class="tag ${perc==="Positiva"?"tag-pos":perc==="Negativa"?"tag-neg":"tag-neu"}">${perc}</span></div>
-        <div><span class="tag ${av==="Sim"?"tag-sim":"tag-nao"}">${av}</span></div>
+        <div><span class="tag ${av.startsWith("Sim")?"tag-sim":"tag-nao"}">${av}</span></div>
         <div class="motivo-txt">${av==="Não"&&mot?mot:"—"}</div>
         <div>${link?`<a class="link-meet" href="${link}" target="_blank">ver gravação</a>`:"—"}</div>
       </div>`;
@@ -380,8 +475,8 @@ function renderDetalheDemo(cor) {
 
 // ── DETALHE POTENCIAIS ─────────────────────────────────────
 function renderDetalhePotencial(cor) {
-  const rows = dadosTodos["Clientes potenciais"]||[];
-  if (!rows.length) return '<div class="vazio">Nenhum cliente potencial registrado ainda.</div>';
+  const rows = filtrarPorPeriodoEAgente(dadosTodos["Clientes potenciais"]||[], "Clientes potenciais");
+  if (!rows.length) return '<div class="vazio">Nenhum cliente potencial encontrado para os filtros selecionados.</div>';
   const comAgenda = rows.filter(r=>r["10. Você tem agenda com cliente já marcada?"]==="Sim").length;
   const txtObs = rows.map(r=>r["11. Observações Adicionais (Opcional)"]||"").join(" ");
   const gc = "grid-template-columns:2fr 1fr 1.5fr 1fr";
@@ -402,18 +497,13 @@ function renderDetalhePotencial(cor) {
         <div>${r["3. Time / Coordenador"]||"—"}</div>
       </div>`;
     }).join("")}
-    ${txtObs.trim()?`
-    <div class="divider"></div>
-    <div class="sec-label" style="margin-bottom:8px">observações</div>
-    <div class="nuvem-box" style="background:#f8f8f8;border-radius:12px;padding:14px">
-      <div class="nuvem">${gerarNuvem(txtObs,"pot")}</div>
-    </div>`:""}`;
+    ${txtObs.trim()?`<div class="divider"></div><div class="nuvem-box" style="background:#f8f8f8;border-radius:12px;padding:14px"><div class="nuvem">${gerarNuvem(txtObs,"pot")}</div></div>`:""}`;
 }
 
 // ── DETALHE MIGRAÇÃO ───────────────────────────────────────
 function renderDetalheMigracao(cor) {
-  const rows = dadosTodos["Migração"]||[];
-  if (!rows.length) return '<div class="vazio">Nenhuma migração registrada ainda.</div>';
+  const rows = filtrarPorPeriodoEAgente(dadosTodos["Migração"]||[], "Migração");
+  if (!rows.length) return '<div class="vazio">Nenhuma migração encontrada para os filtros selecionados.</div>';
   const conc = rows.filter(r=>r["9. Status da migração"]==="Concluído").length;
   const and  = rows.filter(r=>r["9. Status da migração"]==="Em andamento").length;
   const sus  = rows.filter(r=>r["9. Status da migração"]==="Suspenso").length;
@@ -440,8 +530,8 @@ function renderDetalheMigracao(cor) {
 
 // ── DETALHE NEW ────────────────────────────────────────────
 function renderDetalheNew(cor) {
-  const rows = dadosTodos["Ativação"]||[];
-  if (!rows.length) return '<div class="vazio">Nenhum cliente new registrado ainda.</div>';
+  const rows = filtrarPorPeriodoEAgente(dadosTodos["Ativação"]||[], "Ativação");
+  if (!rows.length) return '<div class="vazio">Nenhum cliente new encontrado para os filtros selecionados.</div>';
   const ativ = rows.filter(r=>r["Ativou o produto Log.AI?"]==="Sim").length;
   const pesq = rows.filter(r=>r["Já realizou pesquisas no LogAI essa semana?"]==="Sim").length;
   const gc = "grid-template-columns:2fr 1fr 1fr 2fr";
@@ -468,10 +558,15 @@ function renderDetalheNew(cor) {
 }
 
 // ── ABA CLIENTES ───────────────────────────────────────────
-function renderClientes() {
-  const el = document.getElementById("pagina-clientes");
-  const mapa = {};
+function statusGeral(c) {
+  if (c.new)      return {label:"New",      cls:"status-new",      ordem:4};
+  if (c.migracao) return {label:"Migração", cls:"status-migracao", ordem:3};
+  if (c.demo)     return {label:"Demo",     cls:"status-demo",     ordem:2};
+  return              {label:"Potencial",   cls:"status-potencial",ordem:1};
+}
 
+function construirMapa() {
+  const mapa = {};
   const registrar = (aba, row) => {
     const id = getId(row, aba);
     if (!id) return;
@@ -479,34 +574,36 @@ function renderClientes() {
     const c = mapa[id];
     const nome = getNome(row, aba); if (nome&&nome!=="—") c.nome=nome;
     const prod = getProduto(row, aba); if (prod&&prod!=="—") c.produto=prod;
-    const ag = getAgente(row, aba); if (ag&&ag!=="—") c.agente=ag;
+    const ag   = getAgente(row, aba); if (ag&&ag!=="—") c.agente=ag;
     if (aba==="Clientes potenciais") c.potencial=true;
-    if (aba==="Demo") c.demo=true;
+    if (aba==="Demo")     c.demo=true;
     if (aba==="Migração") { c.migracao=true; c.statusMig=row["9. Status da migração"]||"—"; }
     if (aba==="Ativação") { c.new=true; c.statusNew=row["Ativou o produto Log.AI?"]||"—"; }
   };
-
   ["Clientes potenciais","Demo","Migração","Ativação"].forEach(aba=>(dadosTodos[aba]||[]).forEach(r=>registrar(aba,r)));
+  return Object.values(mapa);
+}
 
-  let clientes = Object.values(mapa);
-
-  const total = clientes.length;
-  const soPot = clientes.filter(c=>c.potencial&&!c.demo&&!c.migracao&&!c.new).length;
-  const emMig = clientes.filter(c=>c.migracao&&!c.new).length;
-  const news  = clientes.filter(c=>c.new).length;
+function renderClientes() {
+  const el = document.getElementById("pagina-clientes");
+  const clientes = construirMapa();
+  const total    = clientes.length;
+  const soPot    = clientes.filter(c=>statusGeral(c).ordem===1).length;
+  const emMig    = clientes.filter(c=>c.migracao).length;
+  const news     = clientes.filter(c=>c.new).length;
 
   el.innerHTML = `
     <div class="clientes-resumo">
       <div class="res-card"><div class="v">${total}</div><div class="l">clientes únicos</div></div>
-      <div class="res-card"><div class="v" style="color:#993556">${soPot}</div><div class="l">só em potenciais</div></div>
+      <div class="res-card"><div class="v" style="color:#993556">${soPot}</div><div class="l">só potenciais</div></div>
       <div class="res-card"><div class="v" style="color:#BA7517">${emMig}</div><div class="l">em migração</div></div>
       <div class="res-card"><div class="v" style="color:#185FA5">${news}</div><div class="l">new</div></div>
     </div>
     <div class="clientes-filtros">
       <input type="text" id="busca-cliente" placeholder="🔍 Buscar por nome ou ID..." oninput="filtrarClientes()" style="min-width:220px"/>
-      <select id="filtro-etapa" onchange="filtrarClientes()">
-        <option value="">Todas as etapas</option>
-        <option value="potencial">Potenciais</option>
+      <select id="filtro-status" onchange="filtrarClientes()">
+        <option value="">Todos os status</option>
+        <option value="potencial">Potencial</option>
         <option value="demo">Demo</option>
         <option value="migracao">Migração</option>
         <option value="new">New</option>
@@ -522,29 +619,13 @@ function renderClientes() {
 }
 
 function filtrarClientes() {
-  const busca = document.getElementById("busca-cliente").value.toLowerCase();
-  const etapa = document.getElementById("filtro-etapa").value;
+  const busca  = document.getElementById("busca-cliente").value.toLowerCase();
+  const status = document.getElementById("filtro-status").value;
   const agente = document.getElementById("filtro-agente").value;
-
-  const mapa = {};
-  const registrar = (aba, row) => {
-    const id = getId(row, aba);
-    if (!id) return;
-    if (!mapa[id]) mapa[id] = {id, nome:"—", produto:"—", agente:"—", potencial:false, demo:false, migracao:false, new:false, statusMig:"—", statusNew:"—"};
-    const c = mapa[id];
-    const nome = getNome(row, aba); if (nome&&nome!=="—") c.nome=nome;
-    const prod = getProduto(row, aba); if (prod&&prod!=="—") c.produto=prod;
-    const ag = getAgente(row, aba); if (ag&&ag!=="—") c.agente=ag;
-    if (aba==="Clientes potenciais") c.potencial=true;
-    if (aba==="Demo") c.demo=true;
-    if (aba==="Migração") { c.migracao=true; c.statusMig=row["9. Status da migração"]||"—"; }
-    if (aba==="Ativação") { c.new=true; c.statusNew=row["Ativou o produto Log.AI?"]||"—"; }
-  };
-  ["Clientes potenciais","Demo","Migração","Ativação"].forEach(aba=>(dadosTodos[aba]||[]).forEach(r=>registrar(aba,r)));
-  let clientes = Object.values(mapa);
-
-  if (busca) clientes = clientes.filter(c=>(c.nome+c.id).toLowerCase().includes(busca));
-  if (etapa) clientes = clientes.filter(c=>c[etapa]);
+  let clientes = construirMapa();
+  if (busca)  clientes = clientes.filter(c=>(c.nome+c.id).toLowerCase().includes(busca));
+  if (status) clientes = clientes.filter(c=>statusGeral(c).label.toLowerCase().replace("ã","a").replace("çã","ca")===status||
+    (status==="migracao"&&c.migracao)||(status==="new"&&c.new)||(status==="demo"&&statusGeral(c).ordem===2)||(status==="potencial"&&statusGeral(c).ordem===1));
   if (agente) clientes = clientes.filter(c=>c.agente===agente);
   renderTabelaClientes(clientes);
 }
@@ -556,13 +637,15 @@ function renderTabelaClientes(clientes) {
     ? `<span class="etapa-pill pill-sim" style="background:${cor}18;color:${cor}">${label}</span>`
     : `<span class="etapa-pill pill-nao">${label}</span>`;
   wrap.innerHTML = `
-    <div class="clientes-table-wrap">
-      <table class="clientes-table">
-        <thead><tr>
-          <th>ID</th><th>Nome</th><th>Produto</th><th>Agente LogAI</th>
-          <th>Potencial</th><th>Demo</th><th>Migração</th><th>New</th>
-        </tr></thead>
-        <tbody>${clientes.map(c=>`<tr>
+    <table class="clientes-table">
+      <thead><tr>
+        <th>Status</th><th>ID</th><th>Nome</th><th>Produto</th><th>Agente LogAI</th>
+        <th>Potencial</th><th>Demo</th><th>Migração</th><th>New</th>
+      </tr></thead>
+      <tbody>${clientes.map(c=>{
+        const s = statusGeral(c);
+        return `<tr>
+          <td><span class="status-pill ${s.cls}">${s.label}</span></td>
           <td style="color:#888;font-size:11px">${c.id}</td>
           <td style="font-weight:500">${c.nome}</td>
           <td>${c.produto}</td>
@@ -571,9 +654,9 @@ function renderTabelaClientes(clientes) {
           <td>${pill(c.demo,"Demo","#7F77DD")}</td>
           <td>${c.migracao?`${pill(true,"Migração","#BA7517")}<br><span style="font-size:10px;color:#888">${c.statusMig}</span>`:pill(false,"Migração","#BA7517")}</td>
           <td>${c.new?`${pill(true,"New","#185FA5")}<br><span style="font-size:10px;color:#888">${c.statusNew}</span>`:pill(false,"New","#185FA5")}</td>
-        </tr>`).join("")}</tbody>
-      </table>
-    </div>
+        </tr>`;
+      }).join("")}</tbody>
+    </table>
     <div style="font-size:11px;color:#aaa;margin-top:8px;padding:4px 0">${clientes.length} cliente${clientes.length!==1?"s":""} encontrado${clientes.length!==1?"s":""}</div>`;
 }
 
@@ -587,7 +670,7 @@ function execItem(label, cor, val, total) {
 }
 
 function gerarNuvem(texto, tipo) {
-  const stop = new Set(["de","a","o","e","que","é","do","da","em","um","para","com","uma","os","no","se","na","por","mais","as","dos","como","mas","foi","ao","ele","das","tem","à","seu","sua","ou","ser","quando","muito","há","nos","já","também","só","pelo","pela","até","isso","ela","entre","era","depois","sem","mesmo","aos","ter","seus","quem","nas","me","esse","eles","estão","você","tinha","foram","essa","num","nem","suas","meu","às","minha","têm","numa","pelos","pelas","qual","nós","lhe","deles","essas","esses","pois","agora","aqui","bem","não","sim","the","and","for","are","but","was","with","they","this","have","from","not","that","been"]);
+  const stop = new Set(["de","a","o","e","que","é","do","da","em","um","para","com","uma","os","no","se","na","por","mais","as","dos","como","mas","foi","ao","ele","das","tem","à","seu","sua","ou","ser","quando","muito","há","nos","já","também","só","pelo","pela","até","isso","ela","entre","era","depois","sem","mesmo","aos","ter","seus","quem","nas","me","esse","eles","estão","você","tinha","foram","essa","num","nem","suas","meu","às","minha","têm","numa","pelos","pelas","qual","nós","lhe","deles","essas","esses","pois","agora","aqui","bem","não","sim"]);
   const freq = {};
   texto.toLowerCase().replace(/[^a-záéíóúãõâêîôûàèìòùç\s]/g,"").split(/\s+/)
     .filter(w=>w.length>3&&!stop.has(w))
