@@ -7,7 +7,7 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
-  .container { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
+  .container { max-width: 980px; margin: 0 auto; padding: 24px 16px; }
   .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 12px; }
   .header h1 { font-size: 22px; font-weight: 700; }
   .header p { font-size: 12px; color: #888; margin-top: 3px; }
@@ -41,8 +41,8 @@
   .dir-frente-valor { font-size: 12px; color: #333; line-height: 1.5; }
 
   /* EXECUTIVO */
-  .exec-section-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; font-weight: 600; }
-  .funil-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+  .sec-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; font-weight: 600; }
+  .funil-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
   .etapa { background: white; border: 1px solid #eee; border-radius: 12px; padding: 14px 12px; text-align: center; position: relative; cursor: pointer; transition: all .15s; }
   .etapa:hover { border-color: #ddd; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
   .etapa.aberta { border-width: 2px; }
@@ -60,7 +60,7 @@
   .det-fechar { font-size: 11px; color: #888; cursor: pointer; padding: 3px 10px; border-radius: 20px; border: 1px solid #eee; }
   .det-fechar:hover { background: #f5f5f5; }
 
-  .exec-grid { display: grid; grid-template-columns: auto 1fr 1fr; gap: 14px; margin-bottom: 20px; align-items: start; }
+  .exec-grid { display: grid; gap: 14px; margin-bottom: 20px; align-items: start; }
   .exec-total { text-align: center; padding: 16px 24px; background: #f8f8f8; border-radius: 12px; }
   .exec-total-num { font-size: 48px; font-weight: 600; line-height: 1; }
   .exec-total-label { font-size: 12px; color: #888; margin-top: 4px; }
@@ -72,14 +72,15 @@
   .exec-item-label { font-size: 12px; color: #333; }
   .exec-item-val { font-size: 12px; font-weight: 600; }
   .exec-bar-bg { width: 100%; background: #e8e8e8; border-radius: 4px; height: 5px; }
-  .exec-bar-fill { height: 5px; border-radius: 4px; transition: width .4s; }
+  .exec-bar-fill { height: 5px; border-radius: 4px; }
 
   .divider { height: 1px; background: #f0f0f0; margin: 16px 0; }
 
   .listao-header { display: grid; gap: 8px; padding: 6px 8px; font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid #eee; margin-bottom: 4px; }
   .listao-row { display: grid; gap: 8px; padding: 8px; border-radius: 8px; font-size: 12px; align-items: center; }
   .listao-row:hover { background: #fafafa; }
-  .tag { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 600; display: inline-block; }
+
+  .tag { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 600; display: inline-block; white-space: nowrap; }
   .tag-pos { background: #e1f5ee; color: #0f6e56; }
   .tag-neg { background: #faece7; color: #993c1d; }
   .tag-neu { background: #f1efe8; color: #5f5e5a; }
@@ -96,12 +97,30 @@
   .nuvem { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .palavra { border-radius: 20px; padding: 3px 10px; font-weight: 600; cursor: default; }
 
+  /* CLIENTES */
+  .clientes-filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+  .clientes-filtros input, .clientes-filtros select { padding: 7px 12px; border: 1px solid #ddd; border-radius: 20px; font-size: 12px; background: white; }
+  .clientes-table-wrap { overflow-x: auto; background: white; border-radius: 12px; border: 1px solid #eee; }
+  .clientes-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 700px; }
+  .clientes-table th { padding: 10px 12px; text-align: left; font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid #eee; white-space: nowrap; background: #fafafa; }
+  .clientes-table td { padding: 9px 12px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+  .clientes-table tr:last-child td { border-bottom: none; }
+  .clientes-table tr:hover td { background: #fafafa; }
+  .etapa-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 600; margin: 1px; }
+  .pill-sim { background: #eeedfe; color: #534ab7; }
+  .pill-nao { background: #f1efe8; color: #bbb; }
+  .clientes-resumo { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
+  .res-card { background: white; border-radius: 10px; padding: 14px; text-align: center; border: 1px solid #eee; }
+  .res-card .v { font-size: 24px; font-weight: 600; }
+  .res-card .l { font-size: 11px; color: #888; margin-top: 3px; }
+
   .vazio { text-align: center; padding: 28px; color: #bbb; font-size: 13px; }
 
   @media (max-width: 600px) {
     .funil-row { grid-template-columns: repeat(2,1fr); }
-    .exec-grid { grid-template-columns: 1fr; }
+    .exec-grid { grid-template-columns: 1fr !important; }
     .nuvens-grid { grid-template-columns: 1fr; }
+    .clientes-resumo { grid-template-columns: repeat(2,1fr); }
   }
 </style>
 </head>
@@ -119,55 +138,75 @@
     <button class="nav-btn ativo" onclick="setAba('forms')" id="nav-forms">Forms</button>
     <button class="nav-btn" onclick="setAba('dir')" id="nav-dir">Direcionamento</button>
     <button class="nav-btn" onclick="setAba('exec')" id="nav-exec">Executivo</button>
+    <button class="nav-btn" onclick="setAba('clientes')" id="nav-clientes">Clientes</button>
   </div>
 
   <div id="pagina-forms"></div>
   <div id="pagina-dir" style="display:none"></div>
   <div id="pagina-exec" style="display:none"></div>
+  <div id="pagina-clientes" style="display:none"></div>
 </div>
 
 <script>
 const API = "https://script.google.com/macros/s/AKfycbydFzsnklxyH7_-9tNTma7D5PUZp-UdBrE13OXhXTaXIkdBlT-OtRiWS1I0G5oNYHwqcQ/exec";
-const CORES = { "NCM":"#7F77DD","Finance":"#1D9E75","Shipment":"#D85A30","Export":"#BA7517","Trading":"#185FA5","México":"#993556","360":"#0F6E56","LogOS":"#534AB7","Logmanager":"#3C3489" };
-const COR_ETAPAS = { potencial:"#993556", demo:"#7F77DD", migracao:"#BA7517", ativacao:"#185FA5" };
+const CORES = {"NCM":"#7F77DD","Finance":"#1D9E75","Shipment":"#D85A30","Export":"#BA7517","Trading":"#185FA5","México":"#993556","360":"#0F6E56","LogOS":"#534AB7","Logmanager":"#3C3489"};
+const COR_ETAPAS = {potencial:"#993556",demo:"#7F77DD",migracao:"#BA7517",ativacao:"#185FA5"};
 const ABAS = ["Espelho","Demo","Migração","Ativação","Potenciais"];
 
 const FORMS_INFO = [
-  { nome:"Espelho", icone:"🪞", cor:"#1D9E75", url:"https://forms.gle/jQaG9qbDubF53z1i9", desc:"Todas as consultas que o time faz no produto legado e replica no LogAI." },
-  { nome:"Demo", icone:"🤝", cor:"#7F77DD", url:"https://forms.gle/hweej1hHV8xaeoeq9", desc:"Preencher após cada demonstração do LogAI para um cliente." },
-  { nome:"Migração", icone:"🔄", cor:"#BA7517", url:"https://forms.gle/ugKFwpVTR8Urr4DZA", desc:"Acompanhamento do processo de migração de clientes para o LogAI." },
-  { nome:"Ativação", icone:"🚀", cor:"#185FA5", url:"https://forms.gle/CQRpx7TgGstv6iTTA", desc:"Acompanhamento semanal de clientes novos no LogAI." },
-  { nome:"Clientes Potenciais", icone:"⭐", cor:"#993556", url:"https://forms.gle/bQ36EwQLjjoKQqdp8", desc:"Registrar clientes com potencial de migrar para o LogAI." },
+  {nome:"Espelho",icone:"🪞",cor:"#1D9E75",url:"https://forms.gle/jQaG9qbDubF53z1i9",desc:"Todas as consultas que o time faz no produto legado e replica no LogAI."},
+  {nome:"Demo",icone:"🤝",cor:"#7F77DD",url:"https://forms.gle/hweej1hHV8xaeoeq9",desc:"Preencher após cada demonstração do LogAI para um cliente."},
+  {nome:"Migração",icone:"🔄",cor:"#BA7517",url:"https://forms.gle/ugKFwpVTR8Urr4DZA",desc:"Acompanhamento do processo de migração de clientes para o LogAI."},
+  {nome:"Ativação",icone:"🚀",cor:"#185FA5",url:"https://forms.gle/CQRpx7TgGstv6iTTA",desc:"Acompanhamento semanal de clientes novos no LogAI."},
+  {nome:"Clientes Potenciais",icone:"⭐",cor:"#993556",url:"https://forms.gle/bQ36EwQLjjoKQqdp8",desc:"Registrar clientes com potencial de migrar para o LogAI."},
 ];
 
 const DIRECIONAMENTO_FIXO = {
-  "13": {
-    "NCM": {
-      "Espelho": "• Guardião Key user deve realizar testes com foco em comparar resultados de preço.\n• Toda e qualquer pesquisa realizada no NCM (1.0, 2.0 e PRO) deve ser replicada no Log.AI.",
-      "Demo": "Realizar demo com clientes potenciais já selecionados.",
-      "Migração": "Migrar clientes do Basic.",
-      "Clientes Potenciais": "Incluir novos clientes potenciais."
-    },
-    "Finance": { "Demo": "Realizar demo com clientes já agendados.", "Clientes Potenciais": "Incluir novos clientes potenciais." },
-    "Shipment": { "Espelho": "Toda e qualquer pesquisa realizada no Shipment deve ser replicada no Log.AI.", "Demo": "Realizar 10 agendas com clientes potenciais.", "Clientes Potenciais": "Incluir novos clientes potenciais." },
-    "Export": { "Espelho": "• Toda e qualquer pesquisa realizada no Export deve ser replicada no Log.AI.\n• Guardiões devem realizar testes com foco em comparar resultados de comprador e exportador.", "Demo": "Realizar 05 agendas com clientes potenciais.", "Clientes Potenciais": "Incluir novos clientes potenciais." },
-    "México": { "Espelho": "Toda e qualquer pesquisa realizada nos produtos México deve ser replicada no Log.AI.", "Ativação": "Ativar com os 15 novos clientes." }
+  "13":{
+    "NCM":{"Espelho":"• Guardião Key user deve realizar testes com foco em comparar resultados de preço.\n• Toda e qualquer pesquisa realizada no NCM (1.0, 2.0 e PRO) deve ser replicada no Log.AI.","Demo":"Realizar demo com clientes potenciais já selecionados.","Migração":"Migrar clientes do Basic.","Clientes Potenciais":"Incluir novos clientes potenciais."},
+    "Finance":{"Demo":"Realizar demo com clientes já agendados.","Clientes Potenciais":"Incluir novos clientes potenciais."},
+    "Shipment":{"Espelho":"Toda e qualquer pesquisa realizada no Shipment deve ser replicada no Log.AI.","Demo":"Realizar 10 agendas com clientes potenciais.","Clientes Potenciais":"Incluir novos clientes potenciais."},
+    "Export":{"Espelho":"• Toda e qualquer pesquisa realizada no Export deve ser replicada no Log.AI.\n• Guardiões devem realizar testes com foco em comparar resultados de comprador e exportador.","Demo":"Realizar 05 agendas com clientes potenciais.","Clientes Potenciais":"Incluir novos clientes potenciais."},
+    "México":{"Espelho":"Toda e qualquer pesquisa realizada nos produtos México deve ser replicada no Log.AI.","Ativação":"Ativar com os 15 novos clientes."}
   }
 };
 
 let dadosTodos = {};
 let abaAtiva = "forms";
 let etapaAberta = null;
+let clientesBusca = "";
+let clientesFiltroEtapa = "";
 
 // ── UTILS ──────────────────────────────────────────────────
-function idCliente(row, aba) {
-  const cols = { "Demo":"4. ID do cliente (Copiar exatamente como aparece no sistema de CS)", "Migração":"4. ID do Cliente", "Ativação":"ID do Cliente", "Potenciais":"4. ID do Cliente" };
-  return (row[cols[aba]] || "").trim().toUpperCase();
-}
-function nomeCliente(row, aba) {
-  const cols = { "Demo":"5. Nome do cliente (Copiar exatamente como aparece no sistema de CS)", "Migração":"5. Nome do Cliente", "Ativação":"Nome do Cliente", "Potenciais":"5. Nome do Cliente" };
-  return row[cols[aba]] || "—";
-}
+const COL_ID = {
+  "Demo":"4. ID do cliente (Copiar exatamente como aparece no sistema de CS)",
+  "Migração":"4. ID do Cliente",
+  "Ativação":"ID do Cliente",
+  "Potenciais":"4. ID do Cliente"
+};
+const COL_NOME = {
+  "Demo":"5. Nome do cliente (Copiar exatamente como aparece no sistema de CS)",
+  "Migração":"5. Nome do Cliente",
+  "Ativação":"Nome do Cliente",
+  "Potenciais":"5. Nome do Cliente"
+};
+const COL_PRODUTO = {
+  "Demo":"6. Produto atual do cliente",
+  "Migração":"6. Produto de origem (de onde está migrando)",
+  "Ativação":"Agente contratado no Log.AI",
+  "Potenciais":"6. Produtos atuais do cliente"
+};
+const COL_AGENTE = {
+  "Demo":"Qual agente foi demonstrado ao cliente no LogAI",
+  "Migração":"Agente habilitado no LogAI para o cliente",
+  "Ativação":"Agente contratado no Log.AI",
+  "Potenciais":"8. Agente do LogAI com potencial para este Cliente"
+};
+
+function getId(row, aba) { return (row[COL_ID[aba]]||"").trim().toUpperCase(); }
+function getNome(row, aba) { return row[COL_NOME[aba]]||"—"; }
+function getProduto(row, aba) { return row[COL_PRODUTO[aba]]||"—"; }
+function getAgente(row, aba) { return row[COL_AGENTE[aba]]||"—"; }
 
 async function buscarAba(aba) {
   const r = await fetch(`${API}?aba=${encodeURIComponent(aba)}`);
@@ -178,8 +217,8 @@ async function buscarAba(aba) {
 async function carregar() {
   document.getElementById("ultima-atualizacao").textContent = "Atualizando...";
   try {
-    const res = await Promise.all(ABAS.map(a => buscarAba(a).catch(() => [])));
-    ABAS.forEach((a,i) => dadosTodos[a] = res[i] || []);
+    const res = await Promise.all(ABAS.map(a => buscarAba(a).catch(()=>[])));
+    ABAS.forEach((a,i) => dadosTodos[a] = res[i]||[]);
     document.getElementById("ultima-atualizacao").textContent = `Atualizado às ${new Date().toLocaleTimeString("pt-BR")}`;
     renderAba();
   } catch(e) {
@@ -189,87 +228,78 @@ async function carregar() {
 
 function setAba(aba) {
   abaAtiva = aba;
-  ["forms","dir","exec"].forEach(a => {
-    document.getElementById(`pagina-${a}`).style.display = a === aba ? "block" : "none";
-    document.getElementById(`nav-${a}`).classList.toggle("ativo", a === aba);
+  ["forms","dir","exec","clientes"].forEach(a => {
+    document.getElementById(`pagina-${a}`).style.display = a===aba?"block":"none";
+    document.getElementById(`nav-${a}`).classList.toggle("ativo", a===aba);
   });
   renderAba();
 }
 
 function renderAba() {
-  if (abaAtiva === "forms") renderForms();
-  else if (abaAtiva === "dir") renderDirecionamento();
-  else if (abaAtiva === "exec") renderExecutivo();
+  if (abaAtiva==="forms") renderForms();
+  else if (abaAtiva==="dir") renderDirecionamento();
+  else if (abaAtiva==="exec") renderExecutivo();
+  else if (abaAtiva==="clientes") renderClientes();
 }
 
 // ── FORMS ──────────────────────────────────────────────────
 function renderForms() {
-  document.getElementById("pagina-forms").innerHTML = `
-    <div class="forms-grid">
-      ${FORMS_INFO.map(f => `
-        <div class="form-card" style="border-top:3px solid ${f.cor}">
-          <div class="form-card-icon">${f.icone}</div>
-          <div class="form-card-nome">${f.nome}</div>
-          <div class="form-card-desc">${f.desc}</div>
-          <a href="${f.url}" target="_blank" class="form-card-link" style="border-color:${f.cor};color:${f.cor};background:${f.cor}12">Abrir form →</a>
-        </div>`).join("")}
-    </div>`;
+  document.getElementById("pagina-forms").innerHTML = `<div class="forms-grid">${FORMS_INFO.map(f=>`
+    <div class="form-card" style="border-top:3px solid ${f.cor}">
+      <div class="form-card-icon">${f.icone}</div>
+      <div class="form-card-nome">${f.nome}</div>
+      <div class="form-card-desc">${f.desc}</div>
+      <a href="${f.url}" target="_blank" class="form-card-link" style="border-color:${f.cor};color:${f.cor};background:${f.cor}12">Abrir form →</a>
+    </div>`).join("")}</div>`;
 }
 
 // ── DIRECIONAMENTO ──────────────────────────────────────────
-function setSemana(s) { document.getElementById("pagina-dir").dataset.semAtiva = s; renderDirecionamento(); }
+function setSemana(s) { document.getElementById("pagina-dir").dataset.semAtiva=s; renderDirecionamento(); }
 function renderDirecionamento() {
   const el = document.getElementById("pagina-dir");
-  const semanas = Object.keys(DIRECIONAMENTO_FIXO).sort((a,b) => Number(b)-Number(a));
-  const semAtiva = el.dataset.semAtiva || semanas[0];
-  el.dataset.semAtiva = semAtiva;
-  const prod = DIRECIONAMENTO_FIXO[semAtiva] || {};
+  const sems = Object.keys(DIRECIONAMENTO_FIXO).sort((a,b)=>Number(b)-Number(a));
+  const sa = el.dataset.semAtiva||sems[0];
+  el.dataset.semAtiva = sa;
+  const prod = DIRECIONAMENTO_FIXO[sa]||{};
   el.innerHTML = `
     <div class="secao-header"><span class="secao-titulo">Direcionamento da semana</span></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
-      ${semanas.map(s => `<button onclick="setSemana('${s}')" style="padding:5px 16px;border-radius:20px;border:1px solid;cursor:pointer;font-size:13px;${s===semAtiva?'border-color:#7F77DD;background:#7F77DD22;color:#7F77DD;font-weight:600':'border-color:#ddd;background:white;color:#888'}">Semana ${s}</button>`).join("")}
+      ${sems.map(s=>`<button onclick="setSemana('${s}')" style="padding:5px 16px;border-radius:20px;border:1px solid;cursor:pointer;font-size:13px;${s===sa?'border-color:#7F77DD;background:#7F77DD22;color:#7F77DD;font-weight:600':'border-color:#ddd;background:white;color:#888'}">Semana ${s}</button>`).join("")}
     </div>
-    <div class="dir-grid">
-      ${Object.entries(prod).map(([p, frentes]) => {
-        const c = CORES[p] || "#7F77DD";
-        return `<div class="dir-card">
-          <div class="dir-card-header" style="background:${c}12;border-bottom:2px solid ${c}">
-            <span style="width:9px;height:9px;border-radius:50%;background:${c};display:inline-block;flex-shrink:0"></span>${p}
-          </div>
-          <div class="dir-card-body">
-            ${Object.entries(frentes).map(([frente, obj]) => `
-              <div class="dir-frente">
-                <div class="dir-frente-label"><span>${frente}</span>${frente==="Clientes Potenciais"?`<span style="font-size:9px;padding:1px 7px;border-radius:20px;background:#f0f0f0;color:#aaa;font-weight:600">CONTÍNUO</span>`:""}</div>
-                <div class="dir-frente-valor">${obj.replace(/\n/g,"<br>")}</div>
-              </div>`).join("")}
-          </div>
-        </div>`;
-      }).join("")}
-    </div>`;
+    <div class="dir-grid">${Object.entries(prod).map(([p,frentes])=>{
+      const c=CORES[p]||"#7F77DD";
+      return `<div class="dir-card">
+        <div class="dir-card-header" style="background:${c}12;border-bottom:2px solid ${c}">
+          <span style="width:9px;height:9px;border-radius:50%;background:${c};display:inline-block;flex-shrink:0"></span>${p}
+        </div>
+        <div class="dir-card-body">${Object.entries(frentes).map(([f,o])=>`
+          <div class="dir-frente">
+            <div class="dir-frente-label"><span>${f}</span>${f==="Clientes Potenciais"?`<span style="font-size:9px;padding:1px 7px;border-radius:20px;background:#f0f0f0;color:#aaa;font-weight:600">CONTÍNUO</span>`:""}</div>
+            <div class="dir-frente-valor">${o.replace(/\n/g,"<br>")}</div>
+          </div>`).join("")}
+        </div>
+      </div>`;
+    }).join("")}</div>`;
 }
 
 // ── EXECUTIVO ───────────────────────────────────────────────
 function renderExecutivo() {
   const el = document.getElementById("pagina-exec");
-
-  // IDs únicos por etapa
-  const idsPot  = new Set((dadosTodos["Potenciais"]||[]).map(r => idCliente(r,"Potenciais")).filter(Boolean));
-  const idsDemo = new Set((dadosTodos["Demo"]||[]).map(r => idCliente(r,"Demo")).filter(Boolean));
-  const idsMig  = new Set((dadosTodos["Migração"]||[]).map(r => idCliente(r,"Migração")).filter(Boolean));
-  const idsAtiv = new Set((dadosTodos["Ativação"]||[]).map(r => idCliente(r,"Ativação")).filter(Boolean));
-
-  // Conversões
-  const convDemo = idsPot.size > 0 ? Math.round([...idsDemo].filter(id => idsPot.has(id)).length / idsPot.size * 100) : 0;
-  const convMig  = idsDemo.size > 0 ? Math.round([...idsMig].filter(id => idsDemo.has(id)).length / idsDemo.size * 100) : 0;
-  const convAtiv = idsMig.size > 0 ? Math.round([...idsAtiv].filter(id => idsMig.has(id)).length / idsMig.size * 100) : 0;
+  const idsPot  = new Set((dadosTodos["Potenciais"]||[]).map(r=>getId(r,"Potenciais")).filter(Boolean));
+  const idsDemo = new Set((dadosTodos["Demo"]||[]).map(r=>getId(r,"Demo")).filter(Boolean));
+  const idsMig  = new Set((dadosTodos["Migração"]||[]).map(r=>getId(r,"Migração")).filter(Boolean));
+  const idsAtiv = new Set((dadosTodos["Ativação"]||[]).map(r=>getId(r,"Ativação")).filter(Boolean));
+  const convDemo = idsPot.size>0 ? Math.round([...idsDemo].filter(id=>idsPot.has(id)).length/idsPot.size*100) : 0;
+  const convMig  = idsDemo.size>0 ? Math.round([...idsMig].filter(id=>idsDemo.has(id)).length/idsDemo.size*100) : 0;
+  const convAtiv = idsMig.size>0 ? Math.round([...idsAtiv].filter(id=>idsMig.has(id)).length/idsMig.size*100) : 0;
 
   el.innerHTML = `
-    <div class="exec-section-label">funil de clientes — clique em uma etapa para detalhar</div>
+    <div class="sec-label">funil de clientes — clique em uma etapa para detalhar</div>
     <div class="funil-row">
-      ${etapaCard("potencial","Potenciais",idsPot.size,"clientes únicos","","","","▾")}
-      ${etapaCard("demo","Demo",idsDemo.size,"clientes únicos",convDemo>0?`${convDemo}% dos potenciais`:"","#EEEDFE","#534AB7", etapaAberta==="demo"?"▴":"▾")}
-      ${etapaCard("migracao","Migração",idsMig.size,"clientes únicos",convMig>0?`${convMig}% das demos`:"","#FAEEDA","#854F0B", etapaAberta==="migracao"?"▴":"▾")}
-      ${etapaCard("ativacao","Ativação",idsAtiv.size,"clientes únicos",convAtiv>0?`${convAtiv}% das migrações`:"","#E6F1FB","#0C447C", etapaAberta==="ativacao"?"▴":"▾")}
+      ${etapaCard("potencial","Potenciais",idsPot.size,"clientes únicos","","","",etapaAberta==="potencial"?"▴":"▾")}
+      ${etapaCard("demo","Demo",idsDemo.size,"clientes únicos",convDemo>0?`${convDemo}% dos potenciais`:"","#EEEDFE","#534AB7",etapaAberta==="demo"?"▴":"▾")}
+      ${etapaCard("migracao","Migração",idsMig.size,"clientes únicos",convMig>0?`${convMig}% das demos`:"","#FAEEDA","#854F0B",etapaAberta==="migracao"?"▴":"▾")}
+      ${etapaCard("ativacao","Ativação",idsAtiv.size,"clientes únicos",convAtiv>0?`${convAtiv}% das migrações`:"","#E6F1FB","#0C447C",etapaAberta==="ativacao"?"▴":"▾")}
     </div>
     <div id="detalhe-container"></div>`;
 
@@ -278,8 +308,8 @@ function renderExecutivo() {
 
 function etapaCard(id, nome, num, sub, conv, convBg, convCor, hint) {
   const c = COR_ETAPAS[id];
-  const aberta = etapaAberta === id;
-  return `<div class="etapa${aberta?" aberta":""}" id="et-${id}" onclick="toggleEtapa('${id}')" style="${aberta?`border-color:${c};border-width:2px`:''}">
+  const ab = etapaAberta===id;
+  return `<div class="etapa${ab?" aberta":""}" onclick="toggleEtapa('${id}')" style="${ab?`border-color:${c};border-width:2px`:''}">
     <div class="etapa-top" style="background:${c}"></div>
     <div class="etapa-nome">${nome}</div>
     <div class="etapa-num" style="color:${c}">${num}</div>
@@ -290,24 +320,21 @@ function etapaCard(id, nome, num, sub, conv, convBg, convCor, hint) {
 }
 
 function toggleEtapa(id) {
-  etapaAberta = etapaAberta === id ? null : id;
+  etapaAberta = etapaAberta===id ? null : id;
   renderExecutivo();
 }
 
 function renderDetalhe(id) {
   const c = COR_ETAPAS[id];
-  const nomes = { potencial:"Potenciais", demo:"Demo", migracao:"Migração", ativacao:"Ativação" };
-  const nome = nomes[id];
-  let html = "";
-  if (id === "demo") html = renderDetalheDemo(c);
-  else if (id === "potencial") html = renderDetalhePotencial(c);
-  else if (id === "migracao") html = renderDetalheMigracao(c);
-  else if (id === "ativacao") html = renderDetalheAtivacao(c);
-
+  const nomes = {potencial:"Potenciais",demo:"Demo",migracao:"Migração",ativacao:"Ativação"};
+  const html = id==="demo" ? renderDetalheDemo(c)
+             : id==="potencial" ? renderDetalhePotencial(c)
+             : id==="migracao" ? renderDetalheMigracao(c)
+             : renderDetalheAtivacao(c);
   document.getElementById("detalhe-container").innerHTML = `
     <div class="detalhe visivel">
       <div class="det-header">
-        <div class="det-titulo" style="color:${c}">${nome}</div>
+        <div class="det-titulo" style="color:${c}">${nomes[id]}</div>
         <div class="det-fechar" onclick="toggleEtapa('${id}')">fechar ✕</div>
       </div>
       ${html}
@@ -316,227 +343,280 @@ function renderDetalhe(id) {
 
 // ── DETALHE DEMO ───────────────────────────────────────────
 function renderDetalheDemo(cor) {
-  const rows = dadosTodos["Demo"] || [];
+  const rows = dadosTodos["Demo"]||[];
   if (!rows.length) return '<div class="vazio">Nenhuma demo registrada ainda.</div>';
-
   const total = rows.length;
-  const pos  = rows.filter(r => r["8. Percepção geral do cliente em relação ao LogAI"] === "Positiva").length;
-  const neg  = rows.filter(r => r["8. Percepção geral do cliente em relação ao LogAI"] === "Negativa").length;
-  const neu  = total - pos - neg;
-  const sim  = rows.filter(r => r["12. Cliente quer avançar?"] === "Sim").length;
-  const nao  = rows.filter(r => r["12. Cliente quer avançar?"] === "Não").length;
-  const pct  = v => total > 0 ? Math.round(v/total*100) : 0;
-
-  // Nuvens de palavras
-  const txtPos = rows.filter(r => r["8. Percepção geral do cliente em relação ao LogAI"] === "Positiva")
-    .map(r => r["9. O que o cliente disse (Principais comentários, dúvidas e pontos de atenção)"] || "").join(" ");
-  const txtNeg = rows.map(r => r["10. Cliente sentiu falta de alguma coisa no LogAI?"] || "").join(" ")
-    + " " + rows.filter(r => r["12. Cliente quer avançar?"] === "Não").map(r => r["Se não, descreva o motivo"] || "").join(" ");
-
-  const cols = "grid-template-columns:2fr 1fr 1fr 1.5fr 1fr";
-
+  const pos  = rows.filter(r=>r["8. Percepção geral do cliente em relação ao LogAI"]==="Positiva").length;
+  const neg  = rows.filter(r=>r["8. Percepção geral do cliente em relação ao LogAI"]==="Negativa").length;
+  const neu  = total-pos-neg;
+  const sim  = rows.filter(r=>r["12. Cliente quer avançar?"]==="Sim").length;
+  const nao  = rows.filter(r=>r["12. Cliente quer avançar?"]==="Não").length;
+  const txtPos = rows.filter(r=>r["8. Percepção geral do cliente em relação ao LogAI"]==="Positiva").map(r=>r["9. O que o cliente disse (Principais comentários, dúvidas e pontos de atenção)"]||"").join(" ");
+  const txtNeg = rows.map(r=>r["10. Cliente sentiu falta de alguma coisa no LogAI?"]||"").join(" ")+" "+rows.filter(r=>r["12. Cliente quer avançar?"]==="Não").map(r=>r["Se não, descreva o motivo"]||"").join(" ");
+  const gc = "grid-template-columns:2fr 1fr 1fr 1.5fr 1fr";
   return `
-    <div class="exec-grid">
-      <div class="exec-total">
-        <div class="exec-total-num" style="color:${cor}">${total}</div>
-        <div class="exec-total-label">demos realizadas</div>
-      </div>
-      <div class="exec-bloco">
-        <div class="exec-bloco-titulo">Percepção do cliente</div>
-        ${execItem("Positiva","#1D9E75",pos,total)}
-        ${execItem("Neutra","#BA7517",neu,total)}
-        ${execItem("Negativa","#D85A30",neg,total)}
-      </div>
-      <div class="exec-bloco">
-        <div class="exec-bloco-titulo">Quer avançar?</div>
-        ${execItem("Sim","#7F77DD",sim,total)}
-        ${execItem("Não","#888",nao,total)}
-      </div>
+    <div class="exec-grid" style="grid-template-columns:auto 1fr 1fr">
+      <div class="exec-total"><div class="exec-total-num" style="color:${cor}">${total}</div><div class="exec-total-label">demos realizadas</div></div>
+      <div class="exec-bloco"><div class="exec-bloco-titulo">Percepção do cliente</div>${execItem("Positiva","#1D9E75",pos,total)}${execItem("Neutra","#BA7517",neu,total)}${execItem("Negativa","#D85A30",neg,total)}</div>
+      <div class="exec-bloco"><div class="exec-bloco-titulo">Quer avançar?</div>${execItem("Sim","#7F77DD",sim,total)}${execItem("Não","#888",nao,total)}</div>
     </div>
     <div class="divider"></div>
-    <div class="exec-section-label" style="margin-bottom:8px">listão de clientes</div>
-    <div class="listao-header" style="${cols}">
-      <div>nome do cliente</div><div>percepção</div><div>quer avançar?</div><div>motivo (se não)</div><div>gravação</div>
-    </div>
-    ${rows.map(r => {
-      const perc = r["8. Percepção geral do cliente em relação ao LogAI"] || "—";
-      const avanc = r["12. Cliente quer avançar?"] || "—";
-      const motivo = r["Se não, descreva o motivo"] || "";
-      const link = r["13. Link da gravação Meetrox (se houver)"] || "";
-      const tagPerc = perc==="Positiva"?"tag-pos":perc==="Negativa"?"tag-neg":"tag-neu";
-      const tagAv = avanc==="Sim"?"tag-sim":"tag-nao";
-      return `<div class="listao-row" style="${cols}">
-        <div style="font-weight:500">${nomeCliente(r,"Demo")}</div>
-        <div><span class="tag ${tagPerc}">${perc}</span></div>
-        <div><span class="tag ${tagAv}">${avanc}</span></div>
-        <div class="motivo-txt">${avanc==="Não"&&motivo ? motivo : "—"}</div>
+    <div class="sec-label" style="margin-bottom:8px">listão de clientes</div>
+    <div class="listao-header" style="${gc}"><div>nome</div><div>percepção</div><div>avançar?</div><div>motivo (se não)</div><div>gravação</div></div>
+    ${rows.map(r=>{
+      const perc=r["8. Percepção geral do cliente em relação ao LogAI"]||"—";
+      const av=r["12. Cliente quer avançar?"]||"—";
+      const mot=r["Se não, descreva o motivo"]||"";
+      const link=r["13. Link da gravação Meetrox (se houver)"]||"";
+      return `<div class="listao-row" style="${gc}">
+        <div style="font-weight:500">${getNome(r,"Demo")}</div>
+        <div><span class="tag ${perc==="Positiva"?"tag-pos":perc==="Negativa"?"tag-neg":"tag-neu"}">${perc}</span></div>
+        <div><span class="tag ${av==="Sim"?"tag-sim":"tag-nao"}">${av}</span></div>
+        <div class="motivo-txt">${av==="Não"&&mot?mot:"—"}</div>
         <div>${link?`<a class="link-meet" href="${link}" target="_blank">ver gravação</a>`:"—"}</div>
       </div>`;
     }).join("")}
     <div class="divider"></div>
-    <div class="exec-section-label" style="margin-bottom:8px">evidências qualitativas</div>
+    <div class="sec-label" style="margin-bottom:8px">evidências qualitativas</div>
     <div class="nuvens-grid">
-      <div class="nuvem-box">
-        <div class="nuvem-titulo" style="color:#0f6e56">o que agradou</div>
-        <div class="nuvem">${gerarNuvem(txtPos, "pos")}</div>
-      </div>
-      <div class="nuvem-box">
-        <div class="nuvem-titulo" style="color:#993c1d">o que faltou / pontos negativos</div>
-        <div class="nuvem">${gerarNuvem(txtNeg, "neg")}</div>
-      </div>
+      <div class="nuvem-box"><div class="nuvem-titulo" style="color:#0f6e56">o que agradou</div><div class="nuvem">${gerarNuvem(txtPos,"pos")}</div></div>
+      <div class="nuvem-box"><div class="nuvem-titulo" style="color:#993c1d">o que faltou / pontos negativos</div><div class="nuvem">${gerarNuvem(txtNeg,"neg")}</div></div>
     </div>`;
 }
 
 // ── DETALHE POTENCIAIS ─────────────────────────────────────
 function renderDetalhePotencial(cor) {
-  const rows = dadosTodos["Potenciais"] || [];
+  const rows = dadosTodos["Potenciais"]||[];
   if (!rows.length) return '<div class="vazio">Nenhum cliente potencial registrado ainda.</div>';
-  const comAgenda = rows.filter(r => r["10. Você tem agenda com cliente já marcada?"] === "Sim").length;
-  const cols = "grid-template-columns:2fr 1fr 1.5fr 1fr";
+  const comAgenda = rows.filter(r=>r["10. Você tem agenda com cliente já marcada?"]==="Sim").length;
+  const txtObs = rows.map(r=>r["11. Observações Adicionais (Opcional)"]||"").join(" ");
+  const gc = "grid-template-columns:2fr 1fr 1.5fr 1fr";
   return `
     <div class="exec-grid" style="grid-template-columns:auto 1fr">
-      <div class="exec-total">
-        <div class="exec-total-num" style="color:${cor}">${rows.length}</div>
-        <div class="exec-total-label">clientes potenciais</div>
-      </div>
-      <div class="exec-bloco">
-        <div class="exec-bloco-titulo">Status</div>
-        ${execItem("Com agenda marcada","#1D9E75",comAgenda,rows.length)}
-        ${execItem("Sem agenda","#888",rows.length-comAgenda,rows.length)}
-      </div>
+      <div class="exec-total"><div class="exec-total-num" style="color:${cor}">${rows.length}</div><div class="exec-total-label">clientes potenciais</div></div>
+      <div class="exec-bloco"><div class="exec-bloco-titulo">Agenda marcada</div>${execItem("Com agenda","#1D9E75",comAgenda,rows.length)}${execItem("Sem agenda","#888",rows.length-comAgenda,rows.length)}</div>
     </div>
     <div class="divider"></div>
-    <div class="exec-section-label" style="margin-bottom:8px">listão de clientes</div>
-    <div class="listao-header" style="${cols}">
-      <div>nome do cliente</div><div>agenda?</div><div>agente LogAI</div><div>coordenador</div>
-    </div>
-    ${rows.map(r => {
-      const agenda = r["10. Você tem agenda com cliente já marcada?"] || "—";
-      const agente = r["8. Agente do LogAI com potencial para este Cliente"] || "—";
-      const coord  = r["3. Time / Coordenador"] || "—";
-      return `<div class="listao-row" style="${cols}">
-        <div style="font-weight:500">${nomeCliente(r,"Potenciais")}</div>
-        <div><span class="tag ${agenda==="Sim"?"tag-sim":"tag-nao"}">${agenda}</span></div>
-        <div>${agente}</div>
-        <div>${coord}</div>
+    <div class="sec-label" style="margin-bottom:8px">listão de clientes</div>
+    <div class="listao-header" style="${gc}"><div>nome</div><div>agenda?</div><div>agente LogAI</div><div>coordenador</div></div>
+    ${rows.map(r=>{
+      const ag=r["10. Você tem agenda com cliente já marcada?"]||"—";
+      return `<div class="listao-row" style="${gc}">
+        <div style="font-weight:500">${getNome(r,"Potenciais")}</div>
+        <div><span class="tag ${ag==="Sim"?"tag-sim":"tag-nao"}">${ag}</span></div>
+        <div>${getAgente(r,"Potenciais")}</div>
+        <div>${r["3. Time / Coordenador"]||"—"}</div>
       </div>`;
-    }).join("")}`;
+    }).join("")}
+    ${txtObs.trim()?`
+    <div class="divider"></div>
+    <div class="sec-label" style="margin-bottom:8px">observações</div>
+    <div class="nuvem-box" style="background:#f8f8f8;border-radius:12px;padding:14px">
+      <div class="nuvem">${gerarNuvem(txtObs,"pot")}</div>
+    </div>`:""}`;
 }
 
 // ── DETALHE MIGRAÇÃO ───────────────────────────────────────
 function renderDetalheMigracao(cor) {
-  const rows = dadosTodos["Migração"] || [];
+  const rows = dadosTodos["Migração"]||[];
   if (!rows.length) return '<div class="vazio">Nenhuma migração registrada ainda.</div>';
-  const conc = rows.filter(r => r["9. Status da migração"] === "Concluído").length;
-  const and  = rows.filter(r => r["9. Status da migração"] === "Em andamento").length;
-  const sus  = rows.filter(r => r["9. Status da migração"] === "Suspenso").length;
-  const cols = "grid-template-columns:2fr 1fr 1.5fr 1fr";
+  const conc = rows.filter(r=>r["9. Status da migração"]==="Concluído").length;
+  const and  = rows.filter(r=>r["9. Status da migração"]==="Em andamento").length;
+  const sus  = rows.filter(r=>r["9. Status da migração"]==="Suspenso").length;
+  const gc = "grid-template-columns:2fr 1fr 1fr 1.5fr";
   return `
-    <div class="exec-grid">
-      <div class="exec-total">
-        <div class="exec-total-num" style="color:${cor}">${rows.length}</div>
-        <div class="exec-total-label">migrações</div>
-      </div>
-      <div class="exec-bloco">
-        <div class="exec-bloco-titulo">Status</div>
-        ${execItem("Concluído","#1D9E75",conc,rows.length)}
-        ${execItem("Em andamento","#BA7517",and,rows.length)}
-        ${execItem("Suspenso","#D85A30",sus,rows.length)}
-      </div>
-      <div class="exec-bloco">
-        <div class="exec-bloco-titulo">Tipo</div>
-        ${["Total","Parcial"].map(t => execItem(t,"#7F77DD",rows.filter(r=>r["8. Tipo de Migração"]===t).length,rows.length)).join("")}
-      </div>
+    <div class="exec-grid" style="grid-template-columns:auto 1fr 1fr">
+      <div class="exec-total"><div class="exec-total-num" style="color:${cor}">${rows.length}</div><div class="exec-total-label">migrações</div></div>
+      <div class="exec-bloco"><div class="exec-bloco-titulo">Status</div>${execItem("Concluído","#1D9E75",conc,rows.length)}${execItem("Em andamento","#BA7517",and,rows.length)}${execItem("Suspenso","#D85A30",sus,rows.length)}</div>
+      <div class="exec-bloco"><div class="exec-bloco-titulo">Tipo</div>${["Total","Parcial"].map(t=>execItem(t,"#7F77DD",rows.filter(r=>r["8. Tipo de Migração"]===t).length,rows.length)).join("")}</div>
     </div>
     <div class="divider"></div>
-    <div class="exec-section-label" style="margin-bottom:8px">listão de clientes</div>
-    <div class="listao-header" style="${cols}">
-      <div>nome do cliente</div><div>status</div><div>produto origem</div><div>agente LogAI</div>
-    </div>
-    ${rows.map(r => {
-      const status = r["9. Status da migração"] || "—";
-      const prod   = r["6. Produto de origem (de onde está migrando)"] || "—";
-      const agente = r["Agente habilitado no LogAI para o cliente"] || "—";
-      const tagS   = status==="Concluído"?"tag-ok":status==="Em andamento"?"tag-and":"tag-neg";
-      return `<div class="listao-row" style="${cols}">
-        <div style="font-weight:500">${nomeCliente(r,"Migração")}</div>
-        <div><span class="tag ${tagS}">${status}</span></div>
-        <div>${prod}</div>
-        <div>${agente}</div>
+    <div class="sec-label" style="margin-bottom:8px">listão de clientes</div>
+    <div class="listao-header" style="${gc}"><div>nome</div><div>status</div><div>produto origem</div><div>agente LogAI</div></div>
+    ${rows.map(r=>{
+      const st=r["9. Status da migração"]||"—";
+      return `<div class="listao-row" style="${gc}">
+        <div style="font-weight:500">${getNome(r,"Migração")}</div>
+        <div><span class="tag ${st==="Concluído"?"tag-ok":st==="Em andamento"?"tag-and":"tag-neg"}">${st}</span></div>
+        <div>${getProduto(r,"Migração")}</div>
+        <div>${getAgente(r,"Migração")}</div>
       </div>`;
     }).join("")}`;
 }
 
 // ── DETALHE ATIVAÇÃO ───────────────────────────────────────
 function renderDetalheAtivacao(cor) {
-  const rows = dadosTodos["Ativação"] || [];
+  const rows = dadosTodos["Ativação"]||[];
   if (!rows.length) return '<div class="vazio">Nenhum cliente de ativação registrado ainda.</div>';
-  const ativ  = rows.filter(r => r["Ativou o produto Log.AI?"] === "Sim").length;
-  const pesq  = rows.filter(r => r["Já realizou pesquisas no LogAI essa semana?"] === "Sim").length;
-  const cols  = "grid-template-columns:2fr 1fr 1fr 1.5fr";
+  const ativ = rows.filter(r=>r["Ativou o produto Log.AI?"]==="Sim").length;
+  const pesq = rows.filter(r=>r["Já realizou pesquisas no LogAI essa semana?"]==="Sim").length;
+  const gc = "grid-template-columns:2fr 1fr 1fr 2fr";
   return `
-    <div class="exec-grid">
-      <div class="exec-total">
-        <div class="exec-total-num" style="color:${cor}">${rows.length}</div>
-        <div class="exec-total-label">clientes acompanhados</div>
-      </div>
-      <div class="exec-bloco">
-        <div class="exec-bloco-titulo">Ativação</div>
-        ${execItem("Ativaram","#1D9E75",ativ,rows.length)}
-        ${execItem("Não ativaram","#D85A30",rows.length-ativ,rows.length)}
-      </div>
-      <div class="exec-bloco">
-        <div class="exec-bloco-titulo">Pesquisas essa semana</div>
-        ${execItem("Realizaram","#7F77DD",pesq,rows.length)}
-        ${execItem("Não realizaram","#888",rows.length-pesq,rows.length)}
-      </div>
+    <div class="exec-grid" style="grid-template-columns:auto 1fr 1fr">
+      <div class="exec-total"><div class="exec-total-num" style="color:${cor}">${rows.length}</div><div class="exec-total-label">clientes acompanhados</div></div>
+      <div class="exec-bloco"><div class="exec-bloco-titulo">Ativação</div>${execItem("Ativaram","#1D9E75",ativ,rows.length)}${execItem("Não ativaram","#D85A30",rows.length-ativ,rows.length)}</div>
+      <div class="exec-bloco"><div class="exec-bloco-titulo">Pesquisas esta semana</div>${execItem("Realizaram","#7F77DD",pesq,rows.length)}${execItem("Não realizaram","#888",rows.length-pesq,rows.length)}</div>
     </div>
     <div class="divider"></div>
-    <div class="exec-section-label" style="margin-bottom:8px">listão de clientes</div>
-    <div class="listao-header" style="${cols}">
-      <div>nome do cliente</div><div>ativou?</div><div>pesquisou?</div><div>feedback da semana</div>
-    </div>
-    ${rows.map(r => {
-      const ativ  = r["Ativou o produto Log.AI?"] || "—";
-      const pesq  = r["Já realizou pesquisas no LogAI essa semana?"] || "—";
-      const feed  = r["Feedback qualitativo da semana"] || "—";
-      return `<div class="listao-row" style="${cols}">
-        <div style="font-weight:500">${nomeCliente(r,"Ativação")}</div>
-        <div><span class="tag ${ativ==="Sim"?"tag-sim":"tag-nao"}">${ativ}</span></div>
-        <div><span class="tag ${pesq==="Sim"?"tag-sim":"tag-nao"}">${pesq}</span></div>
-        <div style="font-size:11px;color:#555;white-space:normal">${feed}</div>
+    <div class="sec-label" style="margin-bottom:8px">listão de clientes</div>
+    <div class="listao-header" style="${gc}"><div>nome</div><div>ativou?</div><div>pesquisou?</div><div>feedback da semana</div></div>
+    ${rows.map(r=>{
+      const at=r["Ativou o produto Log.AI?"]||"—";
+      const ps=r["Já realizou pesquisas no LogAI essa semana?"]||"—";
+      const fb=r["Feedback qualitativo da semana"]||"—";
+      return `<div class="listao-row" style="${gc}">
+        <div style="font-weight:500">${getNome(r,"Ativação")}</div>
+        <div><span class="tag ${at==="Sim"?"tag-sim":"tag-nao"}">${at}</span></div>
+        <div><span class="tag ${ps==="Sim"?"tag-sim":"tag-nao"}">${ps}</span></div>
+        <div style="font-size:11px;color:#555;white-space:normal">${fb}</div>
       </div>`;
     }).join("")}`;
 }
 
+// ── ABA CLIENTES ───────────────────────────────────────────
+function renderClientes() {
+  const el = document.getElementById("pagina-clientes");
+
+  // Monta mapa de clientes cruzando todas as abas pelo ID
+  const mapa = {};
+
+  const registrar = (aba, row) => {
+    const id = getId(row, aba);
+    if (!id) return;
+    if (!mapa[id]) mapa[id] = {id, nome:"—", produto:"—", agente:"—", potencial:false, demo:false, migracao:false, ativacao:false, statusMig:"—", statusAtiv:"—"};
+    const c = mapa[id];
+    const nome = getNome(row, aba);
+    if (nome && nome !== "—") c.nome = nome;
+    const prod = getProduto(row, aba);
+    if (prod && prod !== "—") c.produto = prod;
+    const ag = getAgente(row, aba);
+    if (ag && ag !== "—") c.agente = ag;
+    if (aba==="Potenciais") c.potencial = true;
+    if (aba==="Demo") c.demo = true;
+    if (aba==="Migração") { c.migracao = true; c.statusMig = row["9. Status da migração"]||"—"; }
+    if (aba==="Ativação") { c.ativacao = true; c.statusAtiv = row["Ativou o produto Log.AI?"]||"—"; }
+  };
+
+  ["Potenciais","Demo","Migração","Ativação"].forEach(aba => (dadosTodos[aba]||[]).forEach(r => registrar(aba, r)));
+
+  let clientes = Object.values(mapa);
+
+  // Cards resumo
+  const total = clientes.length;
+  const soPot = clientes.filter(c=>c.potencial&&!c.demo&&!c.migracao&&!c.ativacao).length;
+  const emMig = clientes.filter(c=>c.migracao&&!c.ativacao).length;
+  const ativados = clientes.filter(c=>c.ativacao).length;
+
+  el.innerHTML = `
+    <div class="clientes-resumo">
+      <div class="res-card"><div class="v">${total}</div><div class="l">clientes únicos</div></div>
+      <div class="res-card"><div class="v" style="color:#993556">${soPot}</div><div class="l">só em potenciais</div></div>
+      <div class="res-card"><div class="v" style="color:#BA7517">${emMig}</div><div class="l">em migração</div></div>
+      <div class="res-card"><div class="v" style="color:#185FA5">${ativados}</div><div class="l">ativados</div></div>
+    </div>
+    <div class="clientes-filtros">
+      <input type="text" id="busca-cliente" placeholder="🔍 Buscar por nome ou ID..." oninput="filtrarClientes()" style="min-width:220px"/>
+      <select id="filtro-etapa" onchange="filtrarClientes()">
+        <option value="">Todas as etapas</option>
+        <option value="potencial">Potenciais</option>
+        <option value="demo">Demo</option>
+        <option value="migracao">Migração</option>
+        <option value="ativacao">Ativação</option>
+      </select>
+      <select id="filtro-agente" onchange="filtrarClientes()">
+        <option value="">Todos os agentes</option>
+        ${[...new Set(clientes.map(c=>c.agente).filter(a=>a&&a!=="—"))].sort().map(a=>`<option>${a}</option>`).join("")}
+      </select>
+    </div>
+    <div id="clientes-table-wrap"></div>`;
+
+  renderTabelaClientes(clientes);
+}
+
+function filtrarClientes() {
+  const busca = document.getElementById("busca-cliente").value.toLowerCase();
+  const etapa = document.getElementById("filtro-etapa").value;
+  const agente = document.getElementById("filtro-agente").value;
+
+  const mapa = {};
+  const registrar = (aba, row) => {
+    const id = getId(row, aba);
+    if (!id) return;
+    if (!mapa[id]) mapa[id] = {id, nome:"—", produto:"—", agente:"—", potencial:false, demo:false, migracao:false, ativacao:false, statusMig:"—", statusAtiv:"—"};
+    const c = mapa[id];
+    const nome = getNome(row, aba); if (nome&&nome!=="—") c.nome=nome;
+    const prod = getProduto(row, aba); if (prod&&prod!=="—") c.produto=prod;
+    const ag = getAgente(row, aba); if (ag&&ag!=="—") c.agente=ag;
+    if (aba==="Potenciais") c.potencial=true;
+    if (aba==="Demo") c.demo=true;
+    if (aba==="Migração") { c.migracao=true; c.statusMig=row["9. Status da migração"]||"—"; }
+    if (aba==="Ativação") { c.ativacao=true; c.statusAtiv=row["Ativou o produto Log.AI?"]||"—"; }
+  };
+  ["Potenciais","Demo","Migração","Ativação"].forEach(aba=>(dadosTodos[aba]||[]).forEach(r=>registrar(aba,r)));
+  let clientes = Object.values(mapa);
+
+  if (busca) clientes = clientes.filter(c=>(c.nome+c.id).toLowerCase().includes(busca));
+  if (etapa) clientes = clientes.filter(c=>c[etapa]);
+  if (agente) clientes = clientes.filter(c=>c.agente===agente);
+  renderTabelaClientes(clientes);
+}
+
+function renderTabelaClientes(clientes) {
+  const wrap = document.getElementById("clientes-table-wrap");
+  if (!clientes.length) { wrap.innerHTML='<div class="vazio">Nenhum cliente encontrado.</div>'; return; }
+  const pill = (ativo, label, cor) => ativo
+    ? `<span class="etapa-pill pill-sim" style="background:${cor}18;color:${cor}">${label}</span>`
+    : `<span class="etapa-pill pill-nao">${label}</span>`;
+  wrap.innerHTML = `
+    <div class="clientes-table-wrap">
+      <table class="clientes-table">
+        <thead><tr>
+          <th>ID</th><th>Nome</th><th>Produto</th><th>Agente LogAI</th>
+          <th>Potencial</th><th>Demo</th><th>Migração</th><th>Ativação</th>
+        </tr></thead>
+        <tbody>${clientes.map(c=>`<tr>
+          <td style="color:#888;font-size:11px">${c.id}</td>
+          <td style="font-weight:500">${c.nome}</td>
+          <td>${c.produto}</td>
+          <td>${c.agente}</td>
+          <td>${pill(c.potencial,"Potencial","#993556")}</td>
+          <td>${pill(c.demo,"Demo","#7F77DD")}</td>
+          <td>${c.migracao?`${pill(true,"Migração","#BA7517")}<br><span style="font-size:10px;color:#888">${c.statusMig}</span>`:pill(false,"Migração","#BA7517")}</td>
+          <td>${c.ativacao?`${pill(true,"Ativação","#185FA5")}<br><span style="font-size:10px;color:#888">${c.statusAtiv}</span>`:pill(false,"Ativação","#185FA5")}</td>
+        </tr>`).join("")}</tbody>
+      </table>
+    </div>
+    <div style="font-size:11px;color:#aaa;margin-top:8px;padding:4px 0">${clientes.length} cliente${clientes.length!==1?"s":""} encontrado${clientes.length!==1?"s":""}</div>`;
+}
+
 // ── HELPERS ────────────────────────────────────────────────
 function execItem(label, cor, val, total) {
-  const pct = total > 0 ? Math.round(val/total*100) : 0;
+  const pct = total>0 ? Math.round(val/total*100) : 0;
   return `<div class="exec-item">
-    <div class="exec-item-row">
-      <span class="exec-item-label">${label}</span>
-      <span class="exec-item-val" style="color:${cor}">${pct}%</span>
-    </div>
+    <div class="exec-item-row"><span class="exec-item-label">${label}</span><span class="exec-item-val" style="color:${cor}">${pct}%</span></div>
     <div class="exec-bar-bg"><div class="exec-bar-fill" style="width:${pct}%;background:${cor}"></div></div>
   </div>`;
 }
 
 function gerarNuvem(texto, tipo) {
-  const stopwords = new Set(["de","a","o","e","que","é","do","da","em","um","para","com","uma","os","no","se","na","por","mais","as","dos","como","mas","foi","ao","ele","das","tem","à","seu","sua","ou","ser","quando","muito","há","nos","já","também","só","pelo","pela","até","isso","ela","entre","era","depois","sem","mesmo","aos","ter","seus","quem","nas","me","esse","eles","estão","você","tinha","foram","essa","num","nem","suas","meu","às","minha","têm","numa","pelos","pelas","qual","nós","lhe","deles","essas","esses","pois","seus","agora","aqui","bem","não","sim"]);
+  const stop = new Set(["de","a","o","e","que","é","do","da","em","um","para","com","uma","os","no","se","na","por","mais","as","dos","como","mas","foi","ao","ele","das","tem","à","seu","sua","ou","ser","quando","muito","há","nos","já","também","só","pelo","pela","até","isso","ela","entre","era","depois","sem","mesmo","aos","ter","seus","quem","nas","me","esse","eles","estão","você","tinha","foram","essa","num","nem","suas","meu","às","minha","têm","numa","pelos","pelas","qual","nós","lhe","deles","essas","esses","pois","agora","aqui","bem","não","sim","the","and","for","are","but","was","with","they","this","have","from","not","that","been"]);
   const freq = {};
   texto.toLowerCase().replace(/[^a-záéíóúãõâêîôûàèìòùç\s]/g,"").split(/\s+/)
-    .filter(w => w.length > 3 && !stopwords.has(w))
-    .forEach(w => freq[w] = (freq[w]||0) + 1);
-  const sorted = Object.entries(freq).sort((a,b) => b[1]-a[1]).slice(0,14);
+    .filter(w=>w.length>3&&!stop.has(w))
+    .forEach(w=>freq[w]=(freq[w]||0)+1);
+  const sorted = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,14);
   if (!sorted.length) return '<span style="font-size:12px;color:#bbb">Sem dados suficientes</span>';
   const max = sorted[0][1];
-  return sorted.map(([w,n]) => {
-    const size = 11 + Math.round((n/max)*10);
-    const stops = tipo==="pos"
-      ? [["#9FE1CB","#085041"],["#C0DD97","#27500A"],["#E1F5EE","#0F6E56"]]
-      : [["#F5C4B3","#712B13"],["#F0997B","#4A1B0C"],["#FAECE7","#993C1D"]];
-    const [bg,tc] = stops[Math.min(2, Math.floor((1-n/max)*3))];
-    return `<span class="palavra" style="font-size:${size}px;background:${bg};color:${tc}">${w}</span>`;
+  const paletas = {
+    pos:[["#9FE1CB","#085041"],["#C0DD97","#27500A"],["#E1F5EE","#0F6E56"]],
+    neg:[["#F5C4B3","#712B13"],["#F0997B","#4A1B0C"],["#FAECE7","#993C1D"]],
+    pot:[["#CECBF6","#26215C"],["#AFA9EC","#3C3489"],["#EEEDFE","#534AB7"]]
+  };
+  const pal = paletas[tipo]||paletas.pot;
+  return sorted.map(([w,n])=>{
+    const sz = 11+Math.round((n/max)*10);
+    const [bg,tc] = pal[Math.min(2,Math.floor((1-n/max)*3))];
+    return `<span class="palavra" style="font-size:${sz}px;background:${bg};color:${tc}">${w}</span>`;
   }).join("");
 }
 
